@@ -22,7 +22,7 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes(['verify' => true]);
+Auth::routes(['register' => false]);
 
 // Auth
 Route::middleware(['auth'])->group(function () {
@@ -229,9 +229,26 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+// Frontend
+
 // Policies
 Route::get('/terms_and_conditions', [HomeController::class, 'terms_and_conditions'])->name('terms_and_conditions');
 Route::get('/privacy_policy', [HomeController::class, 'privacy_policy'])->name('privacy_policy');
 
-// Landing Page
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
+// Shop
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
+Route::get('/product/{product:name}', [HomeController::class, 'product'])->name('product');
+
+// Checkout
+Route::get('/checkout', [HomeController::class, 'checkout'])->name('shop.checkout');
+Route::post('/checkout/order', [HomeController::class, 'order'])->name('checkout.order');
+
+// Search
+Route::get('/search/products', [HomeController::class, 'search'])->name('products.search');
+
+// Contact
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::post('/contact/send', [HomeController::class, 'contact_send'])->name('contact.send');
+
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/', [HomeController::class, 'index'])->name('home');
