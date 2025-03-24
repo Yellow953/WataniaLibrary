@@ -7,6 +7,7 @@ use App\Models\Barcode;
 use App\Models\Category;
 use App\Models\Log;
 use App\Models\Product;
+use App\Models\SecondaryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -70,9 +71,31 @@ class ProductController extends Controller
             'image' => $path,
         ]);
 
-        if ($request->barcodes[0] != null) {
+        if ($request->barcodes) {
             foreach ($request->barcodes as $barcode) {
                 $product->barcodes()->create(['barcode' => $barcode]);
+            }
+        }
+
+        if ($request->hasFile('secondary_images')) {
+            foreach ($request->file('secondary_images') as $image) {
+                $ext = $image->getClientOriginalExtension();
+                $filename = uniqid() . '.' . $ext;
+                $picture = Image::make($image);
+
+                $picture->fit(300, 300, function ($constraint) {
+                    $constraint->upsize();
+                });
+
+                $path = 'uploads/products/' . $filename;
+                $picture->save(public_path($path));
+
+                SecondaryImage::create([
+                    'product_id' => $product->id,
+                    'path' => '/' . $path,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
             }
         }
 
@@ -111,6 +134,36 @@ class ProductController extends Controller
             $path = '/uploads/products/' . $filename;
         } else {
             $path = $product->image;
+        }
+
+        if ($request->barcodes) {
+            $barcodes = array_filter(array_map('trim', $request->barcodes));
+            $product->barcodes()->delete();
+            foreach ($barcodes as $barcode) {
+                $product->barcodes()->create(['barcode' => $barcode]);
+            }
+        }
+
+        if ($request->hasFile('secondary_images')) {
+            foreach ($request->file('secondary_images') as $image) {
+                $ext = $image->getClientOriginalExtension();
+                $filename = uniqid() . '.' . $ext;
+                $picture = Image::make($image);
+
+                $picture->fit(300, 300, function ($constraint) {
+                    $constraint->upsize();
+                });
+
+                $path = 'uploads/products/' . $filename;
+                $picture->save(public_path($path));
+
+                SecondaryImage::create([
+                    'product_id' => $product->id,
+                    'path' => '/' . $path,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
         $product->update([
@@ -201,6 +254,15 @@ class ProductController extends Controller
     public function generate_barcodes()
     {
         return view('products.generate_barcodes');
+    }
+
+    public function secondary_image_delete(SecondaryImage $secondary_image)
+    {
+        $path = public_path($secondary_image->path);
+        File::delete($path);
+        $secondary_image->delete();
+
+        return redirect()->back()->with('danger', 'Image deleted successfully...');
     }
 
     public function export()

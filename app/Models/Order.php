@@ -16,6 +16,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     public function currency()
     {
         return $this->belongsTo(Currency::class);
@@ -28,7 +33,7 @@ class Order extends Model
 
     public static function generate_number()
     {
-        $last_order = Order::where('business_id', auth()->user()->business_id)->orderBy('id', 'DESC')->first();
+        $last_order = Order::orderBy('id', 'DESC')->first();
 
         if ($last_order) {
             return (int)$last_order->order_number + 1;
@@ -52,6 +57,10 @@ class Order extends Model
         if (request('cashier_id')) {
             $cashier_id = request('cashier_id');
             $q->where('cashier_id', $cashier_id);
+        }
+        if (request('client_id')) {
+            $client_id = request('client_id');
+            $q->where('client_id', $client_id);
         }
         if (request('currency_id')) {
             $currency_id = request('currency_id');

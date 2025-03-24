@@ -128,9 +128,11 @@ Route::middleware(['auth'])->group(function () {
 
         // Products
         Route::prefix('products')->group(function () {
+            Route::get('/secondary_images/{secondary_image}/delete', [ProductController::class, 'secondary_image_delete'])->name('products.secondary_images.delete');
             Route::get('/export', [ProductController::class, 'export'])->name('products.export');
             Route::get('/new', [ProductController::class, 'new'])->name('products.new');
             Route::post('/create', [ProductController::class, 'create'])->name('products.create');
+            Route::get('/generate_barcodes', [ProductController::class, 'generate_barcodes'])->name('products.generate_barcodes');
             Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
             Route::post('/{product}/update', [ProductController::class, 'update'])->name('products.update');
             Route::get('/{product}/import', [ProductController::class, 'import'])->name('products.import');
@@ -183,6 +185,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/fetch', [ClientController::class, 'fetch'])->name('clients.fetch');
             Route::get('/new', [ClientController::class, 'new'])->name('clients.new');
             Route::post('/create', [ClientController::class, 'create'])->name('clients.create');
+            Route::get('/{client}/history', [ClientController::class, 'history'])->name('clients.history');
             Route::get('/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
             Route::post('/{client}/update', [ClientController::class, 'update'])->name('clients.update');
             Route::get('/{client}/delete', [ClientController::class, 'destroy'])->name('clients.destroy');

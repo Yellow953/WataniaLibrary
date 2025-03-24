@@ -19,7 +19,7 @@ class Tax extends Model
     // Permissions
     public function can_delete()
     {
-        return auth()->user()->role == "super admin" && $this->businesses->count() == 0;
+        return auth()->user()->role == "admin" && $this->businesses->count() == 0;
     }
 
     // Filter
