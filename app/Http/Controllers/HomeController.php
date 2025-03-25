@@ -15,7 +15,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('frontend.index');
+        $categories = Category::select('id', 'name', 'image')->get();
+        return view('frontend.index', compact('categories'));
     }
 
     public function about()
@@ -44,7 +45,7 @@ class HomeController extends Controller
             $data = $request->all();
 
             Mail::send('emails.contact', ['data' => $data,], function ($message) {
-                $message->to('Khrabish.store@gmail.com')
+                $message->to('watania.library@gmail.com')
                     ->subject('New Contact');
             });
 
@@ -396,7 +397,7 @@ class HomeController extends Controller
         }
 
         Mail::send('emails.order-notification', ['order' => $order], function ($message) {
-            $message->to('Khrabish.store@gmail.com')
+            $message->to('watania.library@gmail.com')
                 ->subject('New Order Notification');
         });
     }
