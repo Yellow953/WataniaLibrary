@@ -30,7 +30,7 @@
         </div>
         <div class="col-6">
             <h5 class="text-primary text-start pb-1">Stay updated with the latest releases and offers</h5>
-            <input type="text" class="form-control input pe-5 text-start" name="q" id="searchInput"
+            <input type="text" class="form-control input pe-5 text-start zoom-in-on-hover-sm" name="q" id="searchInput"
                 placeholder="Enter Your Email" autocomplete="off">
         </div>
     </div>

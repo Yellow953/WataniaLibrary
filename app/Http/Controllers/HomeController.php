@@ -16,7 +16,9 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::select('id', 'name', 'image')->get();
-        return view('frontend.index', compact('categories'));
+        $products = Product::select('id', 'name', 'image')->get();
+        $data = compact('categories', 'products');
+        return view('frontend.index', $data);
     }
 
     public function about()
