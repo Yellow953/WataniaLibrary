@@ -42,11 +42,13 @@
 </head>
 
 <body class="custom_scroller">
+    @include('frontend.layouts._announcement')
     @include('frontend.layouts._header')
 
     @yield('content')
 
     @include('frontend.layouts._footer')
+    @include('frontend.layouts._sponsor')
     @include('frontend.layouts._modals')
 
     <!-- WhatsApp Floating Button -->

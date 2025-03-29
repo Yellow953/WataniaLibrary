@@ -1,10 +1,3 @@
-<div class="bg-tertiary text-center py-1 overflow-hidden">
-    <div class="announcement-slider">
-        <p class="text-white text-shadow-tertiary-sm mb-0">We provide delivery all over Lebanon!</p>
-        <p class="text-white text-shadow-tertiary-sm mb-0">We're ready to serve you 24/7</p>
-        <p class="text-white text-shadow-tertiary-sm mb-0">Shop your Favorite Books Online</p>
-    </div>
-</div>
 <div class="bg-white border-bottom">
     <div class="d-flex align-items-center">
         <a class="navbar-brand" href="{{ route('home')}}">
@@ -52,9 +45,9 @@
                     Products</a>
             </li>
             @foreach ($categories->take(8) as $category)
-                <li class="nav-item"><a class="text-decoration-none nav-link zoom-in-on-hover-sm"
-                        href="{{ route('shop', ['category' => $category->name]) }}">{{ $category->name }}</a>
-                </li>
+            <li class="nav-item"><a class="text-decoration-none nav-link zoom-in-on-hover-sm"
+                    href="{{ route('shop', ['category' => $category->name]) }}">{{ $category->name }}</a>
+            </li>
             @endforeach
         </ul>
 
