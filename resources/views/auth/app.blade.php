@@ -12,7 +12,7 @@
     <title>Watania Library</title>
 
     {{-- Favicon --}}
-    <link rel="shortcut icon" href="{{ asset('frontend/images/white-logo.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('frontend/images/favicon.png') }}" />
 
     {{-- Font --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -47,13 +47,11 @@
             <!--begin::Body-->
             <div class="d-flex flex-center w-lg-50 p-10" style="margin: auto">
                 <!--begin::Card-->
-                <div class="card login-card-custom rounded-3 w-md-400px">
+                <div class="card login-card-custom w-md-400px">
                     <!--begin::Card body-->
                     <div class="card-body d-flex flex-column px-10 py-5">
                         <!--begin::Wrapper-->
-                        <div class="d-flex flex-center flex-column-fluid">
-                            @yield('content')
-                        </div>
+                        @yield('content')
                         <!--end::Wrapper-->
                     </div>
                     <!--end::Card body-->

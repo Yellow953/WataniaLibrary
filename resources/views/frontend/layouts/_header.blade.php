@@ -9,7 +9,7 @@
                     placeholder="Type To Search" autocomplete="off">
                 <a class="nav-link ms-2" data-bs-toggle="offcanvas" href="#offcanvasCart" role="button" id="cartButton"
                     aria-controls="offcanvasCart">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-cart-shopping py-2"></i>
                 </a>
             </div>
             <div class="align-items-center tab-display">
@@ -45,9 +45,9 @@
                     Products</a>
             </li>
             @foreach ($categories->take(8) as $category)
-            <li class="nav-item"><a class="text-decoration-none nav-link zoom-in-on-hover-sm"
-                    href="{{ route('shop', ['category' => $category->name]) }}">{{ $category->name }}</a>
-            </li>
+                <li class="nav-item"><a class="text-decoration-none nav-link zoom-in-on-hover-sm"
+                        href="{{ route('shop', ['category' => $category->name]) }}">{{ $category->name }}</a>
+                </li>
             @endforeach
         </ul>
 
