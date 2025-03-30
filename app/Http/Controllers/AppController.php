@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankNote;
+use App\Models\Business;
 use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Log;
@@ -19,7 +20,7 @@ class AppController extends Controller
 {
     public function index()
     {
-        $business = auth()->user()->business;
+        $business = Business::firstOrFail();
         $currency = auth()->user()->currency;
         $categories = Category::select('id', 'name', 'image')->with('products')->get();
         $currencies = Currency::select('id', 'code')->get();

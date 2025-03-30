@@ -6,11 +6,9 @@
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
         <a href="{{ route('dashboard') }}" class="d-flex align-items-center justify-content-center">
-            <img alt="Logo" src="{{ asset('assets/images/yellowpos_yellow_transparent_bg.png') }}"
-                class="h-50px app-sidebar-logo-default" />
-            <img alt="Logo" src="{{ asset('assets/images/yellowpos_yellow_transparent_bg.png') }}"
-                class="h-40px app-sidebar-logo-minimize">
-            <h1 class="app-sidebar-logo-default mx-4 text-yellow">YellowPOS</h1>
+            <img alt="Logo" src="{{ asset('frontend/images/logo.png') }}" class="h-50px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{ asset('frontend/images/logo.png') }}" class="h-40px app-sidebar-logo-minimize">
+            <h1 class="app-sidebar-logo-default mx-4 text-yellow">Watania</h1>
         </a>
         <!--end::Logo image-->
         <!--begin::Sidebar toggle-->

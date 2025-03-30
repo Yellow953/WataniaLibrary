@@ -95,9 +95,9 @@
                 <img src="${item.image}" alt="${item.name}" class="img-fluid rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
                 <div class="flex-grow-1">
                     <h6 class="mb-0">${item.name}</h6>
-                    <small class="text-muted">{{ __('landing.price') }}: $${item.price} | {{ __('landing.quantity') }}: ${item.quantity}</small>
+                    <small class="text-muted">Price: $${item.price} | Quantity: ${item.quantity}</small>
                 </div>
-                <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">{{ __('landing.remove') }}</button>
+                <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">Remove</button>
             `;
 
             cartItemsContainer.appendChild(cartItem);
