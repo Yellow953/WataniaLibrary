@@ -763,6 +763,13 @@ a.text-shadow-sm:hover {
     justify-content: flex-end;
 }
 
+.card-filter {
+    top: 20vh;
+    position: sticky;
+    position: -webkit-sticky;
+    height: fit-content;
+}
+
 .secondary-img {
     border-radius: 10px;
     height: 300px;

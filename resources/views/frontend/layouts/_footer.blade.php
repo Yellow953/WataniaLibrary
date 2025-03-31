@@ -35,9 +35,15 @@
         </div>
     </div>
     <div class="col-12 d-flex justify-content-center pt-5 gap-4">
-        <h2><i class="fa-brands fa-facebook text-black"></i></h2>
-        <h2><i class="fa-brands fa-x-twitter text-black"></i></h2>
-        <h2><i class="fa-brands fa-instagram text-black"></i></h2>
+        <a href="#">
+            <h2><i class="fa-brands fa-facebook text-black"></i></h2>
+        </a>
+        <a href="#">
+            <h2><i class="fa-brands fa-x-twitter text-black"></i></h2>
+        </a>
+        <a href="#">
+            <h2><i class="fa-brands fa-instagram text-black"></i></h2>
+        </a>
     </div>
     <div class="col-12 justify-content-center text-center pt-2">
         <a class="navbar-brand" href="{{ route('home')}}">
