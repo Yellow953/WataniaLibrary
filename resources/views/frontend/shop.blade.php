@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Shop')
 
 @section('content')
     <section class="pb-5">
@@ -73,7 +73,7 @@
                                                     @if ($product->compare_price)
                                                         <h6 class="text-muted">
                                                             <s>${{ number_format($product->compare_price, 2)
-                                                                                                                                                                                                                                                                                                                                                                                                                                            }}</s>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        }}</s>
                                                         </h6>
                                                     @endif
                                                     <h5 class="text-secondary ms-2">${{ number_format($product->price, 2) }}
