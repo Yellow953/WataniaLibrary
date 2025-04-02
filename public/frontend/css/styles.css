@@ -421,8 +421,8 @@ a.active {
 /* ----------Buttons---------- */
 .btn-primary {
     color: var(--light-text) !important;
-    background-color: var(--primary-color);
-    border: var(--primary-color) solid 2px;
+    background-color: rgba(237, 27, 36, 0.4);
+    backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
@@ -432,20 +432,23 @@ a.active {
 
 .btn-primary:hover {
     color: white !important;
-    background-color: var(--primary-color);
+    background-color: rgba(237, 27, 36, 0.5);
+    backdrop-filter: blur(16px);
     border-color: var(--dark-primary-color);
     transition: all 0.3s ease-in-out;
 }
 
 .btn-primary.active {
     color: white !important;
-    background-color: var(--primary-color);
+    background-color: rgba(237, 27, 36, 0.5);
+    backdrop-filter: blur(16px);
     border-color: var(--dark-primary-color);
 }
 
 .btn-secondary {
     color: var(--lightest-secondary-color) !important;
-    background-color: var(--light-secondary-color);
+    background-color: rgba(164, 164, 164, 0.40);
+    backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
@@ -456,32 +459,34 @@ a.active {
 
 .btn-secondary:hover {
     color: white !important;
-    background-color: var(--light-secondary-color);
+    background-color: rgba(164, 164, 164, 0.50);
+    backdrop-filter: blur(16px);
     border: 0px hidden;
     transition: all 0.3s ease-in-out;
 }
 
 .btn-secondary.active {
     color: white !important;
-    background-color: var(--secondary-color);
+    background-color: rgba(164, 164, 164, 0.50);
+    backdrop-filter: blur(16px);
     border-color: var(--dark-secondary-color);
 }
 
 .btn-tertiary {
     color: var(--light-text) !important;
-    background-color: var(--tertiary-color);
-    border: var(--tertiary-color) solid 2px;
+    background-color: rgba(250, 35, 46, 0.61);
+    backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
-    box-shadow: var(--dark-tertiary-color) 0px 0px 5px;
-    text-shadow: var(--dark-tertiary-color) 0px 0px 2px;
+    box-shadow: rgba(68, 68, 68, 0.4) 0px 0px 5px;
+    text-shadow: rgba(68, 68, 68, 0.4) 0px 0px 2px;
 }
 
 .btn-tertiary:hover {
     color: white !important;
-    background-color: var(--tertiary-color);
-    border-color: var(--dark-tertiary-color);
+    background-color: rgba(250, 35, 46, 0.7);
+    backdrop-filter: blur(16px);
     transition: all 0.3s ease-in-out;
 }
 
@@ -925,7 +930,7 @@ footer {
 /* ----------Form---------- */
 
 .search-bar {
-    width: 77vw;
+    width: 57vw;
     text-align: start !important;
     padding-top: 10px;
     padding-bottom: 10px;

@@ -4,7 +4,18 @@
             <img src="{{ asset('frontend/images/logo.png') }}" alt="Watania Logo" class="logo" />
         </a>
         <div class="position-relative py-4 ms-md-4">
-            <div class="align-items-center desktop-display">
+            <div class="d-flex align-items-center desktop-display">
+                <ul class="navbar-nav text-wrap d-flex flex-row">
+                    <li class="nav-item"><a href="{{ route('home') }}"
+                            class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
+                    </li>
+                    <li class="nav-item"><a href="{{ route('about') }}"
+                            class="text-decoration-none nav-link zoom-in-on-hover-sm">About</a>
+                    </li>
+                    <li class="nav-item me-2"><a href="{{ route('contact') }}"
+                            class="text-decoration-none nav-link zoom-in-on-hover-sm">Contact</a>
+                    </li>
+                </ul>
                 <input type="text" class="input form-control search-bar ps-3 box-shadow" name="q" id="searchInput"
                     placeholder="Type To Search" autocomplete="off">
                 <a class="nav-link ms-2" data-bs-toggle="offcanvas" href="#offcanvasCart" role="button" id="cartButton"
@@ -40,15 +51,6 @@
     </button>
     <div class="collapse navbar-collapse justify-content-center shadow border-bottom py-3" id="navbarNav">
         <ul class="navbar-nav text-wrap">
-            <li class="nav-item"><a href="{{ route('home') }}"
-                    class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
-            </li>
-            <li class="nav-item"><a href="{{ route('about') }}"
-                    class="text-decoration-none nav-link zoom-in-on-hover-sm">About</a>
-            </li>
-            <li class="nav-item"><a href="{{ route('contact') }}"
-                    class="text-decoration-none nav-link zoom-in-on-hover-sm">Contact</a>
-            </li>
             <li class="nav-item"><a href="{{ route('shop') }}"
                     class="text-decoration-none nav-link zoom-in-on-hover-sm">All
                     Products</a>
@@ -64,10 +66,10 @@
                                 <div class="col-md-4">
                                     <h3 class="title">{{ $category->name }}</h3>
                                     <ul class="list-unstyled">
-                                        @foreach ($categories as $category)
+                                        @foreach ($category->subcategories as $subcategory)
                                             <li class="zoom-in-on-hover-sm"><a
-                                                    href="{{ route('shop', ['category' => $category->name]) }}"
-                                                    class="text-decoration-none text-black">{{ $category->name }}</a>
+                                                    href="{{ route('shop', ['subcategory' => $subcategory->name]) }}"
+                                                    class="text-decoration-none text-black">{{ $subcategory->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>

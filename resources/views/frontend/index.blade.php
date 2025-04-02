@@ -3,26 +3,36 @@
 @section('title', 'Home')
 
 @section('content')
-    <div class="slider">
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item">
-                    <a href="{{ route('shop') }}">
-                        <img src="{{ asset('frontend/images/hero-1.png') }}" class="d-block hero-img" alt="Hero Image">
-                    </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="{{ route('shop') }}">
-                        <img src="{{ asset('frontend/images/hero-2.png') }}" class="d-block hero-img" alt="Hero Image">
-                    </a>
-                </div>
-                <div class="carousel-item active">
-                    <a href="{{ route('shop') }}">
-                        <img src="{{ asset('frontend/images/hero-3.png') }}" class="d-block hero-img" alt="Hero Image">
-                    </a>
-                </div>
+    <div class="slider position-relative"></div>
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <a href="{{ route('shop') }}">
+                    <img src="{{ asset('frontend/images/hero-1.png') }}" class="d-block hero-img" alt="Hero Image">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="{{ route('shop') }}">
+                    <img src="{{ asset('frontend/images/hero-2.png') }}" class="d-block hero-img" alt="Hero Image">
+                </a>
+            </div>
+            <div class="carousel-item active">
+                <a href="{{ route('shop') }}">
+                    <img src="{{ asset('frontend/images/hero-3.png') }}" class="d-block hero-img" alt="Hero Image">
+                </a>
             </div>
         </div>
+        <button class="carousel-control-prev position-absolute top-50 start-0 translate-middle-y" type="button"
+            data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon rounded-circle p-2" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next position-absolute top-50 end-0 translate-middle-y" type="button"
+            data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon rounded-circle p-2" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
     </div>
     <div class="container py-5">
         <div class="row">
