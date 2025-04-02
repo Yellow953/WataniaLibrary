@@ -40,11 +40,20 @@
     </button>
     <div class="collapse navbar-collapse justify-content-center shadow border-bottom py-3" id="navbarNav">
         <ul class="navbar-nav text-wrap">
+            <li class="nav-item"><a href="{{ route('home') }}"
+                    class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
+            </li>
+            <li class="nav-item"><a href="{{ route('about') }}"
+                    class="text-decoration-none nav-link zoom-in-on-hover-sm">About</a>
+            </li>
+            <li class="nav-item"><a href="{{ route('contact') }}"
+                    class="text-decoration-none nav-link zoom-in-on-hover-sm">Contact</a>
+            </li>
             <li class="nav-item"><a href="{{ route('shop') }}"
                     class="text-decoration-none nav-link zoom-in-on-hover-sm">All
                     Products</a>
             </li>
-            @foreach ($categories->take(8) as $category)
+            @foreach ($categories->take(6) as $category)
                 <li class="nav-item dropdown megamenu-fw"><a
                         class="dropdown-toggle text-decoration-none nav-link zoom-in-on-hover-sm"
                         href="{{ route('shop', ['category' => $category->name]) }}" data-toggle="dropdown" role="button"
@@ -83,16 +92,6 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-
                             </div>
                         </li>
                     </ul>

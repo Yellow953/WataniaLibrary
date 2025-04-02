@@ -1,9 +1,9 @@
 :root {
-    --primary: #f3c623;
-    --dark-primary: #d6a801;
-    --darker-primary: #a08000;
-    --light-primary: #ffe054;
-    --lighter-primary: #fdf8df;
+    --primary: rgb(237, 27, 36);
+    --dark-primary: #96070e;
+    --darker-primary: #420205;
+    --light-primary: rgb(243, 89, 97);
+    --lighter-primary: #ffacb0;
     --secondary: #f7f7f7;
     --light: #f8f9fa;
     --dark: #1b1b1d;
@@ -53,11 +53,11 @@
 
 .menu-item:hover .menu-link {
     color: var(--primary) !important;
-    background-color: rgba(255, 224, 84, 0.1) !important;
+    background-color: rgba(243, 89, 97, 0.1) !important;
 }
 
 .menu-item .menu-link.active {
-    background-color: rgba(255, 224, 84, 0.1) !important;
+    background-color: rgba(243, 89, 97, 0.1) !important;
 }
 
 table thead tr th {
@@ -570,7 +570,7 @@ table thead tr th {
 }
 
 [data-bs-theme="light"] .btn-primary:hover {
-    background-color: rgba(243, 198, 35, 0.5) !important;
+    background-color: rgba(237, 27, 36, 0.5) !important;
     transition: all 0.3s ease;
 }
 
@@ -582,7 +582,7 @@ table thead tr th {
 }
 
 [data-bs-theme="dark"] .btn-primary:hover {
-    background-color: rgba(243, 198, 35, 0.3) !important;
+    background-color: rgba(237, 27, 36, 0.3) !important;
     transition: all 0.3s ease;
 }
 
@@ -611,12 +611,12 @@ table thead tr th {
 }
 
 .btn-icon.btn-custom:hover {
-    background-color: rgba(255, 224, 84, 0.1) !important;
+    background-color: rgba(243, 89, 97, 0.1) !important;
 }
 
 .btn-icon.btn-custom.show.menu-dropdown,
 .btn-icon.btn-custom:focus {
-    background-color: rgba(255, 224, 84, 0.1) !important;
+    background-color: rgba(243, 89, 97, 0.1) !important;
 }
 
 .btn-icon.btn-custom.show.menu-dropdown span,
