@@ -24,7 +24,7 @@
         </div>
     </div>
 </div>
-<nav class="navbar navbar-expand-lg fixed-top bg-nav-sticky">
+<nav class="navbar navbar-expand-lg fixed-top bg-nav-sticky megamenu">
     <div class="navbar-nav ms-auto m-display">
         <input type="text" class="form-control input px-5" name="q" id="searchInput" placeholder="Type To Search"
             autocomplete="off">
@@ -40,16 +40,63 @@
     </button>
     <div class="collapse navbar-collapse justify-content-center shadow border-bottom py-3" id="navbarNav">
         <ul class="navbar-nav text-wrap">
+            <li class="nav-item"><a href="{{ route('home') }}"
+                    class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
+            </li>
+            <li class="nav-item"><a href="{{ route('about') }}"
+                    class="text-decoration-none nav-link zoom-in-on-hover-sm">About</a>
+            </li>
+            <li class="nav-item"><a href="{{ route('contact') }}"
+                    class="text-decoration-none nav-link zoom-in-on-hover-sm">Contact</a>
+            </li>
             <li class="nav-item"><a href="{{ route('shop') }}"
                     class="text-decoration-none nav-link zoom-in-on-hover-sm">All
                     Products</a>
             </li>
-            @foreach ($categories->take(8) as $category)
-                <li class="nav-item"><a class="text-decoration-none nav-link zoom-in-on-hover-sm"
-                        href="{{ route('shop', ['category' => $category->name]) }}">{{ $category->name }}</a>
+            @foreach ($categories->take(6) as $category)
+                <li class="nav-item dropdown megamenu-fw"><a
+                        class="dropdown-toggle text-decoration-none nav-link zoom-in-on-hover-sm"
+                        href="{{ route('shop', ['category' => $category->name]) }}" data-toggle="dropdown" role="button"
+                        aria-expanded="false">{{ $category->name }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu megamenu-content rounded-4 border-2 shadow bg-white-blur" role="menu">
+                        <li>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3 class="title">{{ $category->name }}</h3>
+                                    <ul class="list-unstyled">
+                                        @foreach ($categories as $category)
+                                            <li class="zoom-in-on-hover-sm"><a
+                                                    href="{{ route('shop', ['category' => $category->name]) }}"
+                                                    class="text-decoration-none text-black">{{ $category->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3 class="title">Featured Products</h3>
+                                    <ul class="list-unstyled">
+                                        @foreach ($category->products->take(4) as $product)
+                                            <li class="zoom-in-on-hover-sm"><a href="#"
+                                                    class="text-decoration-none text-black">{{ $product->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3 class="title">Latest Products</h3>
+                                    <ul class="list-unstyled">
+                                        @foreach ($category->products->take(4) as $product)
+                                            <li class="zoom-in-on-hover-sm"><a href="#"
+                                                    class="text-decoration-none text-black">{{ $product->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
             @endforeach
         </ul>
-
     </div>
 </nav>

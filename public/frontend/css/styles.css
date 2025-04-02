@@ -196,6 +196,43 @@ a.active {
     width: max-content;
 }
 
+/* ----------Mega Menu---------- */
+
+.megamenu .nav,
+.megamenu .collapse,
+.megamenu .dropup,
+.megamenu .dropdown {
+    position: static;
+}
+
+.megamenu .container {
+    position: relative;
+}
+
+.megamenu .dropdown-menu {
+    left: auto;
+}
+
+.megamenu .megamenu-content {
+    padding: 15px;
+}
+
+.megamenu .megamenu-content h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+.megamenu .dropdown.megamenu-fw .dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bg-white-blur {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+}
+
 .desktop-display {
     display: flex;
 }

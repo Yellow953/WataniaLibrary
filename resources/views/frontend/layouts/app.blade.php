@@ -59,6 +59,7 @@
     </div>
 
     <!-- Custom JS -->
+    <script src="{{ asset('frontend/js/megamenu.js') }}"></script>
     <script src="{{ asset('frontend/js/animations.js') }}"></script>
     <script src="{{ asset('frontend/js/frontend.js') }}"></script>
     <script src="{{ asset('frontend/js/slider.js') }}"></script>
