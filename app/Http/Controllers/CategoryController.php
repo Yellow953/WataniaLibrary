@@ -18,13 +18,17 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::select('id', 'name', 'description', 'image')->with('products')->filter()->orderBy('id', 'desc')->paginate(25);
-        return view('categories.index', compact('categories'));
+        $categories = Category::select('id', 'name', 'description', 'image', 'parent_id')->with('products')->filter()->orderBy('id', 'desc')->paginate(25);
+        $all_categories = Category::select('id', 'name')->get();
+
+        $data = compact('categories', 'all_categories');
+        return view('categories.index', $data);
     }
 
     public function new()
     {
-        return view('categories.new');
+        $categories = Category::select('id', 'name')->get();
+        return view('categories.new', compact('categories'));
     }
 
     public function create(Request $request)
@@ -51,6 +55,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'image' => $path,
+            'parent_id' => $request->parent_id
         ]);
 
         $text = ucwords(auth()->user()->name) .  " created Category " . $request->name . ", datetime: " . now();
@@ -61,7 +66,10 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        $categories = Category::select('id', 'name')->get();
+
+        $data = compact('categories', 'category');
+        return view('categories.edit', $data);
     }
 
     public function update(Request $request, Category $category)
@@ -88,6 +96,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'image' => $path,
+            'parent_id' => $request->parent_id
         ]);
 
         $text = ucwords(auth()->user()->name) .  " updated Category " . $category->name . ", datetime: " . now();

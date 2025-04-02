@@ -16,21 +16,22 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::select('id', 'name', 'image')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
         $products = Product::select('id', 'name', 'image')->get();
+
         $data = compact('categories', 'products');
         return view('frontend.index', $data);
     }
 
     public function about()
     {
-        $categories = Category::select('id', 'name', 'image')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
         return view('frontend.about', compact('categories'));
     }
 
     public function contact()
     {
-        $categories = Category::select('id', 'name', 'image')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
         return view('frontend.contact', compact('categories'));
     }
 
@@ -60,7 +61,7 @@ class HomeController extends Controller
 
     public function shop(Request $request)
     {
-        $categories = Category::select('id', 'name', 'image')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
 
         if ($request->input('category')) {
             $category = Category::where('name', $request->input('category'))->firstOrFail();
@@ -75,7 +76,7 @@ class HomeController extends Controller
 
     public function product(Product $product)
     {
-        $categories = Category::select('id', 'name', 'image')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
         $simillar_products = Product::select('id', 'name', 'image')->where('category_id', $product->category_id)->limit(10)->get();
 
         $data = compact('product', 'simillar_products', 'categories');
@@ -86,7 +87,7 @@ class HomeController extends Controller
     {
         $countries = Helper::get_countries();
         $cities = Helper::get_cities();
-        $categories = Category::select('id', 'name', 'image')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
 
         $data = compact('countries', 'cities', 'categories');
         return view('frontend.checkout', $data);

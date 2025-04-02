@@ -22,14 +22,27 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="required form-label">Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Name..."
                                 value="{{ $category->name }}" required />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select name="parent_id" class="form-select" data-control="select2"
+                                data-placeholder="Select an option">
+                                <option value=""></option>
+                                @foreach ($categories as $c)
+                                <option value="{{ $c->id }}" {{ $category->parent_id==$c->id ? 'selected' :
+                                    '' }}>{{ ucwords($c->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group row">
                             <label class="col-4 form-label">Image</label>
                             <div class="col-8">

@@ -54,8 +54,22 @@
                 <!--end::Separator-->
                 <!--begin::Row-->
                 <div class="row g-8 mb-8">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select name="parent_id" class="form-select" data-control="select2"
+                                data-placeholder="Select an option">
+                                <option value=""></option>
+                                @foreach ($all_categories as $category)
+                                <option value="{{ $category->id }}" {{ request()->query('parent_id')==$category->id ?
+                                    'selected' :
+                                    '' }}>{{ ucwords($category->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <!--begin::Col-->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <label class="fs-6 form-label fw-bold text-dark">Description</label>
                         <input type="text" class="form-control form-control-solid border" name="description"
                             value="{{ request()->query('description') }}" placeholder="Enter Description..." />
@@ -109,6 +123,14 @@
                                     <div class="d-flex justify-content-start flex-column">
                                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{
                                             ucwords($category->name) }}</a>
+
+                                        @if ($category->parent_id)
+                                        <small>
+                                            <span class="text-primary fw-bold">Parent:</span> <span>{{
+                                                $category->parent->name
+                                                }}</span>
+                                        </small>
+                                        @endif
                                     </div>
                                     <!--end::Name-->
                                 </div>
