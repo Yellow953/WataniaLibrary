@@ -1,34 +1,38 @@
 <footer>
     <div class="container row pt-5 bg-white">
-        <div class="col-3">
-            <h5 class="text-primary text-center pb-1">Customer Service</h5>
+        <div class="col-md-4">
+            <h5 class="text-primary text-center pb-1">Quick Links</h5>
             <ul class="text-black navbar-nav text-center">
                 <li class="nav-item">
-                    <a href="#" class="text-decoration-none text-black">Contact Us</a>
+                    <a href="{{ route('home') }}" class="text-decoration-none text-black">Home
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="text-decoration-none text-black">Find Us</a>
+                    <a href="{{ route('shop') }}" class="text-decoration-none text-black">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="text-decoration-none text-black">FAQ</a>
+                    <a href="{{ route('contact') }}" class="text-decoration-none text-black">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('about') }}" class="text-decoration-none text-black">About Us</a>
                 </li>
             </ul>
         </div>
-        <div class="col-3">
-            <h5 class="text-primary text-center pb-1">About Us</h5>
+        <div class="col-md-4">
+            <h5 class="text-primary text-center pb-1">Policies</h5>
             <ul class="text-black navbar-nav text-center">
                 <li class="nav-item">
-                    <a href="#" class="text-decoration-none text-black">Our Company</a>
+                    <a href="{{ route('privacy_policy') }}" class="text-decoration-none text-black">Privacy Policy</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="text-decoration-none text-black">Privacy Policy</a>
+                    <a href="{{ route('return_policy') }}" class="text-decoration-none text-black">Return Policy</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="text-decoration-none text-black">Terms Of Use</a>
+                    <a href="{{ route('terms_and_conditions') }}" class="text-decoration-none text-black">Terms &
+                        Conditions</a>
                 </li>
             </ul>
         </div>
-        <div class="col-6">
+        <div class="col-md-4">
             <h5 class="text-primary text-start pb-1">Stay updated with the latest releases and offers</h5>
             <input type="text" class="form-control input pe-5 text-start zoom-in-on-hover-sm" name="q" id="searchInput"
                 placeholder="Enter Your Email" autocomplete="off">

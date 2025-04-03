@@ -237,6 +237,7 @@ Route::middleware(['auth'])->group(function () {
 // Policies
 Route::get('/terms_and_conditions', [HomeController::class, 'terms_and_conditions'])->name('terms_and_conditions');
 Route::get('/privacy_policy', [HomeController::class, 'privacy_policy'])->name('privacy_policy');
+Route::get('/return_policy', [HomeController::class, 'return_policy'])->name('return_policy');
 
 // Shop
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');

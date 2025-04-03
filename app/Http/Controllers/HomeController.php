@@ -193,6 +193,24 @@ class HomeController extends Controller
         return response()->json($products);
     }
 
+    public function privacy_policy()
+    {
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        return view('frontend.policies.privacy_policy', compact('categories'));
+    }
+
+    public function return_policy()
+    {
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        return view('frontend.policies.return_policy', compact('categories'));
+    }
+
+    public function terms_and_conditions()
+    {
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        return view('frontend.policies.terms_conditions', compact('categories'));
+    }
+
     private function sendOrderEmails(Order $order, User $user)
     {
         if ($user->email) {
