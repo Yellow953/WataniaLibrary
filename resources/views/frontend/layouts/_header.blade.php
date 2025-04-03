@@ -60,7 +60,7 @@
                         class="dropdown-toggle text-decoration-none nav-link zoom-in-on-hover-sm"
                         href="{{ route('shop', ['category' => $category->name]) }}" data-toggle="dropdown" role="button"
                         aria-expanded="false">{{ $category->name }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu megamenu-content rounded-4 border-2 shadow bg-white-blur" role="menu">
+                    <ul class="dropdown-menu megamenu-content rounded-4 bg-white-blur" role="menu">
                         <li>
                             <div class="row">
                                 <div class="col-md-4">

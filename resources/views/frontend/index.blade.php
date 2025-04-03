@@ -68,7 +68,7 @@
         <div class="row">
             <div class="col-4">
                 <a href="#" class="card home-card shadow zoom-in-on-hover-sm">
-                    <img src="{{ asset('frontend/images/3-grid.jpg') }}" alt="" class="img-fluid secondary-img">
+                    <img src="{{ asset('frontend/images/grid-1.jpg') }}" alt="" class="img-fluid secondary-img">
                     <div class="card-body-2">
                         <div class="btn btn-secondary zoom-in-on-hover">View More</div>
                     </div>
@@ -76,7 +76,7 @@
             </div>
             <div class="col-4">
                 <a href="#" class="card home-card shadow zoom-in-on-hover-sm">
-                    <img src="{{ asset('frontend/images/3-grid.jpg') }}" alt="" class="img-fluid secondary-img">
+                    <img src="{{ asset('frontend/images/grid-2.jpg') }}" alt="" class="img-fluid secondary-img">
                     <div class="card-body-2">
                         <div class="btn btn-secondary zoom-in-on-hover">View More</div>
                     </div>
@@ -84,7 +84,7 @@
             </div>
             <div class="col-4">
                 <a href="#" class="card home-card shadow zoom-in-on-hover-sm">
-                    <img src="{{ asset('frontend/images/3-grid.jpg') }}" alt="" class="img-fluid secondary-img">
+                    <img src="{{ asset('frontend/images/grid-3.jpg') }}" alt="" class="img-fluid secondary-img">
                     <div class="card-body-2">
                         <div class="btn btn-secondary zoom-in-on-hover">View More</div>
                     </div>
@@ -146,6 +146,34 @@
                     </a>
                 </div>
             @endforeach
+        </div>
+    </div>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-4">
+                <a href="#" class="card home-card shadow zoom-in-on-hover-sm">
+                    <img src="{{ asset('frontend/images/grid-4.jpg') }}" alt="" class="img-fluid secondary-img">
+                    <div class="card-body-2">
+                        <div class="btn btn-secondary zoom-in-on-hover">View More</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="#" class="card home-card shadow zoom-in-on-hover-sm">
+                    <img src="{{ asset('frontend/images/grid-5.jpg') }}" alt="" class="img-fluid secondary-img">
+                    <div class="card-body-2">
+                        <div class="btn btn-secondary zoom-in-on-hover">View More</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="#" class="card home-card shadow zoom-in-on-hover-sm">
+                    <img src="{{ asset('frontend/images/grid-6.jpg') }}" alt="" class="img-fluid secondary-img">
+                    <div class="card-body-2">
+                        <div class="btn btn-secondary zoom-in-on-hover">View More</div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
     <div class="container pb-5">

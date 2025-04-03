@@ -48,6 +48,13 @@ body {
     background-color: var(--light-secondary-color);
 }
 
+.glass-bg {
+    background: linear-gradient(135deg,
+            rgba(180, 180, 180, 0) 0%,
+            rgba(180, 180, 180, 0.6) 100%);
+    backdrop-filter: blur(16px);
+}
+
 .y-on-hover {
     transition: all 0.3s ease-in-out;
 }
@@ -185,7 +192,7 @@ body {
     color: var(--primary-color) !important;
     background-color: rgba(255, 255, 255, 0.61);
     transition: all 0.3s ease-in-out;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 5px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px;
 }
 
 a.active {
@@ -229,8 +236,12 @@ a.active {
 }
 
 .bg-white-blur {
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(16px);
+    isolation: isolate;
+    background-color: rgba(255, 255, 255, 0.80);
+    border: 0px hidden;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 5px;
 }
 
 .desktop-display {
@@ -419,20 +430,20 @@ a.active {
 /* ----------Buttons---------- */
 .btn-primary {
     color: var(--light-text) !important;
-    background-color: rgba(237, 27, 36, 0.4);
+    background: linear-gradient(0deg, rgb(237, 27, 36) 0%, rgba(237, 27, 36, 0.7) 100%);
     backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
-    box-shadow: var(--dark-primary-color) 0px 0px 5px;
+    border: 0px hidden;
     text-shadow: var(--dark-primary-color) 0px 0px 2px;
 }
 
 .btn-primary:hover {
     color: white !important;
-    background-color: rgba(237, 27, 36, 0.5);
+    background-color: rgba(237, 27, 36, 0.90);
     backdrop-filter: blur(16px);
-    border-color: var(--dark-primary-color);
+    border: 0px hidden;
     transition: all 0.3s ease-in-out;
 }
 
@@ -440,7 +451,6 @@ a.active {
     color: white !important;
     background-color: rgba(237, 27, 36, 0.5);
     backdrop-filter: blur(16px);
-    border-color: var(--dark-primary-color);
 }
 
 .btn-secondary {
@@ -472,18 +482,17 @@ a.active {
 
 .btn-tertiary {
     color: var(--light-text) !important;
-    background-color: rgba(250, 35, 46, 0.61);
+    background: linear-gradient(0deg, rgb(237, 27, 36) 0%, rgba(237, 27, 36, 0.7) 100%);
     backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
-    box-shadow: rgba(68, 68, 68, 0.4) 0px 0px 5px;
     text-shadow: rgba(68, 68, 68, 0.4) 0px 0px 2px;
 }
 
 .btn-tertiary:hover {
     color: white !important;
-    background-color: rgba(250, 35, 46, 0.7);
+    background-color: rgba(250, 35, 46, 0.90);
     backdrop-filter: blur(16px);
     transition: all 0.3s ease-in-out;
 }
@@ -493,6 +502,7 @@ a.active {
 }
 
 @keyframes shake {
+
     10%,
     90% {
         transform: translateX(-1px);
@@ -615,55 +625,27 @@ a.text-tertiary-light:hover {
 }
 
 .text-shadow-lg {
-    text-shadow: var(--dark-primary-color) 2px 3px 0px;
+    text-shadow: rgba(68, 68, 68, 0.2) 0px 0px 10px;
+}
+
+a.text-shadow-lg:hover {
+    text-shadow: rgba(68, 68, 68, 0.4) 0px 0px 8px;
 }
 
 .text-shadow {
-    text-shadow: var(--dark-primary-color) 2px 2px 0px;
+    text-shadow: rgba(68, 68, 68, 0.2) 0px 0px 4px;
+}
+
+a.text-shadow:hover {
+    text-shadow: rgba(68, 68, 68, 0.4) 0px 0px 4px;
 }
 
 .text-shadow-sm {
-    text-shadow: var(--dark-primary-color) 1px 1px 0px;
-}
-
-.text-shadow-secondary-lg {
-    text-shadow: var(--dark-secondary-color) 2px 3px 0px;
-}
-
-.text-shadow-secondary {
-    text-shadow: var(--dark-secondary-color) 2px 2px 0px;
-}
-
-.text-shadow-secondary-sm {
-    text-shadow: var(--dark-secondary-color) 1px 1px 0px;
-}
-
-.text-shadow-secondary:hover {
-    text-shadow: var(--secondary-color) 2px 2px 0px;
-}
-
-.text-shadow-secondary-sm:hover {
-    text-shadow: var(--secondary-color) 1px 1px 0px;
-}
-
-.text-shadow-tertiary-lg {
-    text-shadow: var(--dark-tertiary-color) 2px 3px 0px;
-}
-
-.text-shadow-tertiary {
-    text-shadow: var(--dark-tertiary-color) 2px 2px 0px;
-}
-
-.text-shadow-tertiary-sm {
-    text-shadow: var(--dark-tertiary-color) 1px 1px 0px;
-}
-
-a.text-shadow-tertiary:hover {
-    text-shadow: var(--tertiary-color) 2px 2px 0px;
+    text-shadow: rgba(68, 68, 68, 0.2) 0px 0px 2px;
 }
 
 a.text-shadow-sm:hover {
-    text-shadow: var(--primary-color) 1px 1px 0px;
+    text-shadow: rgba(68, 68, 68, 0.4) 0px 0px 2px;
 }
 
 .text-white {
@@ -1022,11 +1004,9 @@ footer {
     border-radius: 7px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background: var(--primary-color);
-    background: linear-gradient(
-        180deg,
-        var(--primary-color) 50%,
-        var(--light-primary-color) 100%
-    );
+    background: linear-gradient(180deg,
+            var(--primary-color) 50%,
+            var(--light-primary-color) 100%);
 }
 
 /* ----------Parallax---------- */

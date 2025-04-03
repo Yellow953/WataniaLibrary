@@ -12,7 +12,7 @@
         <div class="row mt-5">
             <div class="col-md-6 pb-5 pb-md-0">
                 <div class="card rounded p-5 text-center bg-secondary-lighter">
-                    <h2 class="mb-4 animate-on-scroll slide-left text-white fw-bold text-shadow-secondary">Contact Info
+                    <h2 class="mb-4 animate-on-scroll slide-left text-white fw-bold text-shadow">Contact Info
                     </h2>
                     <div class="mb-4 animate-on-scroll slide-left">
                         <h5><i class="fa-solid fa-location-dot text-tertiary"></i></h5>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-6">
                 <div class="card rounded p-5 text-center bg-tertiary">
-                    <h2 class="mb-4 animate-on-scroll slide-right text-white fw-bold text-shadow-tertiary">
+                    <h2 class="mb-4 animate-on-scroll slide-right text-white fw-bold text-shadow">
                         Send Us A Message
                     </h2>
                     <form class="form" action="{{ route('contact.send') }}" method="POST" enctype="multipart/form-data">
