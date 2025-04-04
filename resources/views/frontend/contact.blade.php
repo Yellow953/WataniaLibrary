@@ -72,8 +72,8 @@
                             <input type="number" class="ms-3 spam-input" id="spam" name="spam" required />
                         </div>
 
-                        <div class="y-on-hover">
-                            <button type="submit" class="btn btn-primary animate-on-scroll slide-up">
+                        <div class="zoom-in-on-hover">
+                            <button type="submit" class="btn btn-secondary animate-on-scroll slide-up">
                                 Send Message
                             </button>
                         </div>
