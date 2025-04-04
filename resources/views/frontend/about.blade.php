@@ -14,16 +14,17 @@
         </div>
         <div class="row pb-5">
             <div class="col-6 d-flex align-items-center">
-                <h4 class="text-center">For over three decades, we've been proud to serve our community by providing a wide
+                <h5 class="text-center lh-lg">For over three decades, we've been proud to serve our community by providing a
+                    wide
                     selection of new and
                     used books, quality stationery, educational toys, and professional photocopying services. Whether you're
                     a
                     student, a parent, a teacher, or a book enthusiast, we have everything you need to fuel learning,
                     creativity, and growth.
-                </h4>
+                </h5>
             </div>
             <div class="col-6">
-                <img src="{{ asset('frontend/images/about-1.jpg') }}" alt="" class="img-fluid">
+                <img src="{{ asset('frontend/images/about-1.jpg') }}" alt="" class="img-fluid rounded-4 shadow">
             </div>
         </div>
         <div class="row pb-5">
@@ -31,7 +32,7 @@
                 <h1 class="text-primary">Our services and offerings include</h1>
             </div>
             <div class="col-6 d-flex align-items-center">
-                <img src="{{ asset('frontend/images/about-2.jpg') }}" alt="" class="img-fluid">
+                <img src="{{ asset('frontend/images/about-2.jpg') }}" alt="" class="img-fluid rounded-4 shadow">
             </div>
             <div class="col-6 d-flex flex-column justify-content-center pt-3">
                 <h3 class="pb-2 text-primary">Books</h3>
@@ -57,7 +58,7 @@
         </div>
         <div class="row pb-5">
             <div class="col-12 align-items-center d-flex justify-content-center">
-                <img src="{{ asset('frontend/images/about-3.jpg') }}" alt="" class="img-fluid w-50 mb-5">
+                <img src="{{ asset('frontend/images/about-3.jpg') }}" alt="" class="img-fluid w-50 mb-5 rounded-4 shadow">
             </div>
             <div class="col-12 text-center">
                 <h5>At Wataniya Library, we are committed to supporting education, creativity, and lifelong learning. We

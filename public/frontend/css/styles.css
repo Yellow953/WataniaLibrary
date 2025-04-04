@@ -430,7 +430,7 @@ a.active {
 /* ----------Buttons---------- */
 .btn-primary {
     color: var(--light-text) !important;
-    background: linear-gradient(0deg, rgb(237, 27, 36) 0%, rgba(237, 27, 36, 0.7) 100%);
+    background-color: var(--primary-color);
     backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
@@ -441,7 +441,7 @@ a.active {
 
 .btn-primary:hover {
     color: white !important;
-    background-color: rgba(237, 27, 36, 0.90);
+    background-color: rgba(237, 27, 36, 0.80);
     backdrop-filter: blur(16px);
     border: 0px hidden;
     transition: all 0.3s ease-in-out;
@@ -482,7 +482,7 @@ a.active {
 
 .btn-tertiary {
     color: var(--light-text) !important;
-    background: linear-gradient(0deg, rgb(237, 27, 36) 0%, rgba(237, 27, 36, 0.7) 100%);
+    background-color: var(--primary-color);
     backdrop-filter: blur(16px);
     font-weight: 700;
     transition: all 0.3s ease-in-out;
@@ -492,7 +492,7 @@ a.active {
 
 .btn-tertiary:hover {
     color: white !important;
-    background-color: rgba(250, 35, 46, 0.90);
+    background-color: rgba(250, 35, 46, 0.80);
     backdrop-filter: blur(16px);
     transition: all 0.3s ease-in-out;
 }
