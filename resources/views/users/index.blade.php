@@ -56,7 +56,7 @@
                 <div class="row g-8 mb-8">
 
                     <!--begin::Col-->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="fs-6 form-label fw-bold text-dark">Email</label>
                         <input type="email" class="form-control" name="email" value="{{ request()->query('email') }}"
                             placeholder="Enter Email..." />
@@ -64,7 +64,7 @@
                     <!--end::Col-->
 
                     <!--begin::Col-->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="fs-6 form-label fw-bold text-dark">Phone</label>
                         <input type="tel" class="form-control" name="phone" value="{{ request()->query('phone') }}"
                             placeholder="Enter Phone..." />
@@ -72,29 +72,13 @@
                     <!--end::Col-->
 
                     <!--begin::Col-->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="fs-6 form-label fw-bold text-dark">Role</label>
                         <select name="role" class="form-select" data-control="select2" data-placeholder="Select a Role">
                             <option value=""></option>
                             @foreach ($roles as $role)
                             <option value="{{ $role }}" {{ request()->query('role') == $role ? 'selected' : '' }}>
                                 {{ ucfirst($role) }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <!--end::Col-->
-
-                    <!--begin::Col-->
-                    <div class="col-md-6">
-                        <label class="fs-6 form-label fw-bold text-dark">Business</label>
-                        <select name="business_id" class="form-select" data-control="select2"
-                            data-placeholder="Select a Business">
-                            <option value=""></option>
-                            @foreach ($businesses as $business)
-                            <option value="{{ $business->id }}" {{ request()->query('business_id') == $business->id ?
-                                'selected' : '' }}>
-                                {{ $business->name }}
                             </option>
                             @endforeach
                         </select>
@@ -128,9 +112,8 @@
                         <tr class="text-center">
                             <th class="col-3 p-3">User</th>
                             <th class="col-3 p-3">Contact</th>
-                            <th class="col-2 p-3">Business</th>
-                            <th class="col-2 p-3">Role</th>
-                            <th class="col-2 p-3">Actions</th>
+                            <th class="col-3 p-3">Role</th>
+                            <th class="col-3 p-3">Actions</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
@@ -158,9 +141,6 @@
                                     {{ $user->email }} <br>
                                     {{ $user->phone }}
                                 </div>
-                            </td>
-                            <td class="text-center">
-                                {{ ucwords($user->business->name ?? 'No Business Yet...') }}
                             </td>
                             <td class="text-center">
                                 <span
@@ -196,8 +176,7 @@
                             <th colspan="6">
                                 {{ $users->appends(['name' => request()->query('name'), 'email' =>
                                 request()->query('email'), 'phone' => request()->query('phone'), 'role' =>
-                                request()->query('role'), 'business_id' =>
-                                request()->query('business_id')])->links() }}
+                                request()->query('role')])->links() }}
                             </th>
                         </tr>
                     </tfoot>

@@ -61,17 +61,46 @@ class HomeController extends Controller
 
     public function shop(Request $request)
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')
+            ->whereNull('parent_id')
+            ->with('subCategories')
+            ->get();
 
-        if ($request->input('category')) {
+        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price');
+
+        if ($request->filled('category')) {
             $category = Category::where('name', $request->input('category'))->firstOrFail();
-            $products = Product::select('id', 'name', 'category_id', 'image')->where('category_id', $category->id)->paginate(12);
-        } else {
-            $products = Product::select('id', 'name', 'category_id', 'image')->paginate(12);
+            $categoryIds = $this->getAllCategoryIds($category);
+            $productsQuery->whereIn('category_id', $categoryIds);
         }
 
-        $data = compact('categories', 'products');
-        return view('frontend.shop', $data);
+        if ($request->filled('price_min')) {
+            $productsQuery->where('price', '>=', $request->input('price_min'));
+        }
+        if ($request->filled('price_max')) {
+            $productsQuery->where('price', '<=', $request->input('price_max'));
+        }
+
+        switch ($request->input('sort_by')) {
+            case 'price_asc':
+                $productsQuery->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $productsQuery->orderBy('price', 'desc');
+                break;
+            case 'name_asc':
+                $productsQuery->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $productsQuery->orderBy('name', 'desc');
+                break;
+            default:
+                $productsQuery->latest();
+        }
+
+        $products = $productsQuery->paginate(12)->withQueryString();
+
+        return view('frontend.shop', compact('categories', 'products'));
     }
 
     public function product(Product $product)
@@ -224,5 +253,16 @@ class HomeController extends Controller
             $message->to('watania.library@gmail.com')
                 ->subject('New Order Notification');
         });
+    }
+
+    private function getAllCategoryIds($category)
+    {
+        $ids = [$category->id];
+
+        foreach ($category->subCategories as $child) {
+            $ids = array_merge($ids, $this->getAllCategoryIds($child));
+        }
+
+        return $ids;
     }
 }

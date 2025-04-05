@@ -21,24 +21,11 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="required form-label">Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Name..."
                                 value="{{ old('name') }}" required />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="required form-label">Role</label>
-                            <select class="form-select" data-control="select2" data-placeholder="Select an option"
-                                required name="role">
-                                <option value=""></option>
-                                @foreach ($roles as $role)
-                                <option value="{{ $role }}" {{ old('role')==$role ? 'selected' : '' }}>{{ ucwords($role)
-                                    }}</option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -63,19 +50,6 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required form-label">Business</label>
-                            <select name="business_id" class="form-select" data-control="select2" required
-                                data-placeholder="Select an option">
-                                <option value=""></option>
-                                @foreach ($businesses as $business)
-                                <option value="{{ $business->id }}" {{ old('business_id')==$business->id ? 'selected' :
-                                    '' }}>{{ ucwords($business->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
                             <label class="required form-label">Currency</label>
                             <select name="currency_id" class="form-select" data-control="select2" required
                                 data-placeholder="Select an option">
@@ -84,6 +58,19 @@
                                 <option value="{{ $currency->id }}" {{ auth()->user()->currency_id == $currency->id ?
                                     'selected' : '' }} {{ old('currency_id')==$currency->id ? 'selected' :
                                     '' }}>{{ ucwords($currency->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="required form-label">Role</label>
+                            <select class="form-select" data-control="select2" data-placeholder="Select an option"
+                                required name="role">
+                                <option value=""></option>
+                                @foreach ($roles as $role)
+                                <option value="{{ $role }}" {{ old('role')==$role ? 'selected' : '' }}>{{ ucwords($role)
+                                    }}</option>
                                 @endforeach
                             </select>
                         </div>

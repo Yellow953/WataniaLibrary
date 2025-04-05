@@ -16,20 +16,18 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select('id', 'image', 'name', 'email', 'role', 'phone', 'business_id')->filter()->orderBy('id', 'desc')->paginate(25);
+        $users = User::select('id', 'image', 'name', 'email', 'role', 'phone')->filter()->orderBy('id', 'desc')->paginate(25);
         $roles = Helper::get_roles();
-        $businesses = Business::select('id', 'name')->get();
 
-        return view('users.index', compact('users', 'roles', 'businesses'));
+        return view('users.index', compact('users', 'roles'));
     }
 
     public function new()
     {
-        $businesses = Business::select('id', 'name')->get();
         $currencies = Currency::select('id', 'name')->get();
         $roles = Helper::get_roles();
 
-        $data = compact('businesses', 'currencies', 'roles');
+        $data = compact('currencies', 'roles');
         return view('users.new', $data);
     }
 
@@ -40,7 +38,6 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required',
             'role' => 'required',
-            'business_id' => 'required',
             'currency_id' => 'required',
             'password' => 'required|max:255|confirmed',
         ]);
@@ -50,7 +47,7 @@ class UserController extends Controller
             'email' => trim($request->email),
             'phone' => $request->phone,
             'image' => 'assets/images/default_profile.png',
-            'business_id' => $request->business_id,
+            'business_id' => 1,
             'currency_id' => $request->currency_id,
             'role' => $request->role,
             'password' => Hash::make($request->password),
@@ -66,11 +63,10 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $businesses = Business::select('id', 'name')->get();
         $currencies = Currency::select('id', 'name')->get();
         $roles = Helper::get_roles();
 
-        $data = compact('user', 'businesses', 'currencies', 'roles');
+        $data = compact('user', 'currencies', 'roles');
         return view('users.edit', $data);
     }
 
@@ -81,7 +77,6 @@ class UserController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required',
             'role' => 'required',
-            'business_id' => 'required',
             'currency_id' => 'required',
         ]);
 
@@ -89,7 +84,6 @@ class UserController extends Controller
             'name' => trim($request->name),
             'email' => trim($request->email),
             'phone' => $request->phone,
-            'business_id' => $request->business_id,
             'currency_id' => $request->currency_id,
             'role' => $request->role,
         ]);

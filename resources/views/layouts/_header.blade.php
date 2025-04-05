@@ -1,6 +1,5 @@
 @php
 $user = auth()->user();
-$business = $user->business;
 $currencies = Helper::get_currencies();
 @endphp
 
@@ -352,14 +351,6 @@ $currencies = Helper::get_currencies();
                             <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
                         </div>
                         <!--end::Menu item-->
-
-                        @if($user->role == 'admin')
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="{{ route('business') }}" class="menu-link px-5">My Business</a>
-                        </div>
-                        <!--end::Menu item-->
-                        @endif
 
                         <!--begin::Menu separator-->
                         <div class="separator my-2"></div>

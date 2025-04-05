@@ -83,17 +83,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [ProfileController::class, 'show'])->name('profile');
         });
 
-        // My Business Routes
-        Route::prefix('business')->group(function () {
-            Route::post('/operating_hours/update', [ProfileController::class, 'business_operating_hours_update'])->name('business.operating_hours.update');
-            Route::post('/banner/upload', [ProfileController::class, 'business_banner_upload'])->name('business.banner_upload');
-            Route::post('/update', [ProfileController::class, 'business_update'])->name('business.update');
-            Route::get('/menu/toggle', [ProfileController::class, 'toggle_menu'])->name('business.menu.toggle');
-            Route::get('/orders/toggle', [ProfileController::class, 'toggle_orders'])->name('business.orders.toggle');
-            Route::get('/delivery/toggle', [ProfileController::class, 'toggle_delivery'])->name('business.delivery.toggle');
-            Route::get('/', [ProfileController::class, 'business'])->name('business');
-        });
-
         // Logs
         Route::prefix('logs')->group(function () {
             Route::get('/export', [LogController::class, 'export'])->name('logs.export');
