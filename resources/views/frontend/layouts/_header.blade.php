@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="align-items-center tab-display">
-                <ul class="navbar-nav text-wrap d-flex flex-row">
+                <ul class="navbar-nav text-wrap d-flex flex-row ">
                     <li class="nav-item"><a href="{{ route('home') }}"
                             class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
                     </li>
@@ -47,12 +47,34 @@
     </div>
 </div>
 <nav class="navbar navbar-expand-lg fixed-top bg-nav-sticky megamenu">
-    <button class="navbar-toggler border-0 ms-2 tab-end" type="button" data-bs-toggle="collapse"
+    <div class="nav-item m-display">
+        <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasCart" role="button"
+            aria-controls="offcanvasCart">
+            <i class="fa-solid fa-cart-shopping ms-2"></i>
+        </a>
+    </div>
+    <div class="navbar-nav ms-auto me-auto m-display">
+        <input type="text" class="form-control input px-4" name="q" id="searchInput" placeholder="Type To Search"
+            autocomplete="off">
+    </div>
+
+    <button class="navbar-toggler border-0 me-2 tab-end" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-center shadow border-bottom py-3" id="navbarNav">
         <ul class="navbar-nav">
+            <div class="d-flex flex-column d-md-none">
+                <li class="nav-item text-center"><a href="{{ route('home') }}"
+                        class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
+                </li>
+                <li class="nav-item text-center"><a href="{{ route('about') }}"
+                        class="text-decoration-none nav-link zoom-in-on-hover-sm">About</a>
+                </li>
+                <li class="nav-item text-center"><a href="{{ route('contact') }}"
+                        class="text-decoration-none nav-link zoom-in-on-hover-sm">Contact</a>
+                </li>
+            </div>
             <li class="nav-item text-center"><a href="{{ route('shop') }}"
                     class="text-decoration-none nav-link zoom-in-on-hover-sm">All
                     Products</a>
@@ -105,15 +127,5 @@
                 </li>
             @endforeach
         </ul>
-    </div>
-    <div class="navbar-nav ms-auto me-auto m-display">
-        <input type="text" class="form-control input px-4" name="q" id="searchInput" placeholder="Type To Search"
-            autocomplete="off">
-    </div>
-    <div class="nav-item m-display">
-        <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasCart" role="button"
-            aria-controls="offcanvasCart">
-            <i class="fa-solid fa-cart-shopping"></i>
-        </a>
     </div>
 </nav>

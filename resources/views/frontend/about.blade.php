@@ -7,13 +7,14 @@
         <div class="row pt-4 pb-5">
             <div class="col-12 text-center">
                 <h1 class="text-primary">About Us</h1>
-                <h5>Welcome to Wataniya Library your one-stop destination for books, stationery, educational toys, and
+                <h5 class="lh-lg">Welcome to Wataniya Library your one-stop destination for books, stationery, educational
+                    toys, and
                     photocopying services since 1993.
                 </h5>
             </div>
         </div>
         <div class="row pb-5">
-            <div class="col-6 d-flex align-items-center">
+            <div class="col-12 pb-3 pb-md-0 col-md-6 d-flex align-items-center">
                 <h5 class="text-center lh-lg">For over three decades, we've been proud to serve our community by providing a
                     wide
                     selection of new and
@@ -23,7 +24,7 @@
                     creativity, and growth.
                 </h5>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <img src="{{ asset('frontend/images/about-1.jpg') }}" alt="" class="img-fluid rounded-4 shadow">
             </div>
         </div>
@@ -31,10 +32,7 @@
             <div class="col-12 text-center">
                 <h1 class="text-primary">Our services and offerings include</h1>
             </div>
-            <div class="col-6 d-flex align-items-center">
-                <img src="{{ asset('frontend/images/about-2.jpg') }}" alt="" class="img-fluid rounded-4 shadow">
-            </div>
-            <div class="col-6 d-flex flex-column justify-content-center pt-3">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center pt-3 text-center text-md-start">
                 <h3 class="pb-2 text-primary">Books</h3>
                 <h5 class="pb-3">Explore our diverse collection of school books (both new and used), from
                     textbooks
@@ -55,10 +53,14 @@
                     to your personal or professional needs.
                 </h5>
             </div>
+            <div class="col-12 col-md-6 d-none d-md-flex align-items-center">
+                <img src="{{ asset('frontend/images/about-2.jpg') }}" alt="" class="img-fluid rounded-4 shadow">
+            </div>
         </div>
         <div class="row pb-5">
             <div class="col-12 align-items-center d-flex justify-content-center">
-                <img src="{{ asset('frontend/images/about-3.jpg') }}" alt="" class="img-fluid w-50 mb-5 rounded-4 shadow">
+                <img src="{{ asset('frontend/images/about-3.jpg') }}" alt=""
+                    class="img-fluid w-100 w-md-50 mb-5 rounded-4 shadow">
             </div>
             <div class="col-12 text-center">
                 <h5>At Wataniya Library, we are committed to supporting education, creativity, and lifelong learning. We
@@ -68,7 +70,6 @@
                     Thank you for choosing Wataniya Library —where books, learning, and creativity come together. We look
                     forward to serving you!
                 </h5>
-
             </div>
         </div>
     </div>
