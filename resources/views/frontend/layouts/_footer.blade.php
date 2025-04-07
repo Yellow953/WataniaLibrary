@@ -1,6 +1,6 @@
 <footer>
     <div class="container row pt-5 bg-white">
-        <div class="col-md-4">
+        <div class="col-6 col-md-4">
             <h5 class="text-primary text-center pb-1">Quick Links</h5>
             <ul class="text-black navbar-nav text-center">
                 <li class="nav-item">
@@ -17,8 +17,8 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-4">
-            <h5 class="text-primary text-center pb-1">Policies</h5>
+        <div class="col-6 col-md-4">
+            <h5 class="text-primary text-center pb-1 pt-3 pt-md-0">Policies</h5>
             <ul class="text-black navbar-nav text-center">
                 <li class="nav-item">
                     <a href="{{ route('privacy_policy') }}" class="text-decoration-none text-black">Privacy Policy</a>
@@ -33,7 +33,9 @@
             </ul>
         </div>
         <div class="col-md-4">
-            <h5 class="text-primary text-start pb-1">Stay updated with the latest releases and offers</h5>
+            <h5 class="text-primary text-center text-md-start pb-1 pt-3 pt-md-0">Stay updated with the latest releases
+                and offers
+            </h5>
             <input type="text" class="form-control input pe-5 text-start zoom-in-on-hover-sm" name="q" id="searchInput"
                 placeholder="Enter Your Email" autocomplete="off">
         </div>

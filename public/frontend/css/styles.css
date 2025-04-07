@@ -183,9 +183,20 @@ body {
 .nav-link {
     color: black !important;
     font-size: 1rem;
-    padding: 5px 15px !important;
+    padding: 5px 10px !important;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
+}
+
+.navbar-brand,
+.nav-link a {
+    color: black !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover a {
+    color: var(--primary-color) !important;
+    transition: all 0.3s ease-in-out;
 }
 
 .nav-link:hover {
@@ -312,9 +323,47 @@ a.active {
         transition: all 0.2s ease-in-out;
     }
 
+    .logo {
+        height: 50px;
+    }
+
+    .megamenu .nav,
+    .megamenu .collapse,
+    .megamenu .dropup,
+    .megamenu .dropdown {
+        position: relative;
+    }
+
+    .megamenu .container {
+        position: relative;
+    }
+
+    .megamenu .dropdown-menu {
+        left: auto;
+    }
+
+    .megamenu .megamenu-content {
+        padding: 15px;
+    }
+
+    .megamenu .megamenu-content h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 18px;
+    }
+
+    .megamenu .dropdown.megamenu-fw .dropdown-menu {
+        left: 0%;
+        transform: translateX(-0%);
+    }
+
     .m-display {
         display: flex;
         flex-direction: row;
+    }
+
+    .tab-display {
+        display: none;
     }
 
     .desktop-display {
@@ -337,13 +386,17 @@ a.active {
         font-size: 1rem;
     }
 
+    .home-card {
+        height: 200px !important;
+    }
+
+    .secondary-img {
+        height: 200px !important;
+    }
+
     .btn {
         font-size: 0.7rem !important;
         padding: 5px 10px !important;
-    }
-
-    .tab-display {
-        display: none;
     }
 
     .h-50vh {
@@ -371,6 +424,15 @@ a.active {
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+    .tab-hide {
+        display: none
+    }
+
+    .tab-end {
+        display: flex;
+        flex-direction: row;
+    }
+
     .img-footer {
         height: 100% !important;
         object-fit: contain;
@@ -399,13 +461,13 @@ a.active {
         transition: all 0.2s ease-in-out;
     }
 
+    .m-display {
+        display: none;
+    }
+
     .tab-display {
         display: flex;
         flex-direction: row;
-    }
-
-    .m-display {
-        display: none;
     }
 
     .desktop-display {
