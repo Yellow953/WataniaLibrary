@@ -9,7 +9,7 @@
                 <h1 class="text-primary mb-3 fw-bold text-shadow">Contact Us</h1>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-2 mt-md-5">
             <div class="col-md-6 pb-5 pb-md-0">
                 <div class="card rounded p-5 text-center bg-secondary-lighter">
                     <h2 class="mb-4 animate-on-scroll slide-left text-white fw-bold text-shadow">Contact Info

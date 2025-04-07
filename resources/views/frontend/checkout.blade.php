@@ -112,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 mt-2">
+                        <div class="col-md-5 mt-5 mt-md-2">
                             <div class="card p-4 glass-bg rounded-4 border-0 shadow">
                                 <h4 class="text-black text-shadow-sm text-center mb-4">Order Summary</h4>
                                 <div class="summary-card" id="cart-items-container">
@@ -173,13 +173,13 @@
                 cartItem.classList.add('cart-item', 'd-flex', 'align-items-center', 'mb-3');
 
                 cartItem.innerHTML = `
-                                                                        <img src="${item.image}" alt="${item.name}" class="me-3" style="width: 60px; height: 60px; object-fit: cover;">
-                                                                            <div>
-                                                                                <p class="mb-0">${item.name}</p>
-                                                                                <small>{{ __('landing.quantity') }}: ${item.quantity}</small>
-                                                                            </div>
-                                                                            <p class="ms-auto">$${(item.price * item.quantity).toFixed(2)}</p>
-                                                                        `;
+                                                                            <img src="${item.image}" alt="${item.name}" class="me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                                                <div>
+                                                                                    <p class="mb-0">${item.name}</p>
+                                                                                    <small>{{ __('landing.quantity') }}: ${item.quantity}</small>
+                                                                                </div>
+                                                                                <p class="ms-auto">$${(item.price * item.quantity).toFixed(2)}</p>
+                                                                            `;
                 cartItemsContainer.appendChild(cartItem);
             });
 
@@ -209,8 +209,8 @@
             const whishInfoSection = document.createElement('div');
 
             whishInfoSection.innerHTML = `
-                                                                        <h5>Whish Transfer</h5>
-                                                                        <p>Transfer To: <strong>+961 70 231 446</strong></p>`;
+                                                                            <h5>Whish Transfer</h5>
+                                                                            <p>Transfer To: <strong>+961 70 231 446</strong></p>`;
             whishInfoSection.classList.add('whish_section');
             whishInfoSection.style.display = 'none';
 
@@ -218,8 +218,8 @@
             paymentMethodContainer.appendChild(whishInfoSection);
 
             paymentMethodSelect.innerHTML = `
-                                                                        <option value="cash on delivery">Cash On Delivery</option>
-                                                                        <option value="whish">Whish</option>`
+                                                                            <option value="cash on delivery">Cash On Delivery</option>
+                                                                            <option value="whish">Whish</option>`
                 ;
 
             paymentMethodSelect.addEventListener('change', function () {
