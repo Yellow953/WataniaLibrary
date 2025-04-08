@@ -3,149 +3,149 @@
 @section('title', 'Checkout')
 
 @section('content')
-    <section class="pb-5">
-        <div class="container">
-            <div class="checkout-container">
-                @include('layouts._flash')
+<section class="pb-5">
+    <div class="container">
+        <div class="checkout-container">
+            @include('layouts._flash')
 
-                <form class="form" action="{{ route('checkout.order') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+            <form class="form" action="{{ route('checkout.order') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-                    <input type="hidden" name="cart" id="cart-data" value="">
-                    <input type="hidden" name="shipping" id="shipping-cost" value="">
+                <input type="hidden" name="cart" id="cart-data" value="">
+                <input type="hidden" name="shipping" id="shipping-cost" value="">
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2 class="text-primary text-center mb-4">Checkout</h2>
-                        </div>
-                        <div class="col-md-7 mt-2">
-                            <div class="card p-4 glass-bg rounded-4 border-0 shadow">
-                                <div class="mb-4">
-                                    <h4 class="text-black text-shadow-sm text-center mb-3">Shipping Address
-                                    </h4>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label for="name" class="form-label text-secondary">Name *
-                                                </label>
-                                                <input type="text" id="name" name="name" class="form-control"
-                                                    placeholder="John Doe" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="phone" class="form-label text-secondary">Phone *
-                                                </label>
-                                                <input type="tel" id="phone" name="phone" class="form-control"
-                                                    placeholder="+961 70 231 446" required>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="country" class="form-label text-secondary">Country *
-                                                </label>
-                                                <select name="country" id="country" class="form-select" required>
-                                                    @foreach ($countries as $country)
-                                                    <option value="{{ $country }}" {{ $country=="Lebanon" ? 'selected' : ''
-                                                        }}>{{
-                                                        $country }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label text-secondary">Email</label>
-                                                <input type="email" name="email" class="form-control"
-                                                    placeholder="you@example.com">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label for="city" class="form-label text-secondary">City *
-                                                </label>
-                                                <select name="city" id="city" class="form-select" required>
-                                                    @foreach ($cities as $city)
-                                                        <option value="{{ $city }}">{{ $city }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="zip" class="form-label text-secondary">Zip</label>
-                                                <input type="number" min="0" step="1" id="zip" name="zip"
-                                                    class="form-control" placeholder="1234">
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label for="address" class="form-label text-secondary">Address *
-                                                </label>
-                                                <textarea name="address" id="address" rows="3" class="form-control"
-                                                    placeholder="123 Main St" required></textarea>
-                                            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-primary text-center mb-4">Checkout</h2>
+                    </div>
+                    <div class="col-md-7 mt-2">
+                        <div class="card p-4 glass-bg rounded-4 border-0 shadow">
+                            <div class="mb-4">
+                                <h4 class="text-black text-shadow-sm text-center mb-3">Shipping Address
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label text-secondary">Name *
+                                            </label>
+                                            <input type="text" id="name" name="name" class="form-control"
+                                                placeholder="John Doe" required>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <h4 class="text-black text-shadow-sm text-center mb-3">Payment Info</h4>
-
-                                    <div class="mb-3">
-                                        <label for="method" class="form-label text-secondary">Payment Method</label>
-                                        <select id="method" name="payment_method" class="form-select" required>
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label text-secondary">Phone *
+                                            </label>
+                                            <input type="tel" id="phone" name="phone" class="form-control"
+                                                placeholder="+961 70 231 446" required>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <h4 class="text-black text-shadow-sm text-center mb-3">Additional Info
-                                    </h4>
-
-                                    <div class="mb-3">
-                                        <label for="notes" class="form-label text-secondary">Notes (Optional)</label>
-                                        <textarea type="text" id="notes" name="notes" class="form-control" rows="3"
-                                            placeholder="Notes about your order..."></textarea>
+                                    {{-- <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="country" class="form-label text-secondary">Country *
+                                            </label>
+                                            <select name="country" id="country" class="form-select" required>
+                                                @foreach ($countries as $country)
+                                                <option value="{{ $country }}" {{ $country=="Lebanon" ? 'selected' : ''
+                                                    }}>{{
+                                                    $country }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label text-secondary">Email</label>
+                                            <input type="email" name="email" class="form-control"
+                                                placeholder="you@example.com">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="city" class="form-label text-secondary">City *
+                                            </label>
+                                            <select name="city" id="city" class="form-select" required>
+                                                @foreach ($cities as $city)
+                                                <option value="{{ $city }}">{{ $city }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="zip" class="form-label text-secondary">Zip</label>
+                                            <input type="number" min="0" step="1" id="zip" name="zip"
+                                                class="form-control" placeholder="1234">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label text-secondary">Address *
+                                            </label>
+                                            <textarea name="address" id="address" rows="3" class="form-control"
+                                                placeholder="123 Main St" required></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-5 mt-5 mt-md-2">
-                            <div class="card p-4 glass-bg rounded-4 border-0 shadow">
-                                <h4 class="text-black text-shadow-sm text-center mb-4">Order Summary</h4>
-                                <div class="summary-card" id="cart-items-container">
-                                    <!-- Cart Items will be populated here dynamically -->
-                                </div>
+                            <div class="mb-4">
+                                <h4 class="text-black text-shadow-sm text-center mb-3">Payment Info</h4>
 
-                                <div class="summary-item">
-                                    <span>Subtotal</span>
-                                    <span id="subtotal-price">$0.00</span>
+                                <div class="mb-3">
+                                    <label for="method" class="form-label text-secondary">Payment Method</label>
+                                    <select id="method" name="payment_method" class="form-select" required>
+                                    </select>
                                 </div>
-                                <div class="summary-item">
-                                    <span>Shipping</span>
-                                    <span id="shipping-price">$10.00</span>
-                                </div>
-                                <div class="summary-item total-price">
-                                    <span>Total</span>
-                                    <span id="total-price">$0.00</span>
-                                </div>
+                            </div>
 
-                                <button type="submit" class="btn btn-primary">Complete Order</button>
+                            <div class="mb-4">
+                                <h4 class="text-black text-shadow-sm text-center mb-3">Additional Info
+                                </h4>
+
+                                <div class="mb-3">
+                                    <label for="notes" class="form-label text-secondary">Notes (Optional)</label>
+                                    <textarea type="text" id="notes" name="notes" class="form-control" rows="3"
+                                        placeholder="Notes about your order..."></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+                    <div class="col-md-5 mt-5 mt-md-2">
+                        <div class="card p-4 glass-bg rounded-4 border-0 shadow">
+                            <h4 class="text-black text-shadow-sm text-center mb-4">Order Summary</h4>
+                            <div class="summary-card" id="cart-items-container">
+                                <!-- Cart Items will be populated here dynamically -->
+                            </div>
+
+                            <div class="summary-item">
+                                <span>Subtotal</span>
+                                <span id="subtotal-price">$0.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Shipping</span>
+                                <span id="shipping-price">$10.00</span>
+                            </div>
+                            <div class="summary-item total-price">
+                                <span>Total</span>
+                                <span id="total-price">$0.00</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Complete Order</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
             const shippingCosts = {
-                Beirut: 0,
-                Others: 3
+                Beirut: 3,
+                Others: 5
             };
 
             const cart = document.cookie
@@ -176,7 +176,7 @@
                                                                             <img src="${item.image}" alt="${item.name}" class="me-3" style="width: 60px; height: 60px; object-fit: cover;">
                                                                                 <div>
                                                                                     <p class="mb-0">${item.name}</p>
-                                                                                    <small>{{ __('landing.quantity') }}: ${item.quantity}</small>
+                                                                                    <small>Quantity: ${item.quantity}</small>
                                                                                 </div>
                                                                                 <p class="ms-auto">$${(item.price * item.quantity).toFixed(2)}</p>
                                                                             `;
@@ -184,11 +184,11 @@
             });
 
             function calculateShipping() {
-                if (subtotal >= 25) {
+                if (subtotal >= 50) {
                     return 0;
                 }
                 const selectedCity = citySelect.value;
-                return selectedCity === 'Beirut' ? 0 : 3;
+                return selectedCity === 'Beirut' ? 3 : 5;
             }
 
             function updatePrices() {
@@ -209,8 +209,9 @@
             const whishInfoSection = document.createElement('div');
 
             whishInfoSection.innerHTML = `
-                                                                            <h5>Whish Transfer</h5>
-                                                                            <p>Transfer To: <strong>+961 70 231 446</strong></p>`;
+                <h5>Whish Transfer</h5>
+                <p>Transfer To: <strong>+961 03 123 046</strong></p>`;
+
             whishInfoSection.classList.add('whish_section');
             whishInfoSection.style.display = 'none';
 
@@ -218,9 +219,8 @@
             paymentMethodContainer.appendChild(whishInfoSection);
 
             paymentMethodSelect.innerHTML = `
-                                                                            <option value="cash on delivery">Cash On Delivery</option>
-                                                                            <option value="whish">Whish</option>`
-                ;
+            <option value="cash on delivery">Cash On Delivery</option>
+            <option value="whish">Whish</option>`;
 
             paymentMethodSelect.addEventListener('change', function () {
                 if (paymentMethodSelect.value === 'whish') {
@@ -230,5 +230,5 @@
                 }
             });
         });
-    </script>
+</script>
 @endsection
