@@ -203,7 +203,7 @@
 
             saveCart(cart);
 
-            window.location.href = "{{ route('checkout') }}";
+            window.location.href = "{{ route('shop.checkout') }}";
         });
     });
 
