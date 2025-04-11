@@ -12,7 +12,7 @@ class OrdersExport implements FromCollection, WithHeadings
     {
         return  Order::all()->map(function ($order) {
             return [
-                'cashier' => $order->cashier->name,
+                'user' => $order->cashier->name ?? $order->client->name,
                 'order_number' => $order->order_number,
                 'sub_total' => $order->sub_total,
                 'tax' => $order->tax,
@@ -28,7 +28,7 @@ class OrdersExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Cashier',
+            'User',
             'Order Number',
             'Sub Total',
             'Tax',

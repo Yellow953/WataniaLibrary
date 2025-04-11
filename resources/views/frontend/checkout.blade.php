@@ -29,7 +29,7 @@
                                             <label for="name" class="form-label text-secondary">Name *
                                             </label>
                                             <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="John Doe" required>
+                                                placeholder="John Doe" value="{{ old('name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -37,7 +37,7 @@
                                             <label for="phone" class="form-label text-secondary">Phone *
                                             </label>
                                             <input type="tel" id="phone" name="phone" class="form-control"
-                                                placeholder="+961 70 231 446" required>
+                                                placeholder="+961 70 231 446" value="{{ old('phone') }}" required>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-6">
@@ -57,7 +57,7 @@
                                         <div class="mb-3">
                                             <label for="email" class="form-label text-secondary">Email</label>
                                             <input type="email" name="email" class="form-control"
-                                                placeholder="you@example.com">
+                                                value="{{ old('email') }}" placeholder="you@example.com">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -66,7 +66,8 @@
                                             </label>
                                             <select name="city" id="city" class="form-select" required>
                                                 @foreach ($cities as $city)
-                                                <option value="{{ $city }}">{{ $city }}</option>
+                                                <option value="{{ $city }}" {{ old('city')==$city ? 'selected' : '' }}>
+                                                    {{ $city }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -83,7 +84,7 @@
                                             <label for="address" class="form-label text-secondary">Address *
                                             </label>
                                             <textarea name="address" id="address" rows="3" class="form-control"
-                                                placeholder="123 Main St" required></textarea>
+                                                placeholder="123 Main St" required>{{ old('address') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -104,9 +105,9 @@
                                 </h4>
 
                                 <div class="mb-3">
-                                    <label for="notes" class="form-label text-secondary">Notes (Optional)</label>
-                                    <textarea type="text" id="notes" name="notes" class="form-control" rows="3"
-                                        placeholder="Notes about your order..."></textarea>
+                                    <label for="note" class="form-label text-secondary">Note (Optional)</label>
+                                    <textarea type="text" id="note" name="note" class="form-control" rows="3"
+                                        placeholder="Note about your order...">{{ old('note') }}</textarea>
                                 </div>
                             </div>
                         </div>

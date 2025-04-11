@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BankNote;
 use App\Models\Business;
 use App\Models\Category;
+use App\Models\Client;
 use App\Models\Currency;
 use App\Models\Log;
 use App\Models\Order;
@@ -25,9 +26,10 @@ class AppController extends Controller
         $categories = Category::select('id', 'name', 'image')->with('products')->get();
         $currencies = Currency::select('id', 'code')->get();
         $bank_notes = BankNote::where('currency_code', auth()->user()->currency->code)->get();
+        $clients = Client::select('id', 'name')->get();
         $last_order = Order::get()->last();
 
-        $data = compact('categories', 'currency', 'currencies', 'bank_notes', 'last_order', 'business');
+        $data = compact('categories', 'currency', 'currencies', 'bank_notes', 'last_order', 'business', 'clients');
         return view('index', $data);
     }
 
@@ -40,6 +42,7 @@ class AppController extends Controller
 
             $order = Order::create([
                 'cashier_id' => auth()->user()->id,
+                'client_id' => $request->client_id,
                 'currency_id' => auth()->user()->currency_id,
                 'order_number' => Order::generate_number(),
                 'sub_total' => $request->total,
@@ -109,6 +112,7 @@ class AppController extends Controller
 
             $order = Order::create([
                 'cashier_id' => auth()->user()->id,
+                'client_id' => $request->client_id,
                 'currency_id' => auth()->user()->currency_id,
                 'order_number' => Order::generate_number(),
                 'sub_total' => $request->total - $tax + $discount,
@@ -118,6 +122,7 @@ class AppController extends Controller
                 'products_count' => count($request->orderItems),
                 'note' => $request->note,
             ]);
+
             $text .= 'User ' . ucwords(auth()->user()->name) . ' created Order NO: ' . $order->order_number . " of Sub Total: {$request->total}, tax: {$tax}, discount: {$discount}, Total: {$request->grand_total}";
 
             foreach ($request->orderItems as $item) {

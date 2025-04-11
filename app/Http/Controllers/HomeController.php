@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Category;
+use App\Models\Client;
+use App\Models\Currency;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -69,7 +70,7 @@ class HomeController extends Controller
         $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price');
 
         if ($request->filled('category')) {
-            $category = Category::where('name', $request->input('category'))->firstOrFail();
+            $category = Category::where('name', urldecode($request->input('category')))->firstOrFail();
             $categoryIds = $this->getAllCategoryIds($category);
             $productsQuery->whereIn('category_id', $categoryIds);
         }
@@ -127,14 +128,13 @@ class HomeController extends Controller
         $request->validate([
             'email' => 'nullable|email',
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:30|unique:users,phone',
+            'phone' => 'required|string|max:30',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:100',
-            'country' => 'required|string|max:100',
             'zip' => 'nullable|numeric|min:0',
             'payment_method' => 'required|string',
-            'notes' => 'nullable|string',
-            'shipping' => 'required|numeric|min:1',
+            'note' => 'nullable|string',
+            'shipping' => 'required|numeric|min:0',
         ]);
 
         $cart = json_decode($request->cart, true);
@@ -153,28 +153,28 @@ class HomeController extends Controller
 
         DB::beginTransaction();
         try {
-            $user = User::firstOrCreate(
+            $client = Client::firstOrCreate(
                 ['phone' => $request->phone],
                 [
                     'name' => $request->name,
                     'email' => $request->email,
-                    'address' => $request->address,
                     'city' => $request->city,
                     'country' => $request->country,
-                    'zip' => $request->zip,
-                    'password' => bcrypt('password'),
+                    'address' => $request->address,
                 ]
             );
 
+            $currency = Currency::where('code', 'USD')->firstOrFail();
+
             $order = Order::create([
-                'client_id' => $user->id,
-                'order_number' => 'ORD-' . strtoupper(uniqid()),
+                'client_id' => $client->id,
+                'currency_id' => $currency->id,
+                'order_number' => Order::generate_number(),
                 'payment_method' => $request->payment_method,
                 'sub_total' => $subTotal,
                 'total' => $total,
                 'products_count' => $productsCount,
-                'notes' => $request->notes,
-                'status' => 'new',
+                'note' => $request->note,
             ]);
 
             // Create order items
@@ -191,7 +191,7 @@ class HomeController extends Controller
 
             DB::commit();
 
-            $this->sendOrderEmails($order, $user);
+            $this->sendOrderEmails($order, $client);
 
             setcookie('cart', '', time() - 3600, '/');
 
@@ -240,11 +240,11 @@ class HomeController extends Controller
         return view('frontend.policies.terms_conditions', compact('categories'));
     }
 
-    private function sendOrderEmails(Order $order, User $user)
+    private function sendOrderEmails(Order $order, Client $client)
     {
-        if ($user->email) {
-            Mail::send('emails.order-confirmation', ['order' => $order, 'user' => $user], function ($message) use ($user) {
-                $message->to($user->email)
+        if ($client->email) {
+            Mail::send('emails.order-confirmation', ['order' => $order, 'client' => $client], function ($message) use ($client) {
+                $message->to($client->email)
                     ->subject('Order Confirmation');
             });
         }
