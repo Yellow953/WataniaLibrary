@@ -234,6 +234,19 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
+                    <a class="menu-link {{ request()->routeIs('promos*') ? 'active' : '' }}"
+                        href="{{ route('promos') }}">
+                        <span class="menu-icon">
+                            <i class="bi bi-percent"></i>
+                        </span>
+                        <span class="menu-title">Promos</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('logs*') ? 'active' : '' }}" href="{{ route('logs') }}">
                         <span class="menu-icon">
                             <i class="bi bi-file-text-fill"></i>

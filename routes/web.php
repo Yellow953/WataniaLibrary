@@ -15,6 +15,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ReportController;
@@ -201,6 +202,17 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/{currency}/update', [CurrencyController::class, 'update'])->name('currencies.update');
             Route::get('/{currency}/delete', [CurrencyController::class, 'destroy'])->name('currencies.destroy');
             Route::get('/', [CurrencyController::class, 'index'])->name('currencies');
+        });
+
+        // Promos Routes
+        Route::prefix('promos')->group(function () {
+            Route::get('/export', [PromoController::class, 'export'])->name('promos.export');
+            Route::get('/new', [PromoController::class, 'new'])->name('promos.new');
+            Route::post('/create', [PromoController::class, 'create'])->name('promos.create');
+            Route::get('/{promo}/edit', [PromoController::class, 'edit'])->name('promos.edit');
+            Route::post('/{promo}/update', [PromoController::class, 'update'])->name('promos.update');
+            Route::get('/{promo}/delete', [PromoController::class, 'destroy'])->name('promos.destroy');
+            Route::get('/', [PromoController::class, 'index'])->name('promos');
         });
 
         // Analytics
