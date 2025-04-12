@@ -27,7 +27,7 @@ class AppController extends Controller
         $currencies = Currency::select('id', 'code')->get();
         $bank_notes = BankNote::where('currency_code', auth()->user()->currency->code)->get();
         $clients = Client::select('id', 'name')->get();
-        $last_order = Order::get()->last();
+        $last_order = Order::whereNotNull('cashier_id')->orderBy('created_at', 'DESC')->first();
 
         $data = compact('categories', 'currency', 'currencies', 'bank_notes', 'last_order', 'business', 'clients');
         return view('index', $data);

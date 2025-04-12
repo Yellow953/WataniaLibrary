@@ -13,7 +13,7 @@
                         data.logs.forEach(log => {
                             const timelineItem = document.createElement('div');
                             timelineItem.classList.add('timeline-item');
-                            
+
                             timelineItem.innerHTML = `
                                 <div class="timeline-line w-40px"></div>
                                 <div class="timeline-icon symbol symbol-circle symbol-40px">
@@ -65,7 +65,7 @@
                         data.notifications.forEach(notification => {
                             const timelineItem = document.createElement('div');
                             timelineItem.classList.add('timeline-item');
-                            
+
                             timelineItem.innerHTML = `
                                 <div class="timeline-line w-40px"></div>
                                 <div class="timeline-icon symbol symbol-circle symbol-40px">
@@ -105,13 +105,13 @@
     // start typeahead
     $(document).ready(function(){
         var routes = <?php echo json_encode(Helper::get_route_names()); ?>;
-        
+
         var routes = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             local: routes
         });
-        
+
         $('#routes-search').typeahead({
             hint: true,
             highlight: true,
@@ -129,7 +129,7 @@
     });
     // end typeahead
 
-// start todo 
+// start todo
 document.addEventListener('DOMContentLoaded', function() {
     const drawerToggle = document.getElementById('kt_todos_toggle');
     const todoContainer = document.getElementById('todo_container');
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.status == 'completed') {
                 li.classList.add('checked');
             }
-            
+
             todoContainer.insertBefore(li, todoContainer.firstChild);
 
             inputBox.value = '';
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function removeTask(id, listItem) {
-        const url = `{{ route('todos.destroy', '') }}/${id}`;
+        const url = `{{ url('/app/todos/delete', '') }}/${id}`;
         fetch(url, {
             method: "GET",
             headers: {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toggleComplete(id, listItem) {
-        const url = `{{ route('todos.complete', '') }}/${id}`;
+        const url = `{{ url('/app/todos/complete', '') }}/${id}`;
         fetch(url, {
             method: "GET",
             headers: {
