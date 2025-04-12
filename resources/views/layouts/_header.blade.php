@@ -1,6 +1,8 @@
 @php
 $user = auth()->user();
+$business = Helper::get_business();
 $currencies = Helper::get_currencies();
+$taxes = Helper::get_taxes();
 @endphp
 
 <!--begin::Header-->
@@ -379,6 +381,37 @@ $currencies = Helper::get_currencies();
                             <!--end::Menu sub-->
                         </div>
                         <!--end::Menu item-->
+
+                        @if ($user->role == 'admin')
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                            data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
+                            <a href="#" class="menu-link px-5">
+                                <span class="menu-title position-relative">Tax
+                                    <span
+                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{
+                                        $business->tax->name }}</span></span>
+                            </a>
+                            <!--begin::Menu sub-->
+                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                @foreach ($taxes as $tax)
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="{{ route('taxes.switch', $tax->id) }}" class="menu-link d-flex px-5">
+                                        {{ $tax->name }}</a>
+                                </div>
+                                <!--end::Menu item-->
+                                @endforeach
+                            </div>
+                            <!--end::Menu sub-->
+                        </div>
+                        <!--end::Menu item-->
+                        @endif
+
+                        <!--begin::Menu separator-->
+                        <div class="separator my-2"></div>
+                        <!--end::Menu separator-->
+
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href="{{ route('custom_logout') }}" class="menu-link px-5">Sign Out</a>

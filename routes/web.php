@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('app')->group(function () {
         // Switch Currency
         Route::get('/currencies/switch/{currency}', [CurrencyController::class, 'switch'])->name('currencies.switch');
+        // Switch Tax
+        Route::get('/taxes/switch/{tax}', [TaxController::class, 'switch'])->name('taxes.switch');
 
         Route::get('/products/barcode/{barcode}', [ProductController::class, 'barcode'])->name('products.barcode');
 

@@ -2,14 +2,26 @@
 
 namespace App\Helpers;
 
+use App\Models\Business;
 use App\Models\SearchRoute;
 use App\Models\Currency;
+use App\Models\Tax;
 
 class Helper
 {
     public static function get_currencies()
     {
         return Currency::select('id', 'code')->get();
+    }
+
+    public static function get_taxes()
+    {
+        return Tax::select('id', 'name')->get();
+    }
+
+    public static function get_business()
+    {
+        return Business::first();
     }
 
     public static function get_roles()

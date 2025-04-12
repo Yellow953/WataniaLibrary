@@ -2,21 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helper;
-use App\Models\Business;
 use App\Models\Log;
-use App\Models\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin')->only(['business', 'business_update', 'business_operating_hours_update']);
-    }
-
     public function show()
     {
         $user = auth()->user();
