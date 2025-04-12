@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TaxesExport;
+use App\Models\Business;
 use App\Models\Log;
 use App\Models\Tax;
 use Carbon\Carbon;
@@ -11,6 +12,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TaxController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $taxes = Tax::select('id', 'name', 'rate')->filter()->paginate(25);
@@ -77,6 +83,23 @@ class TaxController extends Controller
         } else {
             return redirect()->back()->with('error', 'Unothorized Access...');
         }
+    }
+
+    public function switch(Tax $tax)
+    {
+        $business = Business::firstOrFail();
+
+        $business->update([
+            'tax_id' => $tax->id,
+        ]);
+
+        $text = ucwords(auth()->user()->name) . " switched system to Tax : " . $tax->name . ", datetime :   " . now();
+
+        Log::create([
+            'text' => $text,
+        ]);
+
+        return redirect()->back()->with('success', 'Tax switched to ' . $tax->name);
     }
 
     public function export()

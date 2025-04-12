@@ -150,6 +150,8 @@
                 orderItems = [];
                 updateOrderTable();
 
+                const select = document.getElementById('client_id');
+                $(select).val('').trigger('change');
                 document.getElementById('note').value = '';
             });
         }
@@ -345,6 +347,7 @@
                         changeDue: amountPaid - grandTotal,
                         note: document.getElementById('note').value,
                         cashier: '{{ ucwords(auth()->user()->name) }}',
+                        client_id: document.getElementById('client_id').value,
                         orderNumber: orderNumber
                     };
 
@@ -395,6 +398,8 @@
                                         orderItems = [];
                                         updateOrderTable();
                                         document.getElementById('note').value = '';
+                                        const select = document.getElementById('client_id');
+                                        $(select).val('').trigger('change');
                                         amountPaidInput.value = 0;
                                     }
                                 });
@@ -500,6 +505,8 @@
             orderItems = [];
             updateOrderTable();
             document.getElementById('note').value = '';
+            const select = document.getElementById('client_id');
+            $(select).val('').trigger('change');
             amountPaidInput.value = 0;
             changeDueElement.textContent = moneyFormat.format(0);
         }

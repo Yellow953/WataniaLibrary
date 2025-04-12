@@ -11,7 +11,7 @@ class BusinessSeeder extends Seeder
     {
         $business = [
             'name' => 'Watania Library',
-            'phone' => '+96170285659',
+            'phone' => '+96176925969',
             'address' => 'Lebanon, Beirut, Dora',
             'email' => 'yellow.tech.953@gmail.com',
             'tax_id' => 1,

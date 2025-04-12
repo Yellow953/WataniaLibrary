@@ -53,7 +53,7 @@
 
     <!-- WhatsApp Floating Button -->
     <div id="whatsapp">
-        <a href="https://api.whatsapp.com/send?phone=96170231446" target="_blank">
+        <a href="https://api.whatsapp.com/send?phone=96176925969" target="_blank">
             <img src="{{ asset('frontend/images/whatsapp.png') }}" alt="whatsapp logo" class="img-fluid">
         </a>
     </div>

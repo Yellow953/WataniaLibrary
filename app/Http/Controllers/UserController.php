@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Helpers\Helper;
-use App\Models\Business;
 use App\Models\Currency;
 use App\Models\Log;
 use App\Models\User;
@@ -14,6 +13,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $users = User::select('id', 'image', 'name', 'email', 'role', 'phone')->filter()->orderBy('id', 'desc')->paginate(25);
@@ -115,11 +119,6 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('error', 'Unothorized Access...');
         }
-    }
-
-    public function terms()
-    {
-        return view('users.terms');
     }
 
     public function export()

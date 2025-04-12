@@ -15,6 +15,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ReportController;
@@ -33,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('app')->group(function () {
         // Switch Currency
         Route::get('/currencies/switch/{currency}', [CurrencyController::class, 'switch'])->name('currencies.switch');
+        // Switch Tax
+        Route::get('/taxes/switch/{tax}', [TaxController::class, 'switch'])->name('taxes.switch');
 
         Route::get('/products/barcode/{barcode}', [ProductController::class, 'barcode'])->name('products.barcode');
 
@@ -203,6 +206,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [CurrencyController::class, 'index'])->name('currencies');
         });
 
+        // Promos Routes
+        Route::prefix('promos')->group(function () {
+            Route::get('/export', [PromoController::class, 'export'])->name('promos.export');
+            Route::get('/new', [PromoController::class, 'new'])->name('promos.new');
+            Route::post('/create', [PromoController::class, 'create'])->name('promos.create');
+            Route::get('/{promo}/edit', [PromoController::class, 'edit'])->name('promos.edit');
+            Route::post('/{promo}/update', [PromoController::class, 'update'])->name('promos.update');
+            Route::get('/{promo}/delete', [PromoController::class, 'destroy'])->name('promos.destroy');
+            Route::get('/', [PromoController::class, 'index'])->name('promos');
+        });
+
         // Analytics
         Route::prefix('analytics')->group(function () {
             Route::get('/pdf-report', [AnalyticsController::class, 'generatePdfReport'])->name('analytics.pdf');
@@ -238,6 +252,9 @@ Route::post('/checkout/order', [HomeController::class, 'order'])->name('checkout
 
 // Search
 Route::get('/search/products', [HomeController::class, 'search'])->name('products.search');
+
+// Check Promo
+Route::post('/check', [HomeController::class, 'check'])->name('promos.check');
 
 // Contact
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');

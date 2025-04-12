@@ -29,7 +29,7 @@
                                             <label for="name" class="form-label text-secondary">Name *
                                             </label>
                                             <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="John Doe" required>
+                                                placeholder="John Doe" value="{{ old('name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -37,7 +37,7 @@
                                             <label for="phone" class="form-label text-secondary">Phone *
                                             </label>
                                             <input type="tel" id="phone" name="phone" class="form-control"
-                                                placeholder="+961 70 231 446" required>
+                                                placeholder="+961 76 925 969" value="{{ old('phone') }}" required>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-6">
@@ -57,7 +57,7 @@
                                         <div class="mb-3">
                                             <label for="email" class="form-label text-secondary">Email</label>
                                             <input type="email" name="email" class="form-control"
-                                                placeholder="you@example.com">
+                                                value="{{ old('email') }}" placeholder="you@example.com">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -66,7 +66,8 @@
                                             </label>
                                             <select name="city" id="city" class="form-select" required>
                                                 @foreach ($cities as $city)
-                                                <option value="{{ $city }}">{{ $city }}</option>
+                                                <option value="{{ $city }}" {{ old('city')==$city ? 'selected' : '' }}>
+                                                    {{ $city }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -83,7 +84,7 @@
                                             <label for="address" class="form-label text-secondary">Address *
                                             </label>
                                             <textarea name="address" id="address" rows="3" class="form-control"
-                                                placeholder="123 Main St" required></textarea>
+                                                placeholder="123 Main St" required>{{ old('address') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -104,9 +105,9 @@
                                 </h4>
 
                                 <div class="mb-3">
-                                    <label for="notes" class="form-label text-secondary">Notes (Optional)</label>
-                                    <textarea type="text" id="notes" name="notes" class="form-control" rows="3"
-                                        placeholder="Notes about your order..."></textarea>
+                                    <label for="note" class="form-label text-secondary">Note (Optional)</label>
+                                    <textarea type="text" id="note" name="note" class="form-control" rows="3"
+                                        placeholder="Note about your order...">{{ old('note') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +128,19 @@
                                 <span>Shipping</span>
                                 <span id="shipping-price">$10.00</span>
                             </div>
+                            <li class="summary-item">
+                                <span>Discount</span>
+                                <span id="promoValue">$0.00</span>
+                            </li>
                             <div class="summary-item total-price">
                                 <span>Total</span>
                                 <span id="total-price">$0.00</span>
+                            </div>
+
+                            <div class="summary-item my-4">
+                                <input type="text" class="form-control my-auto me-2" placeholder="Promo Code ..."
+                                    name="promo" id="promo" value="">
+                                <a id="apply" class="btn btn-secondary my-auto ms-2">Redeem</a>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Complete Order</button>
@@ -143,10 +154,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-            const shippingCosts = {
-                Beirut: 3,
-                Others: 5
-            };
+        const shippingCosts = {
+            Beirut: 3,
+            Others: 5
+        };
 
             const cart = document.cookie
                 .split('; ')
@@ -202,9 +213,9 @@
 
             subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
             updatePrices();
-        });
+    });
 
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
             const paymentMethodSelect = document.getElementById('method');
             const whishInfoSection = document.createElement('div');
 
@@ -229,6 +240,43 @@
                     whishInfoSection.style.display = 'none';
                 }
             });
+    });
+
+    $(document).ready(function () {
+        document.getElementById('apply').addEventListener('click', function () {
+            const promoCode = $('#promo').val();
+
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("promos.check") }}',
+                data: { promo: promoCode, _token: '{{ csrf_token() }}' },
+                success: function (response) {
+                    if (response.exists) {
+                        let promoValue = response.value;
+                        const subtotal = parseFloat($('#total-price').text().replace(/\$/g, '').replace(/,/g, ''));
+                        const total = calculateNewTotal(subtotal, promoValue);
+
+                        $('#promo').hide();
+                        $('#apply').hide();
+                        $('.promo-value').show();
+                        promoValue *= 100;
+                        $('#promoValue').text(promoValue.toString() + "%");
+
+                        $('#total-price').text('$' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    } else {
+                        alert('Invalid promo code.');
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
         });
+
+        function calculateNewTotal(subtotal, promoValue) {
+            const newTotal = subtotal - (subtotal * promoValue);
+            return newTotal;
+        }
+    });
 </script>
 @endsection

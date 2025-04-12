@@ -80,51 +80,51 @@
                     Products</a>
             </li>
             @foreach ($categories as $category)
-                <li class="nav-item dropdown megamenu-fw text-center">
-                    <div class="nav-link zoom-in-on-hover-sm">
-                        <a class="text-decoration-none"
-                            href="{{ route('shop') }}?category={{  $category->name }}">{{ $category->name }}</a>
-                        <span class="dropdown-toggle caret" data-toggle="dropdown" role="button"
-                            aria-expanded="false"></span>
-                    </div>
-                    <ul class="dropdown-menu megamenu-content bg-white-blur" role="menu">
-                        <li>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <h3 class="title text-center text-md-start">{{ $category->name }}</h3>
-                                    <ul class="list-unstyled">
-                                        @foreach ($category->subcategories as $subcategory)
-                                            <li class="zoom-in-on-hover-sm"><a
-                                                    href="{{ route('shop') }}?category={{ $subcategory->name }}"
-                                                    class="text-decoration-none text-black">{{ $subcategory->name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div class="col-md-4">
-                                    <h3 class="title text-center text-md-start mt-3">Featured Products</h3>
-                                    <ul class="list-unstyled">
-                                        @foreach ($category->products->take(4) as $product)
-                                            <li class="zoom-in-on-hover-sm"><a href="{{ route('product', $product->name) }}"
-                                                    class="text-decoration-none text-black">{{ $product->name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div class="col-md-4">
-                                    <h3 class="title text-center text-md-start mt-3">Latest Products</h3>
-                                    <ul class="list-unstyled">
-                                        @foreach ($category->products->take(4) as $product)
-                                            <li class="zoom-in-on-hover-sm"><a href="{{ route('product', $product->name) }}"
-                                                    class="text-decoration-none text-black">{{ $product->name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+            <li class="nav-item dropdown megamenu-fw text-center">
+                <div class="nav-link zoom-in-on-hover-sm">
+                    <a class="text-decoration-none"
+                        href="{{ route('shop') }}?category={{ urlencode($category->name) }}">{{ $category->name }}</a>
+                    <span class="dropdown-toggle caret" data-toggle="dropdown" role="button"
+                        aria-expanded="false"></span>
+                </div>
+                <ul class="dropdown-menu megamenu-content bg-white-blur" role="menu">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="title text-center text-md-start">{{ $category->name }}</h3>
+                                <ul class="list-unstyled">
+                                    @foreach ($category->subcategories as $subcategory)
+                                    <li class="zoom-in-on-hover-sm"><a
+                                            href="{{ route('shop') }}?category={{ urlencode($subcategory->name) }}"
+                                            class="text-decoration-none text-black">{{ $subcategory->name }}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </li>
-                    </ul>
-                </li>
+                            <div class="col-md-4">
+                                <h3 class="title text-center text-md-start mt-3">Featured Products</h3>
+                                <ul class="list-unstyled">
+                                    @foreach ($category->products->take(4) as $product)
+                                    <li class="zoom-in-on-hover-sm"><a href="{{ route('product', $product->name) }}"
+                                            class="text-decoration-none text-black">{{ $product->name }}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h3 class="title text-center text-md-start mt-3">Latest Products</h3>
+                                <ul class="list-unstyled">
+                                    @foreach ($category->products->take(4) as $product)
+                                    <li class="zoom-in-on-hover-sm"><a href="{{ route('product', $product->name) }}"
+                                            class="text-decoration-none text-black">{{ $product->name }}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
             @endforeach
         </ul>
     </div>

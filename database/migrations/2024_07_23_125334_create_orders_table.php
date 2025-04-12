@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("cashier_id")->unsigned();
-            $table->bigInteger("client_id")->unsigned();
+            $table->bigInteger("cashier_id")->unsigned()->nullable();
+            $table->bigInteger("client_id")->unsigned()->nullable();
             $table->bigInteger("currency_id")->unsigned();
             $table->string('order_number');
             $table->double('sub_total')->unsigned()->default(0);

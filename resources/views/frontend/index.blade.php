@@ -283,7 +283,7 @@
             </div>
             <div class="desktop-display">
                 @foreach ($products->take(4) as $product)
-                    <div class="col-3 px-2">
+                    <div class="col-2 px-2">
                         <div class="card item-card product-card overflow-hidden zoom-in-on-hover-sm shadow">
                             <img src="{{ $product->image }}" class="img-fluid product-img">
                             <div class="card-body text-start">
@@ -293,7 +293,12 @@
                                         @if ($product->compare_price)
                                             <p class="text-muted"><s>${{ number_format($product->compare_price, 2) }}</s></p>
                                         @endif
+                                        <h6 class="text-secondary ms-2">${{ number_format($product->price, 2) }}</h6>
                                     </div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="{{ route('product', $product->name) }}" class="btn btn-tertiary mt-3">View
+                                        Product</a>
                                 </div>
                             </div>
                         </div>
