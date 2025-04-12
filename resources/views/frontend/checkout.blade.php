@@ -37,7 +37,7 @@
                                             <label for="phone" class="form-label text-secondary">Phone *
                                             </label>
                                             <input type="tel" id="phone" name="phone" class="form-control"
-                                                placeholder="+961 70 231 446" value="{{ old('phone') }}" required>
+                                                placeholder="+961 76 925 969" value="{{ old('phone') }}" required>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-6">

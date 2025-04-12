@@ -24,7 +24,8 @@
                 </div>
                 <div class="mb-4 animate-on-scroll slide-left">
                     <h5><i class="fa fa-phone text-tertiary"></i></h5>
-                    <p class="text-white">+961 03 123 046</p>
+                    <p class="text-white">+961 76 925 969</p>
+                    <p class="text-white">+961 01 244 527</p>
                 </div>
                 <div class="d-flex mt-3 justify-content-center">
                     <div class="social-icons animate-on-scroll slide-up text-center">

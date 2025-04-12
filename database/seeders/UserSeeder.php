@@ -24,8 +24,8 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($users as $user_row) {
-            $user = User::create($user_row);
+        foreach ($users as $user) {
+            User::create($user);
         }
     }
 }

@@ -156,7 +156,7 @@
                                             <div class="text-sm-end fw-semibold fs-4 mt-7">
                                                 <div class="text-dark">Watania Library</div>
                                                 <div>watania.library@gmail.com</div>
-                                                <div>+961 03 123 046</div>
+                                                <div>+961 76 925 969</div>
                                                 <div>Lebanon, Bourj Hammoud, Haret Sader</div>
                                             </div>
                                             <!--end::Text-->
