@@ -128,9 +128,19 @@
                                 <span>Shipping</span>
                                 <span id="shipping-price">$10.00</span>
                             </div>
+                            <li class="summary-item">
+                                <span>Discount</span>
+                                <span id="promoValue">$0.00</span>
+                            </li>
                             <div class="summary-item total-price">
                                 <span>Total</span>
                                 <span id="total-price">$0.00</span>
+                            </div>
+
+                            <div class="summary-item my-4">
+                                <input type="text" class="form-control my-auto me-2" placeholder="Promo Code ..."
+                                    name="promo" id="promo" value="">
+                                <a id="apply" class="btn btn-secondary my-auto ms-2">Redeem</a>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Complete Order</button>
@@ -144,10 +154,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-            const shippingCosts = {
-                Beirut: 3,
-                Others: 5
-            };
+        const shippingCosts = {
+            Beirut: 3,
+            Others: 5
+        };
 
             const cart = document.cookie
                 .split('; ')
@@ -203,9 +213,9 @@
 
             subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
             updatePrices();
-        });
+    });
 
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
             const paymentMethodSelect = document.getElementById('method');
             const whishInfoSection = document.createElement('div');
 
@@ -230,6 +240,43 @@
                     whishInfoSection.style.display = 'none';
                 }
             });
+    });
+
+    $(document).ready(function () {
+        document.getElementById('apply').addEventListener('click', function () {
+            const promoCode = $('#promo').val();
+
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("promos.check") }}',
+                data: { promo: promoCode, _token: '{{ csrf_token() }}' },
+                success: function (response) {
+                    if (response.exists) {
+                        let promoValue = response.value;
+                        const subtotal = parseFloat($('#total-price').text().replace(/\$/g, '').replace(/,/g, ''));
+                        const total = calculateNewTotal(subtotal, promoValue);
+
+                        $('#promo').hide();
+                        $('#apply').hide();
+                        $('.promo-value').show();
+                        promoValue *= 100;
+                        $('#promoValue').text(promoValue.toString() + "%");
+
+                        $('#total-price').text('$' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    } else {
+                        alert('Invalid promo code.');
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
         });
+
+        function calculateNewTotal(subtotal, promoValue) {
+            const newTotal = subtotal - (subtotal * promoValue);
+            return newTotal;
+        }
+    });
 </script>
 @endsection

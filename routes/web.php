@@ -253,6 +253,9 @@ Route::post('/checkout/order', [HomeController::class, 'order'])->name('checkout
 // Search
 Route::get('/search/products', [HomeController::class, 'search'])->name('products.search');
 
+// Check Promo
+Route::post('/check', [HomeController::class, 'check'])->name('promos.check');
+
 // Contact
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact/send', [HomeController::class, 'contact_send'])->name('contact.send');

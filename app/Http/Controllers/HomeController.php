@@ -9,6 +9,7 @@ use App\Models\Currency;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -150,6 +151,7 @@ class HomeController extends Controller
         }
         $shippingFee = $request->shipping;
         $total = $subTotal + $shippingFee;
+        $discount = 0;
 
         DB::beginTransaction();
         try {
@@ -166,18 +168,23 @@ class HomeController extends Controller
 
             $currency = Currency::where('code', 'USD')->firstOrFail();
 
+            if ($request->promo != null) {
+                $promo = Promo::where('code', $request->promo)->first();
+                $discount = $total * ($promo->value / 100);
+            }
+
             $order = Order::create([
                 'client_id' => $client->id,
                 'currency_id' => $currency->id,
                 'order_number' => Order::generate_number(),
                 'payment_method' => $request->payment_method,
                 'sub_total' => $subTotal,
-                'total' => $total,
+                'discount' => $discount,
+                'total' => $total - $discount,
                 'products_count' => $productsCount,
                 'note' => $request->note,
             ]);
 
-            // Create order items
             foreach ($cart as $item) {
                 $product = Product::findOrFail($item['id']);
                 OrderItem::create([
@@ -238,6 +245,17 @@ class HomeController extends Controller
     {
         $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
         return view('frontend.policies.terms_conditions', compact('categories'));
+    }
+
+    public function check(Request $request)
+    {
+        $promo = Promo::where('code', $request->promo)->first();
+
+        if ($promo) {
+            return response()->json(['exists' => true, 'value' => $promo->value / 100]);
+        } else {
+            return response()->json(['exists' => false]);
+        }
     }
 
     private function sendOrderEmails(Order $order, Client $client)
