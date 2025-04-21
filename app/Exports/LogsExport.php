@@ -8,23 +8,23 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class LogsExport implements FromCollection, WithHeadings
 {
-    public function collection()
+    protected $filters;
+
+    public function __construct($filters)
     {
-        return Log::all()->map(function ($log) {
-            return [
-                'log' => $log->text,
-                'created_at' => $log->created_at,
-            ];
-        });
+        $this->filters = $filters;
     }
 
+    public function collection()
+    {
+        return Log::select('text', 'created_at')->filter()->get();
+    }
 
     public function headings(): array
     {
         return [
             'Log',
             'Created At',
-
         ];
     }
 }

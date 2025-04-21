@@ -14,8 +14,10 @@ use App\Http\Controllers\TodoController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DebtController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ReportController;
@@ -193,6 +195,32 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/{supplier}/update', [SupplierController::class, 'update'])->name('suppliers.update');
             Route::get('/{supplier}/delete', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
             Route::get('/', [SupplierController::class, 'index'])->name('suppliers');
+        });
+
+        // Purchases Routes
+        Route::prefix('purchases')->group(function () {
+            Route::get('/export', [PurchaseController::class, 'export'])->name('purchases.export');
+            Route::get('/pdf', [PurchaseController::class, 'pdf'])->name('purchases.pdf');
+            Route::get('/new', [PurchaseController::class, 'new'])->name('purchases.new');
+            Route::post('/create', [PurchaseController::class, 'create'])->name('purchases.create');
+            Route::get('/items/{purchase_item}/delete', [PurchaseController::class, 'purchase_item_destroy'])->name('purchases.items.destroy');
+            Route::get('/{purchase}/show', [PurchaseController::class, 'show'])->name('purchases.show');
+            Route::get('/{purchase}/edit', [PurchaseController::class, 'edit'])->name('purchases.edit');
+            Route::post('/{purchase}/update', [PurchaseController::class, 'update'])->name('purchases.update');
+            Route::get('/{purchase}/delete', [PurchaseController::class, 'destroy'])->name('purchases.destroy');
+            Route::get('/', [PurchaseController::class, 'index'])->name('purchases');
+        });
+
+        // Expenses Routes
+        Route::prefix('expenses')->group(function () {
+            Route::get('/export', [ExpenseController::class, 'export'])->name('expenses.export');
+            Route::get('/pdf', [ExpenseController::class, 'pdf'])->name('expenses.pdf');
+            Route::get('/new', [ExpenseController::class, 'new'])->name('expenses.new');
+            Route::post('/create', [ExpenseController::class, 'create'])->name('expenses.create');
+            Route::get('/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+            Route::post('/{expense}/update', [ExpenseController::class, 'update'])->name('expenses.update');
+            Route::get('/{expense}/delete', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+            Route::get('/', [ExpenseController::class, 'index'])->name('expenses');
         });
 
         // Currency Routes

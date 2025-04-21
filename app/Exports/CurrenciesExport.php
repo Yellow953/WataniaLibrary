@@ -8,17 +8,16 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CurrenciesExport implements FromCollection, WithHeadings
 {
+    protected $filters;
+
+    public function __construct($filters)
+    {
+        $this->filters = $filters;
+    }
+
     public function collection()
     {
-        return Currency::all()->map(function ($currency) {
-            return [
-                'code' => $currency->code,
-                'name' => $currency->name,
-                'symbol' => $currency->symbol,
-                'rate' => $currency->rate,
-                'created_at' => $currency->created_at,
-            ];
-        });
+        return Currency::select('code', 'name', 'symbol', 'rate', 'created_at')->filter()->get();
     }
 
     public function headings(): array

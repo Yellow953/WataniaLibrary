@@ -8,15 +8,16 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class TaxesExport implements FromCollection, WithHeadings
 {
+    protected $filters;
+
+    public function __construct($filters)
+    {
+        $this->filters = $filters;
+    }
+
     public function collection()
     {
-        return Tax::all()->map(function ($tax) {
-            return [
-                'name' => $tax->name,
-                'rate' => $tax->rate,
-                'created_at' => $tax->created_at,
-            ];
-        });
+        return Tax::select('name', 'rate', 'created_at')->filter()->get();
     }
 
     public function headings(): array

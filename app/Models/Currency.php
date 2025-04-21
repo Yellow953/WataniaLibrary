@@ -31,10 +31,20 @@ class Currency extends Model
         return $this->hasMany(Report::class);
     }
 
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
     // Permissions
     public function can_delete()
     {
-        return $this->users->count() == 0 && $this->debts->count() == 0 && $this->reports->count() == 0 && $this->orders->count() == 0 && auth()->user()->role == "admin";
+        return $this->users->count() == 0 && $this->debts->count() == 0  && $this->purchases->count() == 0  && $this->expenses->count() == 0 && $this->reports->count() == 0 && $this->orders->count() == 0 && auth()->user()->role == "admin";
     }
 
     // Filter

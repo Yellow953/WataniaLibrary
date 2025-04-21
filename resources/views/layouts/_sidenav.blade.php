@@ -66,25 +66,27 @@
                     <!--end:Menu content-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('notifications*') ? 'active' : '' }}"
                         href="{{ route('notifications') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-bell-fill"></i>
+                            <i class="bi bi-bell"></i>
                         </span>
                         <span class="menu-title">Notifications</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('logs*') ? 'active' : '' }}" href="{{ route('logs') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-file-text-fill"></i>
+                            <i class="bi bi-file-text"></i>
                         </span>
                         <span class="menu-title">Logs</span>
                     </a>
@@ -102,45 +104,49 @@
                     <!--end:Menu content-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('categories*') ? 'active' : '' }}"
                         href="{{ route('categories') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-stack"></i>
+                            <i class="bi bi-layers"></i>
                         </span>
                         <span class="menu-title">Categories</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('products*') ? 'active' : '' }}"
                         href="{{ route('products') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-box-seam-fill"></i>
+                            <i class="bi bi-box-seam"></i>
                         </span>
                         <span class="menu-title">Products</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('orders*') ? 'active' : '' }}"
                         href="{{ route('orders') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-bag-fill"></i>
+                            <i class="bi bi-bag"></i>
                         </span>
                         <span class="menu-title">Orders</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -154,31 +160,34 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('debts*') ? 'active' : '' }}" href="{{ route('debts') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-piggy-bank-fill"></i>
+                            <i class="bi bi-piggy-bank"></i>
                         </span>
                         <span class="menu-title">Debts</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('clients*') ? 'active' : '' }}"
                         href="{{ route('clients') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-person-fill"></i>
+                            <i class="bi bi-person"></i>
                         </span>
                         <span class="menu-title">Clients</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -192,6 +201,35 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a class="menu-link {{ request()->routeIs('purchases*') ? 'active' : '' }}"
+                        href="{{ route('purchases') }}">
+                        <span class="menu-icon">
+                            <i class="bi bi-boxes"></i>
+                        </span>
+                        <span class="menu-title">Purchases</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a class="menu-link {{ request()->routeIs('expenses*') ? 'active' : '' }}"
+                        href="{{ route('expenses') }}">
+                        <span class="menu-icon">
+                            <i class="bi bi-cash-stack"></i>
+                        </span>
+                        <span class="menu-title">Expenses</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -205,32 +243,35 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('analytics*') ? 'active' : '' }}"
                         href="{{ route('analytics') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-bar-chart-fill"></i>
+                            <i class="bi bi-bar-chart"></i>
                         </span>
                         <span class="menu-title">Analytics</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('notifications*') ? 'active' : '' }}"
                         href="{{ route('notifications') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-bell-fill"></i>
+                            <i class="bi bi-bell"></i>
                         </span>
                         <span class="menu-title">Notifications</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -244,24 +285,26 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('logs*') ? 'active' : '' }}" href="{{ route('logs') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-file-text-fill"></i>
+                            <i class="bi bi-file-text"></i>
                         </span>
                         <span class="menu-title">Logs</span>
                     </a>
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('users*') ? 'active' : '' }}" href="{{ route('users') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-person-fill"></i>
+                            <i class="bi bi-person"></i>
                         </span>
                         <span class="menu-title">Users</span>
                     </a>
@@ -281,13 +324,14 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
+
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('backup*') ? 'active' : '' }}"
                         href="{{ route('backup') }}">
                         <span class="menu-icon">
-                            <i class="bi bi-database-fill"></i>
+                            <i class="bi bi-database"></i>
                         </span>
                         <span class="menu-title">Backup</span>
                     </a>

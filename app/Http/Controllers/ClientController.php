@@ -118,9 +118,10 @@ class ClientController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new ClientsExport, 'clients.xlsx');
+        $filters = $request->all();
+        return Excel::download(new ClientsExport($filters), 'Clients.xlsx');
     }
 
     public function fetch()

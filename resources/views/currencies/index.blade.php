@@ -5,8 +5,8 @@
 @section('actions')
 <a class="btn btn-success btn-sm px-4" href="{{ route('currencies.new') }}"><i class="fa-solid fa-plus"></i> <span
         class="d-none d-md-inline">New Currency</span></a>
-<a class="btn btn-primary btn-sm px-4" href="{{ route('currencies.export') }}"><i class="fa-solid fa-download"></i><span
-        class="d-none d-md-inline">Export to Excel</span></a>
+<a class="btn btn-primary btn-sm px-4" href="{{ route('currencies.export', request()->query()) }}"><i
+        class="fa-solid fa-download"></i><span class="d-none d-md-inline">Export to Excel</span></a>
 @endsection
 
 @section('filter')

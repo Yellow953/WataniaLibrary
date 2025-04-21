@@ -8,19 +8,16 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ClientsExport implements FromCollection, WithHeadings
 {
+    protected $filters;
+
+    public function __construct($filters)
+    {
+        $this->filters = $filters;
+    }
+
     public function collection()
     {
-        return Client::all()->map(function ($client) {
-            return [
-                'name' => $client->name,
-                'email' => $client->email,
-                'phone' => $client->phone,
-                'country' => $client->country,
-                'city' => $client->city,
-                'address' => $client->address,
-                'created_at' => $client->created_at,
-            ];
-        });
+        return Client::select('name', 'email', 'phone', 'Country', 'City', 'address', 'created_at')->filter()->get();
     }
 
     public function headings(): array

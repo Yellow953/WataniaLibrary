@@ -93,8 +93,9 @@ class PromoController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new PromoExport, 'promos.xlsx');
+        $filters = $request->all();
+        return Excel::download(new PromoExport($filters), 'Promos.xlsx');
     }
 }

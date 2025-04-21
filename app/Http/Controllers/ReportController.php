@@ -92,9 +92,10 @@ class ReportController extends Controller
         return redirect()->back()->with('danger', 'Report was successfully deleted');
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new ReportsExport, 'reports.xlsx');
+        $filters = $request->all();
+        return Excel::download(new ReportsExport($filters), 'Reports.xlsx');
     }
 
     public function new_report(Request $request)

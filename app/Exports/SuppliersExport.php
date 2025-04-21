@@ -8,18 +8,18 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class SuppliersExport implements FromCollection, WithHeadings
 {
+    protected $filters;
+
+    public function __construct($filters)
+    {
+        $this->filters = $filters;
+    }
+
     public function collection()
     {
-        return Supplier::all()->map(function ($supplier) {
-            return [
-                'name' => $supplier->name,
-                'email' => $supplier->email,
-                'phone' => $supplier->phone,
-                'address' => $supplier->address,
-                'created_at' => $supplier->created_at,
-            ];
-        });
+        return Supplier::get('name', 'email', 'phone', 'address', 'created_at')->filter()->get();
     }
+
     public function headings(): array
     {
         return [

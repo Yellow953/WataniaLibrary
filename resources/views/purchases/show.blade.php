@@ -3,14 +3,14 @@
 <!--begin::Head-->
 
 <head>
-    <title>Watania Library | Order #{{ $order->order_number }}</title>
+    <title>YellowPOS | Purchase #{{ $purchase->number }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{ asset('frontend/images/favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/yellowpos_favicon.png') }}" />
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -45,7 +45,7 @@
                             <!--begin::Title-->
                             <h1
                                 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                                Order #{{ $order->order_number }}</h1>
+                                Purchase #{{ $purchase->number }}</h1>
                             <!--end::Title-->
                             <!--begin::Breadcrumb-->
                             <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -61,7 +61,8 @@
                                 <!--end::Item-->
                                 <!--begin::Item-->
                                 <li class="breadcrumb-item text-muted">
-                                    <a href="{{ route('orders') }}" class="text-muted text-hover-primary">Orders</a>
+                                    <a href="{{ route('purchases') }}"
+                                        class="text-muted text-hover-primary">Purchases</a>
                                 </li>
                                 <!--end::Item-->
                                 <!--begin::Item-->
@@ -70,7 +71,7 @@
                                 </li>
                                 <!--end::Item-->
                                 <!--begin::Item-->
-                                <li class="breadcrumb-item text-muted">View Order</li>
+                                <li class="breadcrumb-item text-muted">View Purchase</li>
                                 <!--end::Item-->
                             </ul>
                             <!--end::Breadcrumb-->
@@ -85,7 +86,7 @@
                             </a>
                             <!-- begin::Pint-->
                             <button type="button" class="btn btn-sm btn-primary my-1" onclick="window.print();">Print
-                                Order</button>
+                                Purchase</button>
                             <!-- end::Pint-->
                         </div>
                         <!--end::Actions-->
@@ -106,58 +107,54 @@
                                     <!-- begin::Header-->
                                     <div class="d-flex justify-content-between flex-column flex-sm-row mb-19">
                                         <div>
-                                            <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">Order</h4>
+                                            <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">Purchase</h4>
                                             <div class="flex-root d-flex flex-column mt-4">
-                                                <span class="text-muted">Order Number</span>
-                                                <span class="fs-5">#{{ $order->order_number }}</span>
+                                                <span class="text-muted">Purchase Number</span>
+                                                <span class="fs-5">#{{ $purchase->number }}</span>
                                             </div>
                                             <div class="flex-root d-flex flex-column mt-4">
-                                                <span class="text-muted">Date</span>
-                                                <span class="fs-5">{{ $order->created_at }}</span>
+                                                <span class="text-muted">Invoice Number</span>
+                                                <span class="fs-5">#{{ $purchase->invoice_number }}</span>
                                             </div>
-                                            @if ($order->payment_method)
                                             <div class="flex-root d-flex flex-column mt-4">
-                                                <span class="text-muted">Payment Mehtod</span>
-                                                <span class="fs-5">{{ ucwords($order->payment_method) }}</span>
+                                                <span class="text-muted">Purchase Date</span>
+                                                <span class="fs-5">{{ $purchase->purchase_date }}</span>
                                             </div>
-                                            @endif
                                         </div>
-                                        @if ($order->client_id)
+
                                         <div>
-                                            <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">Client</h4>
+                                            <h4 class="pe-5 pb-7">Supplier</h4>
                                             <div class="flex-root d-flex flex-column mt-4">
                                                 <span class="text-muted">Name</span>
-                                                <span class="fs-5">{{ ucwords($order->client->name) }}</span>
-                                            </div>
-                                            <div class="flex-root d-flex flex-column mt-4">
-                                                <span class="text-muted">Phone</span>
-                                                <span class="fs-5">{{ $order->client->phone }}</span>
+                                                <span class="fs-5">{{ ucwords($purchase->supplier->name) }}</span>
                                             </div>
                                             <div class="flex-root d-flex flex-column mt-4">
                                                 <span class="text-muted">Email</span>
-                                                <span class="fs-5">{{ $order->client->email }}</span>
+                                                <span class="fs-5">{{ $purchase->supplier->email }}</span>
                                             </div>
                                             <div class="flex-root d-flex flex-column mt-4">
-                                                <span class="text-muted">Address</span>
-                                                <span class="fs-5">{{ $order->client->city }}, {{
-                                                    $order->client->address }}</span>
+                                                <span class="text-muted">Phone</span>
+                                                <span class="fs-5">{{ $purchase->supplier->phone }}</span>
+                                            </div>
+                                            <div class="flex-root d-flex flex-column mt-4">
+                                                <span class="text-muted">Adddress</span>
+                                                <span class="fs-5">{{ $purchase->supplier->address }}</span>
                                             </div>
                                         </div>
-                                        @endif
+
                                         <!--end::Logo-->
                                         <div class="text-sm-end">
                                             <!--begin::Logo-->
                                             <a href="#" class="d-block mw-150px ms-sm-auto">
-                                                <img alt="Logo" src="{{ asset('frontend/images/logo.png') }}"
-                                                    class="w-100" />
+                                                <img alt="Logo" src="{{ asset($business->logo) }}" class="w-50" />
                                             </a>
                                             <!--end::Logo-->
                                             <!--begin::Text-->
                                             <div class="text-sm-end fw-semibold fs-4 mt-7">
-                                                <div class="text-dark">Watania Library</div>
-                                                <div>watania.library@gmail.com</div>
-                                                <div>+961 76 925 969</div>
-                                                <div>Lebanon, Bourj Hammoud, Haret Sader</div>
+                                                <div class="text-dark">{{ ucwords($business->name) }}</div>
+                                                <div>{{ $business->email }}</div>
+                                                <div>{{ $business->phone }}</div>
+                                                <div>{{ $business->address }}</div>
                                             </div>
                                             <!--end::Text-->
                                         </div>
@@ -167,11 +164,11 @@
                                     <div class="pb-12">
                                         <!--begin::Wrapper-->
                                         <div class="d-flex flex-column gap-7 gap-md-10">
-                                            @if ($order->note)
+                                            @if ($purchase->notes)
                                             <!--begin::Message-->
                                             <div class="fw-bold fs-2">
-                                                Note:
-                                                <span class="text-muted fs-5">{{ $order->note }}</span>
+                                                Notes:
+                                                <span class="text-muted fs-5">{{ $purchase->notes }}</span>
                                             </div>
                                             <!--begin::Message-->
                                             <!--begin::Separator-->
@@ -193,7 +190,7 @@
                                                         </thead>
                                                         <tbody class="fw-semibold text-gray-600">
                                                             <!--begin::Products-->
-                                                            @foreach ($order->items as $item)
+                                                            @forelse ($purchase->items as $item)
                                                             <tr>
                                                                 <!--begin::Product-->
                                                                 <td>
@@ -208,22 +205,6 @@
                                                                         <div class="ms-5">
                                                                             <div class="fw-bold">{{
                                                                                 ucwords($item->product->name) }}</div>
-                                                                            <!-- Show variant details if available -->
-                                                                            @if ($item->variant_details != [] &&
-                                                                            $item->variant_details != "[]")
-                                                                            <div class="small text-muted">
-                                                                                @php
-                                                                                $variants =
-                                                                                json_decode($item->variant_details);
-                                                                                @endphp
-                                                                                @foreach($variants as $variant)
-                                                                                <span>{{ $variant->value }}</span>
-                                                                                @if (!$loop->last)
-                                                                                ,
-                                                                                @endif
-                                                                                @endforeach
-                                                                            </div>
-                                                                            @endif
                                                                         </div>
                                                                         <!--end::Title-->
                                                                     </div>
@@ -233,34 +214,22 @@
                                                                 <td class="text-end">{{ $item->quantity }}</td>
                                                                 <!--end::Quantity-->
                                                                 <!--begin::Total-->
-                                                                <td class="text-end">{{ $currency->symbol }}{{
-                                                                    number_format($item->total, 2) }}</td>
+                                                                <td class="text-end">
+                                                                    {{ $purchase->currency->symbol }}
+                                                                    {{ number_format($item->total, 2)}}</td>
                                                                 <!--end::Total-->
                                                             </tr>
-                                                            @endforeach
+                                                            @empty
+
+                                                            @endforelse
                                                             <!--end::Products-->
-                                                            <!--begin::Subtotal-->
-                                                            <tr class="text-dark fw-bold text-end">
-                                                                <td colspan="2">Subtotal</td>
-                                                                <td class="text-end">{{ $currency->symbol }}{{
-                                                                    number_format($order->sub_total, 2) }}</td>
-                                                            </tr>
-                                                            <!--end::Subtotal-->
-                                                            <!--begin::Shipping-->
-                                                            <tr class="text-dark fw-bold text-end">
-                                                                <td colspan="2">Discount
-                                                                </td>
-                                                                <td class="text-end">{{ $currency->symbol }}{{
-                                                                    number_format($order->discount, 2) }}</td>
-                                                            </tr>
-                                                            <!--end::Shipping-->
                                                             <!--begin::Grand total-->
                                                             <tr class="text-dark fw-bold text-end">
                                                                 <td colspan="2">
-                                                                    Grand Total</td>
+                                                                    Total</td>
                                                                 <td class="text-dark fs-3 fw-bolder text-end">
-                                                                    {{ $currency->symbol }}{{
-                                                                    number_format($order->total, 2) }}</td>
+                                                                    {{ $purchase->currency->symbol }}
+                                                                    {{ number_format($purchase->total, 2) }}</td>
                                                             </tr>
                                                             <!--end::Grand total-->
                                                         </tbody>

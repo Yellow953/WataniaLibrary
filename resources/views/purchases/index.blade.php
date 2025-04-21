@@ -1,19 +1,27 @@
 @extends('layouts.app')
 
-@section('title', 'categories')
+@section('title', 'purchases')
 
 @section('actions')
-<a class="btn btn-success btn-sm px-4" href="{{ route('categories.new') }}"><i class="fa-solid fa-plus"></i> <span
-        class="d-none d-md-inline">New Category</span></a>
-<a class="btn btn-primary btn-sm px-4" href="{{ route('categories.export', request()->query()) }}"><i
-        class="fa-solid fa-download"></i><span class="d-none d-md-inline">Export to Excel</span></a>
+<a class="btn btn-success btn-sm px-4" href="{{ route('purchases.new') }}">
+    <i class="fa-solid fa-plus"></i>
+    <span class="d-none d-md-inline">New Purchase</span>
+</a>
+<a class="btn btn-primary btn-sm px-4" href="{{ route('purchases.pdf', request()->query()) }}">
+    <i class="fa-solid fa-file-pdf"></i>
+    <span class="d-none d-md-inline">Export to PDF</span>
+</a>
+<a class="btn btn-primary btn-sm px-4" href="{{ route('purchases.export', request()->query()) }}">
+    <i class="fa-solid fa-download"></i>
+    <span class="d-none d-md-inline">Export to Excel</span>
+</a>
 @endsection
 
 @section('filter')
 <!--begin::filter-->
 <div class="filter border-0 px-0 px-md-3 py-4">
     <!--begin::Form-->
-    <form action="{{ route('categories') }}" method="GET" enctype="multipart/form-data" class="form">
+    <form action="{{ route('purchases') }}" method="GET" enctype="multipart/form-data" class="form">
         @csrf
         <div class="pt-0 pt-3 px-2 px-md-4">
             <!--begin::Compact form-->
@@ -31,8 +39,8 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" class="form-control ps-10" name="name" value="{{ request()->query('name') }}"
-                        placeholder="Search By Name..." />
+                    <input type="text" class="form-control ps-10" name="number" value="{{ request()->query('number') }}"
+                        placeholder="Search By Number..." />
                 </div>
                 <!--end::Input group-->
                 <!--begin:Action-->
@@ -54,25 +62,39 @@
                 <!--end::Separator-->
                 <!--begin::Row-->
                 <div class="row g-8 mb-8">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Category</label>
-                            <select name="parent_id" class="form-select" data-control="select2"
-                                data-placeholder="Select an option">
-                                <option value=""></option>
-                                @foreach ($all_categories as $category)
-                                <option value="{{ $category->id }}" {{ request()->query('parent_id')==$category->id ?
-                                    'selected' :
-                                    '' }}>{{ ucwords($category->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <!--begin::Col-->
                     <div class="col-md-6">
-                        <label class="fs-6 form-label fw-bold text-dark">Description</label>
-                        <input type="text" class="form-control form-control-solid border" name="description"
-                            value="{{ request()->query('description') }}" placeholder="Enter Description..." />
+                        <label class="fs-6 form-label fw-bold text-dark">Supplier</label>
+                        <select name="supplier_id" class="form-select" data-control="select2"
+                            data-placeholder="Select an option">
+                            <option value=""></option>
+                            @foreach ($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}" {{ request()->query('supplier_id')==$supplier->id ?
+                                'selected' :
+                                '' }}>{{ ucwords($supplier->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                        <label class="fs-6 form-label fw-bold text-dark">Purchase Date</label>
+                        <input type="date" class="form-control form-control-solid border" name="purchase_date"
+                            value="{{ request()->query('purchase_date') }}" />
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                        <label class="fs-6 form-label fw-bold text-dark">Invoice Number</label>
+                        <input type="text" class="form-control form-control-solid border" name="invoice_number"
+                            value="{{ request()->query('invoice_number') }}" placeholder="Enter Invoice Number..." />
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                        <label class="fs-6 form-label fw-bold text-dark">Notes</label>
+                        <input type="text" class="form-control form-control-solid border" name="notes"
+                            value="{{ request()->query('notes') }}" placeholder="Enter Notes..." />
                     </div>
                     <!--end::Col-->
                 </div>
@@ -101,58 +123,58 @@
                     <!--begin::Table head-->
                     <thead>
                         <tr class="text-center">
-                            <th class="col-4 p-3">Category</th>
-                            <th class="col-4 p-3">Description</th>
-                            <th class="col-2 p-3">Products</th>
+                            <th class="col-2 p-3">NO</th>
+                            <th class="col-2 p-3">Supplier</th>
+                            <th class="col-2 p-3">Date</th>
+                            <th class="col-2 p-3">Invoice Number</th>
+                            <th class="col-2 p-3">Total</th>
                             <th class="col-2 p-3">Actions</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody>
-                        @forelse ($categories as $category)
+                        @forelse ($purchases as $purchase)
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <!--begin::Avatar-->
-                                    <div class="symbol symbol-45px me-5">
-                                        <img alt="Category" src="{{ asset($category->image) }}" />
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::Name-->
-                                    <div class="d-flex justify-content-start flex-column">
-                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{
-                                            ucwords($category->name) }}</a>
-
-                                        @if ($category->parent_id)
-                                        <small>
-                                            <span class="text-primary fw-bold">Parent:</span> <span>{{
-                                                $category->parent->name
-                                                }}</span>
-                                        </small>
-                                        @endif
-                                    </div>
-                                    <!--end::Name-->
+                                <div class="text-center">
+                                    <span class="text-primary fw-bold">#
+                                        {{ ucwords($purchase->number) }}</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="text-center">
-                                    {{ $category->description }}
+                                    {{ ucwords($purchase->supplier->name) }}
                                 </div>
                             </td>
                             <td class="text-center">
-                                <a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{
-                                    $category->products->count() }}</a>
+                                <div class="text-center">
+                                    {{ $purchase->purchase_date }}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="text-center">
+                                    {{ $purchase->invoice_number }}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="text-center">
+                                    {{ $purchase->currency->symbol }}{{ number_format($purchase->total, 2) }}
+                                </div>
                             </td>
                             <td class="d-flex justify-content-end border-0">
-                                <a href="{{ route('categories.edit', $category->id) }}"
+                                <a href="{{ route('purchases.show', $purchase->id) }}"
+                                    class="btn btn-icon btn-primary btn-sm me-1">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <a href="{{ route('purchases.edit', $purchase->id) }}"
                                     class="btn btn-icon btn-warning btn-sm me-1">
                                     <i class="bi bi-pen-fill"></i>
                                 </a>
-                                @if($category->can_delete())
-                                <a href="{{ route('categories.destroy', $category->id) }}"
+                                @if($purchase->can_delete())
+                                <a href="{{ route('purchases.destroy', $purchase->id) }}"
                                     class="btn btn-icon btn-danger btn-sm show_confirm" data-toggle="tooltip"
-                                    data-original-title="Delete Category">
+                                    data-original-title="Delete Purchase">
                                     <i class="bi bi-trash3-fill"></i>
                                 </a>
                                 @endif
@@ -160,18 +182,18 @@
                         </tr>
                         @empty
                         <tr>
-                            <th colspan="4">
-                                <div class="text-center">No Categories Yet ...</div>
+                            <th colspan="6">
+                                <div class="text-center">No Purchases Yet ...</div>
                             </th>
                         </tr>
                         @endforelse
                     </tbody>
                     <!--end::Table body-->
+
                     <tfoot>
                         <tr>
-                            <th colspan="4">
-                                {{ $categories->appends(['name' => request()->query('name'), 'description' =>
-                                request()->query('description')])->links() }}
+                            <th colspan="6">
+                                {{ $purchases->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

@@ -7,6 +7,7 @@ use App\Models\Barcode;
 use App\Models\Category;
 use App\Models\Log;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\SecondaryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -214,21 +215,47 @@ class ProductController extends Controller
 
     public function import(Product $product)
     {
-        return view('products.import', compact('product'));
+        $purchases = Purchase::select('id', 'number')->get();
+
+        $data = compact('product', 'purchases');
+        return view('products.import', $data);
     }
 
     public function save(Product $product, Request $request)
     {
         $request->validate([
+            'purchase_id' => 'required',
             'quantity' => 'required|numeric|min:0',
+            'cost' => 'required|numeric|min:0',
+        ]);
+
+        if ($request->barcodes) {
+            $barcodes = array_filter(array_map('trim', $request->barcodes));
+            $product->barcodes()->delete();
+            foreach ($barcodes as $barcode) {
+                $product->barcodes()->create(['barcode' => $barcode]);
+            }
+        }
+
+        $purchase = Purchase::findOrFail($request->purchase_id);
+
+        $purchase->items()->create([
+            'product_id' => $product->id,
+            'quantity' => $request->quantity,
+            'cost' => $request->cost,
+            'total' => $request->quantity * $request->cost,
         ]);
 
         $product->update([
             'quantity' => $product->quantity + $request->quantity,
         ]);
 
+        $purchase->update([
+            'total' => $purchase->total + ($request->quantity + $request->cost),
+        ]);
+
         Log::create([
-            'text' => ucwords(auth()->user()->name) . ' imported ' . $request->quantity . ' pcs to Product: ' . $product->name . ', datetime: ' . now(),
+            'text' => ucwords(auth()->user()->name) . ' imported ' . $request->quantity . ' pcs to Product: ' . ucwords($product->name) . ', datetime: ' . now(),
         ]);
 
         return redirect()->route('products')->with('success', 'Stock Imported Successfully...');
@@ -265,8 +292,9 @@ class ProductController extends Controller
         return redirect()->back()->with('danger', 'Image deleted successfully...');
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new ProductsExport, 'products.xlsx');
+        $filters = $request->all();
+        return Excel::download(new ProductsExport($filters), 'Products.xlsx');
     }
 }

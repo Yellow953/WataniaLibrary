@@ -119,8 +119,9 @@ class CategoryController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new CategoriesExport, 'categories.xlsx');
+        $filters = $request->all();
+        return Excel::download(new CategoriesExport($filters), 'Categories.xlsx');
     }
 }

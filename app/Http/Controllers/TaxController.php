@@ -102,8 +102,9 @@ class TaxController extends Controller
         return redirect()->back()->with('success', 'Tax switched to ' . $tax->name);
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new TaxesExport, 'taxes.xlsx');
+        $filters = $request->all();
+        return Excel::download(new TaxesExport($filters), 'Taxes.xlsx');
     }
 }

@@ -121,8 +121,9 @@ class UserController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        $filters = $request->all();
+        return Excel::download(new UsersExport($filters), 'Users.xlsx');
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Log;
 use App\Models\Order;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
@@ -53,8 +54,9 @@ class OrderController extends Controller
         }
     } //end of order
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new OrdersExport, 'orders.xlsx');
+        $filters = $request->all();
+        return Excel::download(new OrdersExport($filters), 'Orders.xlsx');
     }
 }

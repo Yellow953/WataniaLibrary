@@ -2,11 +2,10 @@
 
 namespace App\Exports;
 
-use App\Models\Category;
+use App\Models\Expense;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class CategoriesExport implements FromCollection, WithHeadings
+class ExpensesExport implements FromCollection
 {
     protected $filters;
 
@@ -17,14 +16,17 @@ class CategoriesExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        return Category::select('name', 'description', 'created_at')->filter()->get();
+        return Expense::select('number', 'date', 'category', 'description', 'amount', 'created_at')->filter()->get();
     }
 
     public function headings(): array
     {
         return [
-            'Name',
+            'NO',
+            'Date',
+            'Category',
             'Description',
+            'Amount',
             'Created At',
         ];
     }

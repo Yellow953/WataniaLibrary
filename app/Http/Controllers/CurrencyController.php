@@ -97,8 +97,9 @@ class CurrencyController extends Controller
         return redirect()->back()->with('success', 'Currency switched to ' . $currency->name);
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new CurrenciesExport, 'currencies.xlsx');
+        $filters = $request->all();
+        return Excel::download(new CurrenciesExport($filters), 'Currencies.xlsx');
     }
 }

@@ -1,19 +1,27 @@
 @extends('layouts.app')
 
-@section('title', 'categories')
+@section('title', 'expenses')
 
 @section('actions')
-<a class="btn btn-success btn-sm px-4" href="{{ route('categories.new') }}"><i class="fa-solid fa-plus"></i> <span
-        class="d-none d-md-inline">New Category</span></a>
-<a class="btn btn-primary btn-sm px-4" href="{{ route('categories.export', request()->query()) }}"><i
-        class="fa-solid fa-download"></i><span class="d-none d-md-inline">Export to Excel</span></a>
+<a class="btn btn-success btn-sm px-4" href="{{ route('expenses.new') }}">
+    <i class="fa-solid fa-plus"></i>
+    <span class="d-none d-md-inline">New Expense</span>
+</a>
+<a class="btn btn-primary btn-sm px-4" href="{{ route('expenses.pdf', request()->query()) }}">
+    <i class="fa-solid fa-file-pdf"></i>
+    <span class="d-none d-md-inline">Export to PDF</span>
+</a>
+<a class="btn btn-primary btn-sm px-4" href="{{ route('expenses.export', request()->query()) }}">
+    <i class="fa-solid fa-download"></i>
+    <span class="d-none d-md-inline">Export to Excel</span>
+</a>
 @endsection
 
 @section('filter')
 <!--begin::filter-->
 <div class="filter border-0 px-0 px-md-3 py-4">
     <!--begin::Form-->
-    <form action="{{ route('categories') }}" method="GET" enctype="multipart/form-data" class="form">
+    <form action="{{ route('expenses') }}" method="GET" enctype="multipart/form-data" class="form">
         @csrf
         <div class="pt-0 pt-3 px-2 px-md-4">
             <!--begin::Compact form-->
@@ -31,8 +39,8 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" class="form-control ps-10" name="name" value="{{ request()->query('name') }}"
-                        placeholder="Search By Name..." />
+                    <input type="text" class="form-control ps-10" name="number" value="{{ request()->query('number') }}"
+                        placeholder="Search By Number..." />
                 </div>
                 <!--end::Input group-->
                 <!--begin:Action-->
@@ -54,22 +62,28 @@
                 <!--end::Separator-->
                 <!--begin::Row-->
                 <div class="row g-8 mb-8">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-label">Category</label>
-                            <select name="parent_id" class="form-select" data-control="select2"
-                                data-placeholder="Select an option">
-                                <option value=""></option>
-                                @foreach ($all_categories as $category)
-                                <option value="{{ $category->id }}" {{ request()->query('parent_id')==$category->id ?
-                                    'selected' :
-                                    '' }}>{{ ucwords($category->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <!--begin::Col-->
                     <div class="col-md-6">
+                        <label class="fs-6 form-label fw-bold text-dark">Category</label>
+                        <select name="category" class="form-select" data-control="select2"
+                            data-placeholder="Select an option">
+                            <option value=""></option>
+                            @foreach ($categories as $category)
+                            <option value="{{ $category }}" {{ request()->query('category')==$category ? 'selected' : ''
+                                }}>{{ ucwords($category) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                        <label class="fs-6 form-label fw-bold text-dark">Date</label>
+                        <input type="date" class="form-control form-control-solid border" name="date"
+                            value="{{ request()->query('date') }}" />
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-12">
                         <label class="fs-6 form-label fw-bold text-dark">Description</label>
                         <input type="text" class="form-control form-control-solid border" name="description"
                             value="{{ request()->query('description') }}" placeholder="Enter Description..." />
@@ -101,58 +115,54 @@
                     <!--begin::Table head-->
                     <thead>
                         <tr class="text-center">
-                            <th class="col-4 p-3">Category</th>
-                            <th class="col-4 p-3">Description</th>
-                            <th class="col-2 p-3">Products</th>
+                            <th class="col-2 p-3">NO</th>
+                            <th class="col-2 p-3">Date</th>
+                            <th class="col-2 p-3">Category</th>
+                            <th class="col-2 p-3">Description</th>
+                            <th class="col-2 p-3">Amount</th>
                             <th class="col-2 p-3">Actions</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody>
-                        @forelse ($categories as $category)
+                        @forelse ($expenses as $expense)
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <!--begin::Avatar-->
-                                    <div class="symbol symbol-45px me-5">
-                                        <img alt="Category" src="{{ asset($category->image) }}" />
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::Name-->
-                                    <div class="d-flex justify-content-start flex-column">
-                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{
-                                            ucwords($category->name) }}</a>
-
-                                        @if ($category->parent_id)
-                                        <small>
-                                            <span class="text-primary fw-bold">Parent:</span> <span>{{
-                                                $category->parent->name
-                                                }}</span>
-                                        </small>
-                                        @endif
-                                    </div>
-                                    <!--end::Name-->
+                                <div class="text-center">
+                                    <span class="text-primary fw-bold">#
+                                        {{ ucwords($expense->number) }}</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="text-center">
+                                    {{ $expense->date }}
                                 </div>
                             </td>
                             <td>
                                 <div class="text-center">
-                                    {{ $category->description }}
+                                    {{ ucwords($expense->category) }}
                                 </div>
                             </td>
                             <td class="text-center">
-                                <a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{
-                                    $category->products->count() }}</a>
+                                <div class="text-center">
+                                    {{ $expense->description }}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="text-center">
+                                    {{ $expense->currency->symbol }}{{ number_format($expense->amount, 2) }}
+                                </div>
                             </td>
                             <td class="d-flex justify-content-end border-0">
-                                <a href="{{ route('categories.edit', $category->id) }}"
+                                <a href="{{ route('expenses.edit', $expense->id) }}"
                                     class="btn btn-icon btn-warning btn-sm me-1">
                                     <i class="bi bi-pen-fill"></i>
                                 </a>
-                                @if($category->can_delete())
-                                <a href="{{ route('categories.destroy', $category->id) }}"
+                                @if($expense->can_delete())
+                                <a href="{{ route('expenses.destroy', $expense->id) }}"
                                     class="btn btn-icon btn-danger btn-sm show_confirm" data-toggle="tooltip"
-                                    data-original-title="Delete Category">
+                                    data-original-title="Delete Expense">
                                     <i class="bi bi-trash3-fill"></i>
                                 </a>
                                 @endif
@@ -160,18 +170,18 @@
                         </tr>
                         @empty
                         <tr>
-                            <th colspan="4">
-                                <div class="text-center">No Categories Yet ...</div>
+                            <th colspan="6">
+                                <div class="text-center">No Expenses Yet ...</div>
                             </th>
                         </tr>
                         @endforelse
                     </tbody>
                     <!--end::Table body-->
+
                     <tfoot>
                         <tr>
-                            <th colspan="4">
-                                {{ $categories->appends(['name' => request()->query('name'), 'description' =>
-                                request()->query('description')])->links() }}
+                            <th colspan="6">
+                                {{ $expenses->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

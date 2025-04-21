@@ -99,8 +99,9 @@ class SupplierController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new SuppliersExport, 'suppliers.xlsx');
+        $filters = $request->all();
+        return Excel::download(new SuppliersExport($filters), 'Suppliers.xlsx');
     }
 }

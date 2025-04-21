@@ -20,7 +20,6 @@ class AnalyticsController extends Controller
 
     public function index()
     {
-        // Fetch total debts for suppliers and clients
         $clientData = Debt::whereNotNull('client_id')->get();
         $totalClientDebt = 0;
 

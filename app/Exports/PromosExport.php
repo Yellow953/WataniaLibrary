@@ -6,11 +6,18 @@ use App\Models\Promo;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PromoExport implements FromCollection, WithHeadings
+class PromosExport implements FromCollection, WithHeadings
 {
+    protected $filters;
+
+    public function __construct($filters)
+    {
+        $this->filters = $filters;
+    }
+
     public function collection()
     {
-        return Promo::all()->map(function ($promo) {
+        return Promo::filter()->get()->map(function ($promo) {
             return [
                 'title' => $promo->title,
                 'code' => $promo->code,

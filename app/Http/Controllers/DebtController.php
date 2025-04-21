@@ -119,9 +119,10 @@ class DebtController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new DebtsExport, 'debts.xlsx');
+        $filters = $request->all();
+        return Excel::download(new DebtsExport($filters), 'Debts.xlsx');
     }
 
     public function new_debt(Request $request)
