@@ -18,8 +18,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
-        $products = Product::select('id', 'name', 'image')->where('public', true)->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
+        $products = Product::select('id', 'name', 'image')->where('public', true)->where('quantity', '>=', 0)->limit(20)->get();
 
         $data = compact('categories', 'products');
         return view('frontend.index', $data);
@@ -27,13 +27,13 @@ class HomeController extends Controller
 
     public function about()
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
         return view('frontend.about', compact('categories'));
     }
 
     public function contact()
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
         return view('frontend.contact', compact('categories'));
     }
 
@@ -109,7 +109,7 @@ class HomeController extends Controller
     {
         if (!$product->public) return redirect()->back()->with('danger', 'This product is unavailable right now...');
 
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
         $simillar_products = Product::select('id', 'name', 'image')->where('category_id', $product->category_id)->limit(10)->get();
 
         $data = compact('product', 'simillar_products', 'categories');
@@ -120,7 +120,7 @@ class HomeController extends Controller
     {
         $countries = Helper::get_countries();
         $cities = Helper::get_cities();
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
 
         $data = compact('countries', 'cities', 'categories');
         return view('frontend.checkout', $data);
@@ -231,19 +231,19 @@ class HomeController extends Controller
 
     public function privacy_policy()
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
         return view('frontend.policies.privacy_policy', compact('categories'));
     }
 
     public function return_policy()
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
         return view('frontend.policies.return_policy', compact('categories'));
     }
 
     public function terms_and_conditions()
     {
-        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
+        $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
         return view('frontend.policies.terms_conditions', compact('categories'));
     }
 
