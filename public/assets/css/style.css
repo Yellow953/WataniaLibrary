@@ -721,6 +721,10 @@ table thead tr th {
     color: var(--primary) !important;
 }
 
+.text-red {
+    color: var(--primary) !important;
+}
+
 .text-yellow {
     color: var(--primary) !important;
 }

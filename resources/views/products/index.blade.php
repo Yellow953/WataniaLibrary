@@ -79,6 +79,27 @@
                             value="{{ request()->query('description') }}" placeholder="Enter Description..." />
                     </div>
                     <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-4">
+                        <label class="fs-6 form-label fw-bold text-dark">Reference</label>
+                        <input type="text" class="form-control form-control-solid border" name="reference"
+                            value="{{ request()->query('reference') }}" placeholder="Enter Reference..." />
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-4">
+                        <label class="fs-6 form-label fw-bold text-dark">Group</label>
+                        <input type="text" class="form-control form-control-solid border" name="group"
+                            value="{{ request()->query('group') }}" placeholder="Enter Group..." />
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-4">
+                        <label class="fs-6 form-label fw-bold text-dark">Brand</label>
+                        <input type="text" class="form-control form-control-solid border" name="brand"
+                            value="{{ request()->query('brand') }}" placeholder="Enter Brand..." />
+                    </div>
+                    <!--end::Col-->
                 </div>
                 <!--end::Row-->
             </div>
@@ -129,6 +150,8 @@
                                     <div class="d-flex justify-content-start flex-column">
                                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{
                                             ucwords($product->name) }}</a>
+                                        <span class="badge badge-{{ $product->public ? 'success' : '' }} me-auto">{{
+                                            $product->public ? 'Shop' : '' }}</span>
                                     </div>
                                     <!--end::Name-->
                                 </div>
@@ -161,7 +184,7 @@
                                 {{ ucwords($product->category->name) }}
                             </td>
                             <td class="d-flex justify-content-end border-0">
-                                <a href="{{ route('products.import', $product->id) }}"
+                                <a href="{{ route('products.add', $product->id) }}"
                                     class="btn btn-icon btn-success btn-sm me-1">
                                     <i class="bi bi-plus-lg"></i>
                                 </a>
@@ -191,11 +214,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="5">
-                                {{ $products->appends([
-                                'name' => request()->query('name'),
-                                'category_id' => request()->query('category_id'),
-                                'description' => request()->query('description'),
-                                ])->links() }}
+                                {{ $products->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

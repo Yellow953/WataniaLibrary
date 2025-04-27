@@ -185,9 +185,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $orders->appends(['order_number' => request()->query('order_number'), 'cashier_id' =>
-                                request()->query('cashier_id'), 'note' =>
-                                request()->query('note')])->links() }}
+                                {{ $orders->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
-        $products = Product::select('id', 'name', 'image')->get();
+        $products = Product::select('id', 'name', 'image')->where('public', true)->get();
 
         $data = compact('categories', 'products');
         return view('frontend.index', $data);
@@ -68,7 +68,7 @@ class HomeController extends Controller
             ->with('subCategories')
             ->get();
 
-        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price');
+        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price')->where('public', true);
 
         if ($request->filled('category')) {
             $category = Category::where('name', urldecode($request->input('category')))->firstOrFail();
@@ -107,6 +107,8 @@ class HomeController extends Controller
 
     public function product(Product $product)
     {
+        if (!$product->public) return redirect()->back()->with('danger', 'This product is unavailable right now...');
+
         $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->with('subCategories')->get();
         $simillar_products = Product::select('id', 'name', 'image')->where('category_id', $product->category_id)->limit(10)->get();
 
@@ -217,9 +219,7 @@ class HomeController extends Controller
             return response()->json([]);
         }
 
-        $products = Product::where('name', 'like', '%' . $query . '%')
-            ->take(5)
-            ->get(['id', 'name', 'image']);
+        $products = Product::where('name', 'like', '%' . $query . '%')->where('public', true)->take(5)->get(['id', 'name', 'image']);
 
         $products = $products->map(function ($product) {
             $product->url = route('product', $product->name);

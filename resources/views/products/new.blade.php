@@ -72,6 +72,30 @@
                                 placeholder="Enter Compare Price..." value="{{ old('compare_price') }}" />
                         </div>
                     </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Reference</label>
+                            <input type="text" class="form-control" placeholder="Enter Reference..." name="reference"
+                                value="{{ old('reference') }}" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Group</label>
+                            <input type="text" class="form-control" placeholder="Enter Group..." name="group"
+                                value="{{ old('group') }}" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Brand</label>
+                            <input type="text" class="form-control" placeholder="Enter Brand..." name="brand"
+                                value="{{ old('brand') }}" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -127,6 +151,14 @@
                                 </div>
                                 <!--end::Image input-->
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" class="form-checkbox" name="public" id="public" checked {{
+                                    old('public') ? 'checked' : '' }}>
+                                Public</label>
                         </div>
                     </div>
                 </div>

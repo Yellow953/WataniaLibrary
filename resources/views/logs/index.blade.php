@@ -246,7 +246,7 @@
                     <!--end::Timeline-->
 
                     <div>
-                        {{ $logs->links() }}
+                        {{ $logs->appends(request()->query())->links() }}
                     </div>
                 </div>
                 <!--end::Tab panel-->

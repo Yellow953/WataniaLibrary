@@ -57,6 +57,18 @@ class Product extends Model
             $description = request('description');
             $q->where('description', 'LIKE', "%{$description}%");
         }
+        if (request('reference')) {
+            $reference = request('reference');
+            $q->where('reference', 'LIKE', "%{$reference}%");
+        }
+        if (request('group')) {
+            $group = request('group');
+            $q->where('group', 'LIKE', "%{$group}%");
+        }
+        if (request('brand')) {
+            $brand = request('brand');
+            $q->where('brand', 'LIKE', "%{$brand}%");
+        }
 
         return $q;
     }

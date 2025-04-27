@@ -26,6 +26,10 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
                 'cost' => $product->cost,
                 'price' => $product->price,
                 'description' => $product->description,
+                'reference' => $product->reference,
+                'group' => $product->group,
+                'brand' => $product->brand,
+                'public' => $product->public,
                 'created_at' => $product->created_at,
             ];
         });
@@ -40,6 +44,10 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
             'Cost',
             'Price',
             'Description',
+            'Reference',
+            'Group',
+            'Brand',
+            'Public',
             'Created At',
         ];
     }
@@ -53,6 +61,10 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
             $row->cost,
             $row->price,
             $row->description,
+            $row->reference,
+            $row->group,
+            $row->brand,
+            $row->public ? 'Yes' : 'No',
             $row->created_at,
         ];
     }

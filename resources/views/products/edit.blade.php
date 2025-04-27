@@ -67,6 +67,30 @@
                                 placeholder="Enter Compare Price..." value="{{ $product->compare_price }}" />
                         </div>
                     </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Reference</label>
+                            <input type="text" class="form-control" placeholder="Enter Reference..." name="reference"
+                                value="{{ $product->reference }}" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Group</label>
+                            <input type="text" class="form-control" placeholder="Enter Group..." name="group"
+                                value="{{ $product->group }}" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Brand</label>
+                            <input type="text" class="form-control" placeholder="Enter Brand..." name="brand"
+                                value="{{ $product->brand }}" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -122,6 +146,14 @@
                                 </div>
                                 <!--end::Image input-->
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" class="form-checkbox" name="public" id="public" {{
+                                    $product->public ? 'checked' : '' }}>
+                                Public</label>
                         </div>
                     </div>
                 </div>

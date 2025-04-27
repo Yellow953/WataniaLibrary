@@ -118,7 +118,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $taxes->appends(['name' => request()->query('name')])->links() }}
+                                {{ $taxes->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

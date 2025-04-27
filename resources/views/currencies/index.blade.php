@@ -119,7 +119,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $currencies->appends(['name' => request()->query('name')])->links() }}
+                                {{ $currencies->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

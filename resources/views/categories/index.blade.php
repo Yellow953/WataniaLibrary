@@ -170,8 +170,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $categories->appends(['name' => request()->query('name'), 'description' =>
-                                request()->query('description')])->links() }}
+                                {{ $categories->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

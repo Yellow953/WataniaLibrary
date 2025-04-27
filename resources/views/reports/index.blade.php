@@ -118,8 +118,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="3">
-                                {{ $reports->appends(['date_from' => request()->query('date_from'), 'date_to' =>
-                                request()->query('date_to')])->links() }}
+                                {{ $reports->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

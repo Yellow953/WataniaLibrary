@@ -140,8 +140,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $promos->appends(['title' => request()->query('title'), 'code' =>
-                                request()->query('code')])->links() }}
+                                {{ $promos->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

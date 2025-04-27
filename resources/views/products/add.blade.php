@@ -2,7 +2,7 @@
 
 @section('title', 'products')
 
-@section('sub-title', 'import')
+@section('sub-title', 'add')
 
 @section('actions')
 <a class="btn btn-success btn-sm px-4" href="{{ route('purchases.new') }}">
@@ -29,7 +29,7 @@
                     class="form">
                     @csrf
                     <div class="card-head pb-0">
-                        <h1 class="text-center text-primary">Import Product</h1>
+                        <h1 class="text-center text-primary">Buy Products</h1>
                     </div>
                     <div class="card-body">
                         <div class="row">

@@ -155,10 +155,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $suppliers->appends(['name' => request()->query('name'), 'phone' =>
-                                request()->query('phone'), 'email' =>
-                                request()->query('email'), 'address' =>
-                                request()->query('address')])->links() }}
+                                {{ $suppliers->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

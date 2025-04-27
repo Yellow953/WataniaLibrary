@@ -174,13 +174,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="4">
-                                {{ $debts->appends(['supplier_id' =>
-                                request()->query('supplier_id'), 'client_id' =>
-                                request()->query('client_id'), 'type' =>
-                                request()->query('type'), 'note' =>
-                                request()->query('note'), 'date_from' =>
-                                request()->query('date_from'), 'date_to' =>
-                                request()->query('date_to')])->links() }}
+                                {{ $debts->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>

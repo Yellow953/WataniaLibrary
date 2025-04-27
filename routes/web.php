@@ -124,12 +124,14 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('products')->group(function () {
             Route::get('/secondary_images/{secondary_image}/delete', [ProductController::class, 'secondary_image_delete'])->name('products.secondary_images.delete');
             Route::get('/export', [ProductController::class, 'export'])->name('products.export');
+            Route::post('/import', [ProductController::class, 'import'])->name('products.import');
+            Route::get('/sample', [ProductController::class, 'sample'])->name('products.sample');
             Route::get('/new', [ProductController::class, 'new'])->name('products.new');
             Route::post('/create', [ProductController::class, 'create'])->name('products.create');
             Route::get('/generate_barcodes', [ProductController::class, 'generate_barcodes'])->name('products.generate_barcodes');
             Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
             Route::post('/{product}/update', [ProductController::class, 'update'])->name('products.update');
-            Route::get('/{product}/import', [ProductController::class, 'import'])->name('products.import');
+            Route::get('/{product}/add', [ProductController::class, 'add'])->name('products.add');
             Route::get('/generate_barcodes', [ProductController::class, 'generate_barcodes'])->name('products.generate_barcodes');
             Route::post('/{product}/save', [ProductController::class, 'save'])->name('products.save');
             Route::get('/{product}/destroy', [ProductController::class, 'destroy'])->name('products.destroy');

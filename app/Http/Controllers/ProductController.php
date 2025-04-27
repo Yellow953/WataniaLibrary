@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
 use App\Models\Barcode;
 use App\Models\Category;
 use App\Models\Log;
@@ -23,7 +24,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::select('id', 'name', 'quantity', 'cost', 'price', 'image', 'category_id', 'description')->filter()->orderBy('id', 'desc')->paginate(25);
+        $products = Product::select('id', 'name', 'quantity', 'cost', 'price', 'image', 'category_id', 'description', 'public')->filter()->orderBy('id', 'desc')->paginate(25);
         $categories = Category::select('id', 'name')->get();
         $currency = auth()->user()->currency;
 
@@ -45,6 +46,9 @@ class ProductController extends Controller
             'cost' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required',
+            'reference' => 'nullable|string|max:255',
+            'group' => 'nullable|string|max:255',
+            'brand' => 'nullable|string|max:255',
             'barcodes' => 'array',
         ]);
 
@@ -69,6 +73,10 @@ class ProductController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
             'description' => $request->description,
+            'reference' => $request->reference,
+            'group' => $request->group,
+            'brand' => $request->brand,
+            'public' => ($request->input('public') == 'on') ? true : false,
             'image' => $path,
         ]);
 
@@ -121,6 +129,9 @@ class ProductController extends Controller
             'cost' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required',
+            'reference' => 'nullable|string|max:255',
+            'group' => 'nullable|string|max:255',
+            'brand' => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('image')) {
@@ -173,13 +184,16 @@ class ProductController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
             'description' => $request->description,
+            'reference' => $request->reference,
+            'group' => $request->group,
+            'brand' => $request->brand,
+            'public' => ($request->input('public') == 'on') ? true : false,
             'image' => $path,
         ]);
 
-        if ($request->barcodes[0] != null) {
-            $barcodes = array_filter(array_map('trim', $request->barcodes));
+        if ($request->barcodes) {
             $product->barcodes()->delete();
-            foreach ($barcodes as $barcode) {
+            foreach ($request->barcodes as $barcode) {
                 $product->barcodes()->create(['barcode' => $barcode]);
             }
         }
@@ -213,12 +227,12 @@ class ProductController extends Controller
         }
     }
 
-    public function import(Product $product)
+    public function add(Product $product)
     {
         $purchases = Purchase::select('id', 'number')->get();
 
         $data = compact('product', 'purchases');
-        return view('products.import', $data);
+        return view('products.add', $data);
     }
 
     public function save(Product $product, Request $request)
@@ -296,5 +310,27 @@ class ProductController extends Controller
     {
         $filters = $request->all();
         return Excel::download(new ProductsExport($filters), 'Products.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx,csv|max:20480',
+        ]);
+
+        Excel::import(new ProductsImport, $request->file('file'));
+
+        return back()->with('success', 'Products queued for import successfully, Please wait while the import finishes. Meanwhile, you can close this page and use the system normally...');
+    }
+
+    public function sample()
+    {
+        $path = public_path('samples/ProductSample.xlsx');
+
+        if (!file_exists($path)) {
+            abort(404, 'Sample file not found.');
+        }
+
+        return response()->download($path, 'ProductSample.xlsx');
     }
 }

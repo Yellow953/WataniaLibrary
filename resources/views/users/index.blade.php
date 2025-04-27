@@ -174,9 +174,7 @@
                     <tfoot>
                         <tr>
                             <th colspan="6">
-                                {{ $users->appends(['name' => request()->query('name'), 'email' =>
-                                request()->query('email'), 'phone' => request()->query('phone'), 'role' =>
-                                request()->query('role')])->links() }}
+                                {{ $users->appends(request()->query())->links() }}
                             </th>
                         </tr>
                     </tfoot>
