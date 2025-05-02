@@ -68,7 +68,7 @@ class HomeController extends Controller
             ->with('subCategories')
             ->get();
 
-        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price')->where('public', true);
+        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price')->where('public', true)->where('quantity', '>', 0);
 
         if ($request->filled('category')) {
             $category = Category::where('name', urldecode($request->input('category')))->firstOrFail();
@@ -110,7 +110,7 @@ class HomeController extends Controller
         if (!$product->public) return redirect()->back()->with('danger', 'This product is unavailable right now...');
 
         $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
-        $simillar_products = Product::select('id', 'name', 'image')->where('category_id', $product->category_id)->limit(10)->get();
+        $simillar_products = Product::select('id', 'name', 'image')->where('category_id', $product->category_id)->where('quantity', '>', 0)->limit(10)->get();
 
         $data = compact('product', 'simillar_products', 'categories');
         return view('frontend.product', $data);
@@ -219,7 +219,7 @@ class HomeController extends Controller
             return response()->json([]);
         }
 
-        $products = Product::where('name', 'like', '%' . $query . '%')->where('public', true)->take(5)->get(['id', 'name', 'image']);
+        $products = Product::where('name', 'like', '%' . $query . '%')->where('public', true)->where('quantity', '>', 0)->take(5)->get(['id', 'name', 'image']);
 
         $products = $products->map(function ($product) {
             $product->url = route('product', $product->name);

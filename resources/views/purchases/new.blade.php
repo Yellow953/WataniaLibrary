@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-4 order-2 order-md-1">
             <div class="card my-4 mt-md-0 shadow-sm radius-10px">
-                <img src="{{ asset('assets/images/sales_order.png') }}" alt="Sales Order" class="img-fluid">
+                <img src="{{ asset('assets/images/stock.png') }}" alt="Sales Order" class="img-fluid">
             </div>
 
             <div class="card p-4 my-4 mt-md-0 shadow-sm products-container">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div id="no-results" class="text-muted text-center d-none">No matching products found.</div>
-                <div id="products" class="px-5 max-h-400px">
+                <div id="products" class="px-5 max-h-400px custom_scroller">
                     @foreach ($products as $product)
                     <div class="product-row row" data-name="{{ strtolower($product->name) }}">
                         <div class="col-9 pb-2 my-auto">

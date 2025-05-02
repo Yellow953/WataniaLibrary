@@ -23,11 +23,14 @@ class AppController extends Controller
     {
         $business = Business::firstOrFail();
         $currency = auth()->user()->currency;
-        $categories = Category::select('id', 'name', 'image')->with('products')->get();
         $currencies = Currency::select('id', 'code')->get();
         $bank_notes = BankNote::where('currency_code', auth()->user()->currency->code)->get();
         $clients = Client::select('id', 'name')->get();
         $last_order = Order::whereNotNull('cashier_id')->orderBy('created_at', 'DESC')->first();
+        $categories = Category::select('id', 'name', 'image')
+            ->with(['products' => function ($query) {
+                $query->where('quantity', '>', 0);
+            }])->get();
 
         $data = compact('categories', 'currency', 'currencies', 'bank_notes', 'last_order', 'business', 'clients');
         return view('index', $data);

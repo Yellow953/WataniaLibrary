@@ -122,19 +122,18 @@
                                 id="kt_pos_food_content_{{ $category->id }}">
                                 <div class="d-flex flex-wrap d-grid gap-3">
                                     @forelse ($category->products as $product)
-                                    <div class="card card-flush flex-row-fluid p-0 pb-5 mw-100 border-primary product-item"
+                                    <div class="card card-flush flex-row-fluid p-0 pb-5 mw-100 border-primary product-item align-items-center"
                                         data-product-id="{{ $product->id }}">
-                                        <div class="card-body text-center">
+                                        <div class="card-body text-center w-150px">
                                             <img src="{{ asset($product->image) }}"
                                                 class="rounded-3 mb-4 w-150px h-150px" alt="{{ $product->name }}" />
                                             <div class="mb-2">
-                                                <div class="text-center">
-                                                    <span
-                                                        class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{
-                                                        ucwords($product->name) }}</span>
+                                                <div
+                                                    class="text-center fw-bold text-gray-800 cursor-pointer text-hover-primary w-150px px-2">
+                                                    {{ ucwords($product->name) }}
                                                 </div>
                                             </div>
-                                            <span class="text-success text-end fw-bold fs-1">{{
+                                            <span class="text-success text-end fw-bold">{{
                                                 number_format($product->price * $currency->rate, 2) }}
                                                 {{ $currency->symbol }}</span>
                                         </div>

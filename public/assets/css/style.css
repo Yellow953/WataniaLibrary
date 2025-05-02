@@ -837,6 +837,16 @@ table thead tr th {
     transition: all 0.3s ease;
 }
 
+.max-h-400px {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.radius-10px {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 @media only screen and (max-width: 600px) {
     .backup-img {
         height: 150px;
