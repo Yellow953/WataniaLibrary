@@ -194,10 +194,6 @@
                                 <span class="fw-bold">Currency:</span>
                                 <span>{{ $user->currency->name }}</span>
                             </div>
-                            <div class="user-info-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Business:</span>
-                                <span>{{ ucwords($user->business->name) }}</span>
-                            </div>
                         </div>
                     </div>
                 </div>

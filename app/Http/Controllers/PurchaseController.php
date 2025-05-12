@@ -31,7 +31,7 @@ class PurchaseController extends Controller
     public function new()
     {
         $suppliers = Supplier::select('id', 'name')->get();
-        $products = Product::select('id', 'name')->where('quantity', '>', 0)->get();
+        $products = Product::select('id', 'name')->get();
 
         $data = compact('suppliers', 'products');
         return view('purchases.new', $data);
@@ -105,7 +105,7 @@ class PurchaseController extends Controller
 
     public function edit(Purchase $purchase)
     {
-        $products = Product::select('id', 'name')->where('quantity', '>', 0)->get();
+        $products = Product::select('id', 'name')->get();
 
         $data = compact('purchase', 'products');
         return view('purchases.edit', $data);
