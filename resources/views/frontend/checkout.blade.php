@@ -184,7 +184,7 @@
                 cartItem.classList.add('cart-item', 'd-flex', 'align-items-center', 'mb-3');
 
                 cartItem.innerHTML = `
-                                                                            <img src="${item.image}" alt="${item.name}" class="me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                                            <img src="${item.image}" alt="${item.name}" class="border-custom me-3" style="width: 60px; height: 60px; object-fit: cover;">
                                                                                 <div>
                                                                                     <p class="mb-0">${item.name}</p>
                                                                                     <small>Quantity: ${item.quantity}</small>

@@ -65,6 +65,7 @@ class HomeController extends Controller
     {
         $categories = Category::select('id', 'name', 'image')
             ->whereNull('parent_id')
+            ->limit(6)
             ->with('subCategories')
             ->get();
 

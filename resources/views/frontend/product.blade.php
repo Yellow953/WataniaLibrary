@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-6 mt-5">
                 <div class="card mb-3 position-relative overflow-hidden">
-                    <img class="card-img img-fluid" src="{{ asset($product->image) }}" alt="Product image"
+                    <img class="card-img img-fluid border-custom" src="{{ asset($product->image) }}" alt="Product image"
                         id="product-detail">
                 </div>
 
@@ -22,7 +22,7 @@
                                     @if ($product->secondary_images->count() != 0)
                                     <div class="col-4 p-2">
                                         <a href="#" class="secondary-image" data-image="{{ asset($product->image) }}">
-                                            <img class="card-img secondary-img border img-fluid"
+                                            <img class="card-img border-custom secondary-img border img-fluid"
                                                 src="{{ asset($product->image) }}">
                                         </a>
                                     </div>
@@ -30,7 +30,7 @@
                                     @foreach ($product->secondary_images as $image)
                                     <div class="col-4 p-2">
                                         <a href="#" class="secondary-image" data-image="{{ asset($image->path) }}">
-                                            <img class="card-img secondary-img border img-fluid"
+                                            <img class="card-img border-custom secondary-img border img-fluid"
                                                 src="{{ asset($image->path) }}">
                                         </a>
                                     </div>
@@ -130,11 +130,13 @@
                         <div class="row justify-content-center">
                             @foreach ($chunk as $pr)
                             <div class="col-4 col-md-2">
-                                <a href="{{ route('product', $pr->name) }}" class="text-decoration-none">
-                                    <img class="card-img border img-fluid" src="{{ asset($pr->image) }}"
-                                        alt="{{ $pr->name }}">
-                                    <h5 class="text-center text-primary text-shadow-sm mt-2">{{ $pr->name }}</h5>
-                                </a>
+                                <div class="card border-custom">
+                                    <a href="{{ route('product', $pr->name) }}" class="text-decoration-none">
+                                        <img class="card-img border img-fluid" src="{{ asset($pr->image) }}"
+                                            alt="{{ $pr->name }}">
+                                        <h5 class="text-center text-primary text-shadow-sm mt-2">{{ $pr->name }}</h5>
+                                    </a>
+                                </div>
                             </div>
                             @endforeach
                         </div>
