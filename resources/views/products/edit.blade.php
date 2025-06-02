@@ -160,6 +160,9 @@
 
                 <div class="row">
                     <h2 class="text-primary my-3">Barcodes and SKU</h2>
+                    <div class="mx-1 mb-3 fs-6 text-tertary">
+                        Barcodes that are entered here can be generated from products -> generate barcodes page...
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="form-label">Barcodes</label>
@@ -181,7 +184,9 @@
 
                 <div class="row">
                     <h2 class="text-primary my-3">Secondary Images</h2>
-
+                    <div class="mx-1 mb-3 fs-6 text-tertary">
+                        Secondary Images can also be used as variant images...
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="form-label">Secondary Images</label>
@@ -190,7 +195,7 @@
                         </div>
 
                         <div id="existingImages" class="d-flex flex-wrap mt-2">
-                            @foreach ($product->images as $image)
+                            @foreach ($product->secondary_images as $image)
                             <div class="position-relative m-1">
                                 <img src="{{ asset($image->path) }}" class="rounded border" width="100" height="100">
                                 <a href="{{ route('products.secondary_images.delete', $image->id) }}"
@@ -200,6 +205,51 @@
                         </div>
 
                         <div id="imagePreviewContainer" class="d-flex flex-wrap mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h2 class="text-primary my-3">Variants</h2>
+                    <div class="mx-1 mb-3 fs-6 text-tertary">
+                        Variants are variations of the same product ex: size, color, remove, ... <br>
+                        Options are the values
+                        of the variant ex: Small, Medium, Large, Blue, Red... <br>
+                        Option Price should be 0 if the price is
+                        the same otherwise its added to the product price above... <br>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="variant-wrapper">
+                            @foreach ($product->variants as $variant)
+                            <div class="variant-group mb-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <h3 class="border rounded py-2 px-4 w-25">{{ $variant->title }}</h3>
+                                    <a href="{{ route('products.variants.delete', $variant->id) }}"
+                                        class="btn btn-danger btn-sm remove-variant"><i class="fa fa-trash"></i></a>
+                                </div>
+                                <div class="variant-options mt-2">
+                                    @foreach ($variant->options as $option)
+                                    <div class="input-group mb-2">
+                                        <div class="row w-100">
+                                            <div class="col-5 my-auto">
+                                                <h4 class="border rounded py-2 px-4">{{ $option->value }}</h4>
+                                            </div>
+                                            <div class="col-5 my-auto">
+                                                <h4 class="border rounded py-2 px-4">{{ $option->price }}</h4>
+                                            </div>
+                                            <div class="col-2 my-auto"><a
+                                                    href="{{ route('products.variant_options.delete', $option->id) }}"
+                                                    class="btn btn-danger btn-sm remove-option"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        <button type="button" id="add-variant" class="btn btn-primary mt-2"><i class="fa fa-plus"></i>
+                            Add Variant</button>
                     </div>
                 </div>
             </div>
@@ -214,6 +264,18 @@
 </div>
 
 <script>
+    // Disable Barcode ENTER
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
+            event.preventDefault();
+
+            if (event.target.tagName === 'INPUT') {
+                event.target.value.trim();
+            }
+        }
+    });
+
+    // Barcodes
     document.addEventListener('DOMContentLoaded', function() {
         var barcodeWrapper = document.getElementById('barcode-wrapper');
         var addBarcodeBtn = document.getElementById('add-barcode');
@@ -259,6 +321,7 @@
         checkDuplicates();
     });
 
+    // Secondary Images
     document.addEventListener("DOMContentLoaded", function () {
         let secondaryImagesInput = document.getElementById("secondaryImagesInput");
         let previewContainer = document.getElementById("imagePreviewContainer");
@@ -303,6 +366,65 @@
 
                 secondaryImagesInput.files = dt.files;
                 event.target.parentElement.remove();
+            }
+        });
+    });
+
+    // Variants
+    document.addEventListener('DOMContentLoaded', function() {
+        var variantWrapper = document.getElementById('variant-wrapper');
+        var addVariantBtn = document.getElementById('add-variant');
+        var variantIndex = 1;
+
+        addVariantBtn.addEventListener('click', function() {
+            var newVariantGroup = document.createElement('div');
+            newVariantGroup.classList.add('variant-group', 'mb-3');
+            newVariantGroup.innerHTML = `
+                <div class="d-flex align-items-center gap-2">
+                    <input type="text" class="form-control w-25" name="variants[${variantIndex}][title]" placeholder="Variant Title (e.g., Size, Color)" required>
+                    <button type="button" class="btn btn-danger remove-variant"><i class="fa fa-trash"></i></button>
+                </div>
+                <div class="variant-options mt-2">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control w-50" name="variants[${variantIndex}][options][0][value]" placeholder="Option (e.g., S, Red)" required>
+                        <input type="number" class="form-control w-25" name="variants[${variantIndex}][options][0][price]" placeholder="Price" required step="0.01">
+                        <button type="button" class="btn btn-danger remove-option"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success btn-sm add-option"><i class="fa fa-plus"></i> Add Option</button>
+            `;
+            variantWrapper.appendChild(newVariantGroup);
+            variantIndex++;
+        });
+
+        variantWrapper.addEventListener('click', function(event) {
+            if (event.target.closest('.remove-variant')) {
+                event.target.closest('.variant-group').remove();
+            }
+        });
+
+        variantWrapper.addEventListener('click', function(event) {
+            if (event.target.closest('.add-option')) {
+                var variantGroup = event.target.closest('.variant-group');
+                var optionsContainer = variantGroup.querySelector('.variant-options');
+                var variantInput = variantGroup.querySelector('input[name^="variants["]');
+                var variantId = variantInput.name.match(/\d+/)[0];
+                var optionIndex = optionsContainer.querySelectorAll('.input-group').length;
+
+                var newOption = document.createElement('div');
+                newOption.classList.add('input-group', 'mb-2');
+                newOption.innerHTML = `
+                    <input type="text" class="form-control w-50" name="variants[${variantId}][options][${optionIndex}][value]" placeholder="Option (e.g., M, Blue)" required>
+                    <input type="number" class="form-control w-25" name="variants[${variantId}][options][${optionIndex}][price]" placeholder="Price" required step="0.01">
+                    <button type="button" class="btn btn-danger remove-option"><i class="fa fa-trash"></i></button>
+                `;
+                optionsContainer.appendChild(newOption);
+            }
+        });
+
+        variantWrapper.addEventListener('click', function(event) {
+            if (event.target.closest('.remove-option')) {
+                event.target.closest('.input-group').remove();
             }
         });
     });

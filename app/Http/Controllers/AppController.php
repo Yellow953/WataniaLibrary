@@ -23,16 +23,22 @@ class AppController extends Controller
     {
         $business = Business::firstOrFail();
         $currency = auth()->user()->currency;
+        $exchange_rate = Currency::where('code', 'LBP')->firstOrFail()->rate;
         $currencies = Currency::select('id', 'code')->get();
-        $bank_notes = BankNote::where('currency_code', auth()->user()->currency->code)->get();
-        $clients = Client::select('id', 'name')->get();
-        $last_order = Order::whereNotNull('cashier_id')->orderBy('created_at', 'DESC')->first();
+        $bank_notes = BankNote::get();
+        $last_order = Order::whereNotNull('cashier_id')->latest()->first();
+        $clients = Client::select('id', 'name')->orderBy('created_at', 'DESC')->get();
         $categories = Category::select('id', 'name', 'image')
-            ->with(['products' => function ($query) {
-                $query->where('quantity', '>', 0);
-            }])->get();
+            ->with([
+                'products' => function ($query) {
+                    $query->where('quantity', '>', 0)
+                        ->with(['variants.options', 'barcodes']);
+                }
+            ])
+            ->get();
+        $encryptedPassword = null;
 
-        $data = compact('categories', 'currency', 'currencies', 'bank_notes', 'last_order', 'business', 'clients');
+        $data = compact('categories', 'currency', 'exchange_rate', 'currencies', 'bank_notes', 'last_order', 'business', 'clients', 'encryptedPassword');
         return view('index', $data);
     }
 
@@ -44,7 +50,7 @@ class AppController extends Controller
             $text = '';
 
             $order = Order::create([
-                'cashier_id' => auth()->user()->id,
+                'cashier_id' => auth()->id(),
                 'client_id' => $request->client_id,
                 'currency_id' => auth()->user()->currency_id,
                 'order_number' => Order::generate_number(),
@@ -54,6 +60,10 @@ class AppController extends Controller
                 'total' => $request->grand_total,
                 'products_count' => count(json_decode($request->order_items, true)),
                 'note' => $request->note ?? null,
+                'exchange_rate' => $request->exchange_rate,
+                'payment_currency' => $request->payment_currency,
+                'amount_paid' => $request->amount_paid,
+                'change_due' => $request->change_due,
             ]);
 
             $text .= 'User ' . ucwords(auth()->user()->name) . ' created Order NO: ' . $order->order_number . " of Sub Total: {$request->total}, tax: {$request->tax}, discount: {$request->discount}, Total: {$request->grand_total}";
@@ -68,12 +78,20 @@ class AppController extends Controller
                     continue;
                 }
 
+                $variantTotalPrice = $item['price'];
+                if (isset($item['options']) && is_array($item['options'])) {
+                    foreach ($item['options'] as $option) {
+                        $variantTotalPrice += $option['optionPrice'];
+                    }
+                }
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item['id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
-                    'total' => $item['price'] * $item['quantity'],
+                    'total' => $variantTotalPrice * $item['quantity'],
+                    'variant_details' => isset($item['options']) ? json_encode($item['options']) : null,
                 ]);
 
                 $product->update(['quantity' => ($product->quantity - $item['quantity'])]);
@@ -114,7 +132,7 @@ class AppController extends Controller
             $discount = $request->discount ?? 0;
 
             $order = Order::create([
-                'cashier_id' => auth()->user()->id,
+                'cashier_id' => auth()->id(),
                 'client_id' => $request->client_id,
                 'currency_id' => auth()->user()->currency_id,
                 'order_number' => Order::generate_number(),
@@ -124,8 +142,11 @@ class AppController extends Controller
                 'total' => $request->total,
                 'products_count' => count($request->orderItems),
                 'note' => $request->note,
+                'exchange_rate' => $request->exchangeRate,
+                'payment_currency' => $request->paymentCurrency,
+                'amount_paid' => $request->amountPaid,
+                'change_due' => $request->changeDue,
             ]);
-
             $text .= 'User ' . ucwords(auth()->user()->name) . ' created Order NO: ' . $order->order_number . " of Sub Total: {$request->total}, tax: {$tax}, discount: {$discount}, Total: {$request->grand_total}";
 
             foreach ($request->orderItems as $item) {
@@ -135,12 +156,20 @@ class AppController extends Controller
                     continue;
                 }
 
+                $variantTotalPrice = $item['price'];
+                if (isset($item['options']) && is_array($item['options'])) {
+                    foreach ($item['options'] as $option) {
+                        $variantTotalPrice += $option['optionPrice'];
+                    }
+                }
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item['id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
-                    'total' => $item['price'] * $item['quantity'],
+                    'total' => $variantTotalPrice * $item['quantity'],
+                    'variant_details' => isset($item['options']) ? json_encode($item['options']) : null,
                 ]);
 
                 $product->update(['quantity' => ($product->quantity - $item['quantity'])]);

@@ -10,6 +10,8 @@ use App\Models\Log;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\SecondaryImage;
+use App\Models\Variant;
+use App\Models\VariantOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -55,7 +57,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
-            $filename = auth()->user()->id . '_' . time() . '.' . $ext;
+            $filename = auth()->id() . '_' . time() . '.' . $ext;
             $image = Image::make($file);
             $image->fit(300, 300, function ($constraint) {
                 $constraint->upsize();
@@ -108,6 +110,21 @@ class ProductController extends Controller
             }
         }
 
+        if ($request->variants) {
+            foreach ($request->variants as $variant) {
+                $variantModel = $product->variants()->create([
+                    'title' => $variant['title']
+                ]);
+
+                foreach ($variant['options'] as $option) {
+                    $variantModel->options()->create([
+                        'value' => $option['value'],
+                        'price' => $option['price']
+                    ]);
+                }
+            }
+        }
+
         $text = ucwords(auth()->user()->name) .  " created Product: " . $product->name . ", datetime: " . now();
         Log::create(['text' => $text]);
 
@@ -137,7 +154,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
-            $filename = auth()->user()->id . '_' . time() . '.' . $ext;
+            $filename = auth()->id() . '_' . time() . '.' . $ext;
             $image = Image::make($file);
             $image->fit(300, 300, function ($constraint) {
                 $constraint->upsize();
@@ -178,6 +195,21 @@ class ProductController extends Controller
             }
         }
 
+        if ($request->variants) {
+            foreach ($request->variants as $variant) {
+                $variantModel = $product->variants()->create([
+                    'title' => $variant['title']
+                ]);
+
+                foreach ($variant['options'] as $option) {
+                    $variantModel->options()->create([
+                        'value' => $option['value'],
+                        'price' => $option['price']
+                    ]);
+                }
+            }
+        }
+
         $product->update([
             'name' => $request->name,
             'cost' => $request->cost,
@@ -190,13 +222,6 @@ class ProductController extends Controller
             'public' => ($request->input('public') == 'on') ? true : false,
             'image' => $path,
         ]);
-
-        if ($request->barcodes) {
-            $product->barcodes()->delete();
-            foreach ($request->barcodes as $barcode) {
-                $product->barcodes()->create(['barcode' => $barcode]);
-            }
-        }
 
         $text = ucwords(auth()->user()->name) .  " updated Product: " . $request->name . ", datetime: " . now();
         Log::create(['text' => $text]);
@@ -216,6 +241,19 @@ class ProductController extends Controller
 
             foreach ($product->barcodes as $barcode) {
                 $barcode->delete();
+            }
+
+            foreach ($product->secondary_images as $image) {
+                $path = public_path($image->path);
+                File::delete($path);
+                $image->delete();
+            }
+
+            foreach ($product->variants as $variant) {
+                foreach ($variant->options as $option) {
+                    $option->delete();
+                }
+                $variant->delete();
             }
 
             $product->delete();
@@ -304,6 +342,24 @@ class ProductController extends Controller
         $secondary_image->delete();
 
         return redirect()->back()->with('danger', 'Image deleted successfully...');
+    }
+
+    public function variant_delete(Variant $variant)
+    {
+        foreach ($variant->options as $option) {
+            $option->delete();
+        }
+
+        $variant->delete();
+
+        return redirect()->back()->with('danger', 'Variant deleted successfully...');
+    }
+
+    public function variant_option_delete(VariantOption $variant_option)
+    {
+        $variant_option->delete();
+
+        return redirect()->back()->with('danger', 'Variant option deleted successfully...');
     }
 
     public function export(Request $request)

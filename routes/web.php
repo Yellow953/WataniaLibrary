@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('quick')->group(function () {
             Route::post('/new_client', [ClientController::class, 'new_client'])->name('quick.new_client');
             Route::post('/new_debt', [DebtController::class, 'new_debt'])->name('quick.new_debt');
-            Route::post('/new_report', [ReportController::class, 'new_report'])->name('quick.new_report');
+            Route::post('/reports/create', [ReportController::class, 'create'])->name('reports.create');
         });
 
         // Users
@@ -123,12 +123,13 @@ Route::middleware(['auth'])->group(function () {
         // Products
         Route::prefix('products')->group(function () {
             Route::get('/secondary_images/{secondary_image}/delete', [ProductController::class, 'secondary_image_delete'])->name('products.secondary_images.delete');
+            Route::get('/variants/{variant}/delete', [ProductController::class, 'variant_delete'])->name('products.variants.delete');
+            Route::get('/variant_options/{variant_option}/delete', [ProductController::class, 'variant_option_delete'])->name('products.variant_options.delete');
             Route::get('/export', [ProductController::class, 'export'])->name('products.export');
             Route::post('/import', [ProductController::class, 'import'])->name('products.import');
             Route::get('/sample', [ProductController::class, 'sample'])->name('products.sample');
             Route::get('/new', [ProductController::class, 'new'])->name('products.new');
             Route::post('/create', [ProductController::class, 'create'])->name('products.create');
-            Route::get('/generate_barcodes', [ProductController::class, 'generate_barcodes'])->name('products.generate_barcodes');
             Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
             Route::post('/{product}/update', [ProductController::class, 'update'])->name('products.update');
             Route::get('/{product}/add', [ProductController::class, 'add'])->name('products.add');
@@ -153,14 +154,9 @@ Route::middleware(['auth'])->group(function () {
         // Reports Routes
         Route::prefix('reports')->group(function () {
             Route::get('/export', [ReportController::class, 'export'])->name('reports.export');
-            Route::get('/new', [ReportController::class, 'new'])->name('reports.new');
-            Route::post('/create', [ReportController::class, 'create'])->name('reports.create');
-            Route::get('/{report}/edit', [ReportController::class, 'edit'])->name('reports.edit');
-            Route::post('/{report}/update', [ReportController::class, 'update'])->name('reports.update');
+            Route::get('/pdf', [ReportController::class, 'pdf'])->name('reports.pdf');
             Route::get('/{report}/delete', [ReportController::class, 'destroy'])->name('reports.destroy');
-            Route::get('/data', [ReportController::class, 'data'])->name('reports.data');
-            Route::get('/sales', [ReportController::class, 'sales'])->name('reports.sales');
-            Route::get('/{date}/show', [ReportController::class, 'show'])->name('reports.show');
+            Route::get('/{report}/show', [ReportController::class, 'show'])->name('reports.show');
             Route::get('/', [ReportController::class, 'index'])->name('reports');
         });
 

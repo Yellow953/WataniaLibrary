@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Debt;
-use App\Models\Report;
 use App\Models\OrderItem;
 use App\Models\Order;
 use App\Models\Product;
@@ -70,16 +69,6 @@ class AnalyticsController extends Controller
         $salesByWeek = $this->getSalesData('week');
         $salesByMonth = $this->getSalesData('month');
 
-        // Cash flow
-
-        $reports = $this->getCashFlowData();
-        $cash_flow_dates = [];
-        $cash_flow_diff = [];
-        foreach ($reports as $report) {
-            $cash_flow_dates[] = $report->date;
-            $cash_flow_diff[] = $report->cash_in - $report->cash_out;
-        }
-
         // Fetch products with category and calculate profit
         $products = Product::with('category')->get()->map(function ($product) {
             $profit = $product->price - $product->cost;
@@ -120,7 +109,7 @@ class AnalyticsController extends Controller
             }
         }
 
-        $data = compact('totalClientDebt',   'reports', 'currency', 'totalSupplierDebt', 'hourly_orders', 'quantityData', 'revenueData', 'salesByDay', 'salesByWeek', 'salesByMonth', 'cash_flow_dates', 'cash_flow_diff', 'products', 'todays_orders', 'todays_orders_count', 'todays_sales', 'todays_profit');
+        $data = compact('totalClientDebt', 'currency', 'totalSupplierDebt', 'hourly_orders', 'quantityData', 'revenueData', 'salesByDay', 'salesByWeek', 'salesByMonth', 'products', 'todays_orders', 'todays_orders_count', 'todays_sales', 'todays_profit');
         return view('analytics.index', $data);
     }
 
@@ -168,18 +157,6 @@ class AnalyticsController extends Controller
             ->where('created_at', '>=', $dateCondition)
             ->groupBy('period')
             ->orderBy('period')
-            ->get();
-    }
-
-    private function getCashFlowData()
-    {
-        return Report::select(
-            'date',
-            'start_cash',
-            'end_cash'
-        )
-            ->orderBy('date', 'asc')
-            ->limit(30)
             ->get();
     }
 

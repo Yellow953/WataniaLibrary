@@ -143,8 +143,6 @@ class ClientController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'country' => 'Lebanon',
-            'city' => null,
             'address' => $request->address,
         ]);
 
@@ -153,7 +151,14 @@ class ClientController extends Controller
             'text' => $text,
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Client created successfully!']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Client created successfully!',
+            'client' => [
+                'id' => $client->id,
+                'name' => ucwords($client->name)
+            ]
+        ]);
     }
 
     public function history(Client $client)

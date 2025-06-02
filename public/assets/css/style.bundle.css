@@ -34117,8 +34117,8 @@ fieldset:disabled .btn {
     --bs-menu-link-bg-color-show: #f4f6fa;
     --bs-menu-link-bg-color-here: #f4f6fa;
     --bs-menu-link-bg-color-active: #f4f6fa;
-    --bs-scrollbar-color: #f4f4f4;
-    --bs-scrollbar-hover-color: #efefef;
+    --bs-scrollbar-color: #f35961;
+    --bs-scrollbar-hover-color: #f35961;
     --bs-scrollbar-size: 5px;
     --bs-scrollbar-overlay-size: 19px;
     --bs-scrollbar-overlay-space: 7px;
@@ -34264,8 +34264,8 @@ fieldset:disabled .btn {
     --bs-menu-link-bg-color-show: #2b2b40;
     --bs-menu-link-bg-color-here: #2b2b40;
     --bs-menu-link-bg-color-active: #2b2b40;
-    --bs-scrollbar-color: #2b2b40;
-    --bs-scrollbar-hover-color: #27273a;
+    --bs-scrollbar-color: #f35961;
+    --bs-scrollbar-hover-color: #f35961;
     --bs-overlay-bg: rgba(255, 255, 255, 0.05);
     --bs-blockui-overlay-bg: rgba(255, 255, 255, 0.05);
     --bs-rating-color-default: #474761;
@@ -62047,12 +62047,4 @@ body,
     [data-kt-app-layout="dark-header"] .app-header .page-heading {
         color: #ffffff !important;
     }
-}
-
-.border-custom {
-    border: 3px solid var(--bs-border-dashed-color);
-}
-
-.border-custom:hover {
-    border: 3px solid var(--bs-primary);
 }

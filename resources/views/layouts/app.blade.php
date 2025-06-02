@@ -3,7 +3,7 @@
 <!--begin::Head-->
 
 <head>
-    <title>Watania | {{ ucwords(View::yieldContent('title')) }}</title>
+    <title>Watania Library | {{ ucwords(View::yieldContent('title')) }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

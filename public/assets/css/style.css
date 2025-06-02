@@ -11,6 +11,7 @@
     --danger: #dc3545;
     --warning: #ffc107;
     --muted: #6c757d;
+    --border: #e1e3ea;
 }
 
 .alert {
@@ -124,7 +125,25 @@ table thead tr th {
     margin-bottom: 10px;
 }
 
-.bank-note:hover,
+.bank-note {
+    border: 2px solid var(--primary);
+    color: black;
+}
+
+.bank-note:hover {
+    background-color: var(--light-primary);
+    color: white;
+}
+
+.bg-custom-1 {
+    background-color: var(--light-primary);
+    color: white;
+}
+.bg-custom-2 {
+    background-color: var(--primary);
+    color: white;
+}
+
 .product-item:hover {
     cursor: pointer;
 }
@@ -845,6 +864,10 @@ table thead tr th {
 .radius-10px {
     border-radius: 10px;
     overflow: hidden;
+}
+
+.border-custom {
+    border: 3px solid var(--border);
 }
 
 @media only screen and (max-width: 600px) {

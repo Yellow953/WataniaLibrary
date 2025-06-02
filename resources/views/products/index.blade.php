@@ -80,24 +80,31 @@
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="fs-6 form-label fw-bold text-dark">Reference</label>
                         <input type="text" class="form-control form-control-solid border" name="reference"
                             value="{{ request()->query('reference') }}" placeholder="Enter Reference..." />
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="fs-6 form-label fw-bold text-dark">Group</label>
                         <input type="text" class="form-control form-control-solid border" name="group"
                             value="{{ request()->query('group') }}" placeholder="Enter Group..." />
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="fs-6 form-label fw-bold text-dark">Brand</label>
                         <input type="text" class="form-control form-control-solid border" name="brand"
                             value="{{ request()->query('brand') }}" placeholder="Enter Brand..." />
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-md-6">
+                        <label class="fs-6 form-label fw-bold text-dark">Barcode</label>
+                        <input type="text" class="form-control form-control-solid border" name="barcode"
+                            value="{{ request()->query('barcode') }}" placeholder="Enter Barcode..." />
                     </div>
                     <!--end::Col-->
                 </div>

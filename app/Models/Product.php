@@ -22,7 +22,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function images()
+    public function secondary_images()
     {
         return $this->hasMany(SecondaryImage::class);
     }
@@ -30,6 +30,11 @@ class Product extends Model
     public function barcodes()
     {
         return $this->hasMany(Barcode::class);
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
     }
 
     public function items()
@@ -68,6 +73,11 @@ class Product extends Model
         if (request('brand')) {
             $brand = request('brand');
             $q->where('brand', 'LIKE', "%{$brand}%");
+        }
+        if (request('barcode')) {
+            $q->whereHas('barcodes', function ($query) {
+                $query->where('barcode', 'LIKE', '%' . request('barcode') . '%');
+            });
         }
 
         return $q;
