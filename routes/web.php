@@ -260,6 +260,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/checkout', [AppController::class, 'checkout'])->name('checkout');
         Route::post('/sync', [AppController::class, 'sync'])->name('sync');
 
+        Route::get('/fix', [AppController::class, 'fix'])->name('fix');
+
         // Dashboard
         Route::get('/', [AppController::class, 'index'])->name('dashboard');
     });

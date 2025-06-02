@@ -178,4 +178,9 @@ class AppController extends Controller
             return redirect()->route($res->link);
         }
     }
+
+    public function fix()
+    {
+        return 'fixed...';
+    }
 }
