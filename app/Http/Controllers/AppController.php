@@ -210,6 +210,21 @@ class AppController extends Controller
 
     public function fix()
     {
+        $products = Product::all();
+
+        foreach ($products as $product) {
+            if ($product->reference) {
+                $imagePath = '/uploads/products/' . $product->reference . '.png';
+                $fullPath = public_path($imagePath);
+
+                $finalPath = file_exists($fullPath) ? $imagePath : '/assets/images/no_img.png';
+
+                $product->update([
+                    'image' => $finalPath,
+                ]);
+            }
+        }
+
         return 'fixed...';
     }
 }
