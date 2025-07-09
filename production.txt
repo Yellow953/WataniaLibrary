@@ -1,5 +1,6 @@
-item carousel not symmetric and price 0
+item carousel dynamic items
 discount by item
 total discount %
-mega menu fix
+? mega menu fix
+? categories cleanup
 orders index => sometimes total 0
