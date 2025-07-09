@@ -1013,7 +1013,7 @@
 
             receiptWindow.onload = () => {
                 receiptWindow.print();
-                receiptWindow.close();
+                // receiptWindow.close();
             };
         }
 

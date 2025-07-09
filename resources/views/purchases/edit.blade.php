@@ -33,9 +33,17 @@
                 <div id="no-results" class="text-muted text-center d-none">No matching products found.</div>
                 <div id="products" class="px-5 max-h-400px custom_scroller">
                     @foreach ($products as $product)
-                    <div class="product-row row" data-name="{{ strtolower($product->name) }}">
+                    <div class="product-row row" data-name="{{ strtolower($product->name) }}"
+                        data-barcodes="{{ strtolower($product->barcodes->pluck('barcode')->implode(',')) }}">
                         <div class="col-9 pb-2 my-auto">
-                            {{ $product->name }}
+                            <span class="fw-bold">{{ $product->name }} </span> <br />
+                            @if ($product->barcodes->count() > 0)
+                            Barcodes:
+                            @foreach ($product->barcodes as $index => $barcode)
+                            {{ $index != 0 ? ',' : '' }}
+                            {{ $barcode->barcode }}
+                            @endforeach
+                            @endif
                         </div>
                         <div class="col-3 pb-2 my-auto text-end">
                             <button class="btn btn-sm btn-success px-4"
@@ -176,15 +184,23 @@
     }
 
     document.getElementById('searchInput').addEventListener('input', function () {
-        const query = this.value.trim().toLowerCase();
+        const rawQuery = this.value.toLowerCase().trim();
+        const query = rawQuery.replace(/\s+/g, '');
         const productRows = document.querySelectorAll('.product-row');
         let visibleCount = 0;
 
         productRows.forEach(row => {
-            const name = row.getAttribute('data-name');
-            const match = name.includes(query);
-            row.style.display = match ? 'flex' : 'none';
-            if (match) visibleCount++;
+            const name = (row.getAttribute('data-name') || '').toLowerCase();
+            const barcodesRaw = (row.getAttribute('data-barcodes') || '').toLowerCase();
+            const barcodes = barcodesRaw.replace(/\s+/g, '');
+
+            const nameMatch = name.includes(query);
+            const barcodeMatch = barcodes.split(',').some(b => b.includes(query));
+
+            const isMatch = nameMatch || barcodeMatch;
+
+            row.style.display = isMatch ? 'flex' : 'none';
+            if (isMatch) visibleCount++;
         });
 
         document.getElementById('no-results').classList.toggle('d-none', visibleCount > 0);
