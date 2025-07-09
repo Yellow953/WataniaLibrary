@@ -332,7 +332,8 @@ class ProductController extends Controller
 
     public function generate_barcodes()
     {
-        return view('products.generate_barcodes');
+        $products = Product::select('id', 'name', 'price')->get();
+        return view('products.generate_barcodes', compact('products'));
     }
 
     public function secondary_image_delete(SecondaryImage $secondary_image)
