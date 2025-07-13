@@ -51,7 +51,8 @@
                                         <tr>
                                             <th class="min-w-150px"></th>
                                             <th class="w-100px"></th>
-                                            <th class="w-50px"></th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="order_items">
@@ -70,9 +71,9 @@
                                     <span class="d-block lh-1 mb-4" data-kt-pos-element="total">{{ $currency->symbol
                                         }}0.00</span>
                                     <span class="d-block mb-4 text-danger" data-kt-pos-element="discount"
-                                        id="discount_text">{{ $currency->symbol }}0.00</span>
+                                        id="discount_text">0%</span>
                                     <input type="number" class="form-control d-none" id="discount_input" min="0"
-                                        step="any" placeholder="Enter discount">
+                                        max="100" step="0.01" placeholder="Enter discount percentage">
                                     <span class="d-block mb-9" data-kt-pos-element="tax">{{ $currency->symbol
                                         }}0.00</span>
                                     <span class="d-block fs-2qx lh-1" data-kt-pos-element="grant-total">{{

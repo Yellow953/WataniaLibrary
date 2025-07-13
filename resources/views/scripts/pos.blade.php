@@ -13,7 +13,6 @@
                 currency: this.systemCurrency,
                 minimumFractionDigits: 2
             });
-            this.ENCRYPTED_PASSWORD = {{ $encryptedPassword ?? 'null' }};
 
             // State
             this.orderItems = [];
@@ -96,6 +95,15 @@
                     this.handleQuantityChange(target.closest(this.SELECTORS.QUANTITY_INCREASE), 1);
                 } else if (target.closest(this.SELECTORS.DELETE_ITEM)) {
                     this.handleDeleteItem(target.closest(this.SELECTORS.DELETE_ITEM));
+                }
+            });
+
+            this.cachedElements.orderTable.addEventListener('change', (e) => {
+                if (e.target.classList.contains('item-discount')) {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    const discountValue = parseFloat(e.target.value) || 0;
+                    this.orderItems[index].discount = Math.min(Math.max(discountValue, 0), 100);
+                    this.updateOrderTable();
                 }
             });
 
@@ -480,7 +488,8 @@
                     price: productData.price,
                     quantity: 1,
                     image: productData.image,
-                    options: options
+                    options: options,
+                    discount: 0
                 });
             }
 
@@ -518,6 +527,15 @@
         handleDeleteItem(button) {
             const index = parseInt(button.getAttribute('data-index'));
             this.orderItems.splice(index, 1);
+            this.updateOrderTable();
+        }
+
+        handleItemDiscountChange(button, change) {
+            const index = parseInt(button.getAttribute('data-index'));
+            const item = this.orderItems[index];
+
+            item.discount = Math.min(Math.max(item.discount + change, 0), 100);
+
             this.updateOrderTable();
         }
 
@@ -567,7 +585,17 @@
                     </div>
                 </td>
                 <td class="text-end">
-                    <span class="text-gray-800 fw-bold" data-kt-pos-element="item-total">${this.moneyFormat.format((item.price + (item.options?.reduce((sum, option) => sum + option.optionPrice, 0) || 0)) * item.quantity)}</span>
+                    <div class="input-group input-group-sm flex-nowrap">
+                        <input type="number" class="form-control item-discount"
+                            value="${item.discount}" min="0" max="100" step="1"
+                            data-index="${index}" style="width: 50px;">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </td>
+                <td class="text-end">
+                    <span class="text-gray-800 fw-bold" data-kt-pos-element="item-total">
+                        ${this.moneyFormat.format(this.calculateItemTotal(item))}
+                    </span>
                 </td>
                 <td class="text-end">
                     <button type="button" class="btn btn-sm btn-icon btn-light-danger delete-item" data-index="${index}">
@@ -575,6 +603,12 @@
                     </button>
                 </td>
             `;
+        }
+
+        calculateItemTotal(item) {
+            const basePrice = item.price + (item.options?.reduce((sum, option) => sum + option.optionPrice, 0) || 0);
+            const discountedPrice = basePrice * (1 - (item.discount / 100));
+            return discountedPrice * item.quantity;
         }
 
         handleCompleteOrder(e) {
@@ -598,29 +632,31 @@
 
         // Calculation Functions
         calculateTotals() {
-            const subtotal = this.orderItems.reduce((sum, item) =>
-                sum + (item.price + (item.options?.reduce((sum, option) => sum + option.optionPrice, 0) || 0)) * item.quantity,
-            0);
+            const subtotal = this.orderItems.reduce((sum, item) => {
+                return sum + this.calculateItemTotal(item);
+            }, 0);
 
             const tax = subtotal * (this.taxRate / 100);
-            this.grandTotal = subtotal + tax - this.discount;
 
-            if (this.discount > subtotal + tax) {
-                this.discount = subtotal + tax;
+            const globalDiscountAmount = (subtotal + tax) * (this.discount / 100);
+            this.grandTotal = subtotal + tax - globalDiscountAmount;
+
+            if (globalDiscountAmount > subtotal + tax) {
+                this.discount = 100;
                 this.grandTotal = 0;
             }
 
             this.grandTotalUSD = this.systemCurrency === 'USD' ? this.grandTotal : this.convertCurrency(this.grandTotal, 'LBP', 'USD');
             this.grandTotalLBP = this.systemCurrency === 'LBP' ? this.grandTotal : this.convertCurrency(this.grandTotal, 'USD', 'LBP');
 
-            this.updateTotalDisplay(subtotal, tax);
+            this.updateTotalDisplay(subtotal, tax, globalDiscountAmount);
         }
 
-        updateTotalDisplay(subtotal, tax) {
+        updateTotalDisplay(subtotal, tax, discountAmount) {
             this.cachedElements.form.querySelector('[data-kt-pos-element="total"]').innerHTML =
                 this.moneyFormat.format(subtotal);
             this.cachedElements.form.querySelector('[data-kt-pos-element="discount"]').innerHTML =
-                this.moneyFormat.format(this.discount);
+                `${this.discount}% (${this.moneyFormat.format(discountAmount)})`;
             this.cachedElements.form.querySelector('[data-kt-pos-element="tax"]').innerHTML =
                 this.moneyFormat.format(tax);
             this.cachedElements.form.querySelector('[data-kt-pos-element="grant-total"]').innerHTML =
@@ -628,7 +664,7 @@
 
             this.cachedElements.form.querySelector('input[name="total"]').value = subtotal;
             this.cachedElements.form.querySelector('input[name="tax"]').value = tax;
-            this.cachedElements.form.querySelector('input[name="discount"]').value = this.discount;
+            this.cachedElements.form.querySelector('input[name="discount"]').value = discountAmount;
             this.cachedElements.form.querySelector('input[name="grand_total"]').value = this.grandTotal;
         }
 
@@ -1065,8 +1101,8 @@
                             <table width="100%">
                                 ${this.orderItems.map(item => `
                                     <tr>
-                                        <td>${item.name} x${item.quantity}</td>
-                                        <td class="text-right">${this.moneyFormat.format(item.price * item.quantity)}</td>
+                                        <td>${item.name} x${item.quantity} ${item.discount > 0 ? `(${item.discount}% off)` : ''}</td>
+                                        <td class="text-right">${this.moneyFormat.format(this.calculateItemTotal(item))}</td>
                                     </tr>
                                 `).join('')}
                             </table>
@@ -1244,43 +1280,17 @@
         }
 
         // Discount Handling
-        async showDiscountInput() {
-            if(this.ENCRYPTED_PASSWORD != null){
-                const password = prompt("Enter password to change discount:");
-                if (!password) return;
-
-                const hash = await this.hashPassword(password);
-                const expectedHash = this.ENCRYPTED_PASSWORD;
-
-                if (hash === expectedHash) {
-                    this.cachedElements.discountInput.value = this.discount;
-                    this.cachedElements.discountElement.classList.add('d-none');
-                    this.cachedElements.discountInput.classList.remove('d-none');
-                    this.cachedElements.discountInput.focus();
-                } else {
-                    alert("Incorrect password");
-                }
-            }else{
-                this.cachedElements.discountInput.value = this.discount;
-                this.cachedElements.discountElement.classList.add('d-none');
-                this.cachedElements.discountInput.classList.remove('d-none');
-                this.cachedElements.discountInput.focus();
-            }
-        }
-
-        async hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        showDiscountInput() {
+            this.cachedElements.discountInput.value = this.discount;
+            this.cachedElements.discountElement.classList.add('d-none');
+            this.cachedElements.discountInput.classList.remove('d-none');
+            this.cachedElements.discountInput.focus();
         }
 
         updateDiscount() {
-            const discountValue = parseFloat(this.cachedElements.discountInput.value) || 0;
-            const maxDiscount = parseFloat(this.cachedElements.form.querySelector('input[name="total"]').value);
+            let discountValue = parseFloat(this.cachedElements.discountInput.value) || 0;
 
-            this.discount = Math.min(discountValue, maxDiscount);
+            this.discount = Math.min(Math.max(discountValue, 0), 100);
 
             this.cachedElements.discountElement.classList.remove('d-none');
             this.cachedElements.discountInput.classList.add('d-none');

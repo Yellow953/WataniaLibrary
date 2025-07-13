@@ -90,7 +90,8 @@ class AppController extends Controller
                     'product_id' => $item['id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
-                    'total' => $variantTotalPrice * $item['quantity'],
+                    'discount' => $item['discount'],
+                    'total' => $variantTotalPrice * $item['quantity'] - $item['discount'],
                     'variant_details' => isset($item['options']) ? json_encode($item['options']) : null,
                 ]);
 
@@ -168,7 +169,8 @@ class AppController extends Controller
                     'product_id' => $item['id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
-                    'total' => $variantTotalPrice * $item['quantity'],
+                    'discount' => $item['discount'],
+                    'total' => $variantTotalPrice * $item['quantity'] - $item['discount'],
                     'variant_details' => isset($item['options']) ? json_encode($item['options']) : null,
                 ]);
 
@@ -210,20 +212,20 @@ class AppController extends Controller
 
     public function fix()
     {
-        $products = Product::all();
+        // $products = Product::all();
 
-        foreach ($products as $product) {
-            if ($product->reference) {
-                $imagePath = '/uploads/products/' . $product->reference . '.png';
-                $fullPath = public_path($imagePath);
+        // foreach ($products as $product) {
+        //     if ($product->reference) {
+        //         $imagePath = '/uploads/products/' . $product->reference . '.png';
+        //         $fullPath = public_path($imagePath);
 
-                $finalPath = file_exists($fullPath) ? $imagePath : '/assets/images/no_img.png';
+        //         $finalPath = file_exists($fullPath) ? $imagePath : '/assets/images/no_img.png';
 
-                $product->update([
-                    'image' => $finalPath,
-                ]);
-            }
-        }
+        //         $product->update([
+        //             'image' => $finalPath,
+        //         ]);
+        //     }
+        // }
 
         return 'fixed...';
     }
