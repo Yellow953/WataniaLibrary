@@ -246,9 +246,12 @@ Route::middleware(['auth'])->group(function () {
         // Analytics
         Route::prefix('analytics')->group(function () {
             Route::get('/pdf-report', [AnalyticsController::class, 'generatePdfReport'])->name('analytics.pdf');
+            Route::get('/daily-report', [AnalyticsController::class, 'dailyReport'])->name('analytics.daily-report');
+            Route::get('/weekly-report', [AnalyticsController::class, 'weeklyReport'])->name('analytics.weekly-report');
             Route::get('/monthly-report', [AnalyticsController::class, 'monthlyReport'])->name('analytics.monthly-report');
             Route::get('/custom-report', [AnalyticsController::class, 'customReport'])->name('analytics.custom-report');
             Route::get('/hourly-orders', [AnalyticsController::class, 'getHourlyOrders'])->name('analytics.hourly-orders');
+            Route::get('/sales-vs-purchases', [AnalyticsController::class, 'getSalesVsPurchases']);
             Route::get('/', [AnalyticsController::class, 'index'])->name('analytics');
         });
 
