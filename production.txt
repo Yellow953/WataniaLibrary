@@ -3,4 +3,3 @@ discount by item
 total discount %
 ? mega menu fix
 ? categories cleanup
-orders index => sometimes total 0
