@@ -39,26 +39,23 @@
     <section>
         <div class="row">
             <div class="col-12 justify-content-between d-flex pb-3">
-                <h4 class="text-black">Reading Books</h4>
+                <h4 class="text-black">Art Materials</h4>
                 <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
             </div>
 
             <div class="col-12 mb-5">
                 <div class="owl-carousel product-carousel">
-                    @foreach ($products as $product)
+                    @foreach ($art_materials as $art_material)
                     <div class="item px-2">
                         <div class="card border-custom item-card product-card overflow-hidden shadow">
-                            <img src="{{ $product->image }}" class="img-fluid product-img">
+                            <img src="{{ $art_material->image }}" class="img-fluid product-img">
                             <div class="card-body text-start">
-                                <h6 class="text-black">{{ $product->name }}</h6>
+                                <h6 class="text-black">{{ $art_material->name }}</h6>
                                 <div class="d-flex justify-content-end">
-                                    @if ($product->compare_price)
-                                    <p class="text-muted mb-0"><s>${{ number_format($product->compare_price, 2) }}</s>
-                                    </p>
-                                    @endif
-                                    <div class="text-secondary ms-2 mb-0">${{ number_format($product->price, 2) }}</div>
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($art_material->price, 2) }}
+                                    </div>
                                 </div>
-                                <a href="{{ route('product', $product->name) }}"
+                                <a href="{{ route('product', $art_material->name) }}"
                                     class="btn btn-tertiary w-100 mt-3">View
                                     Product</a>
                             </div>
@@ -102,26 +99,23 @@
     <section>
         <div class="row mt-5">
             <div class="col-12 justify-content-between d-flex pb-3">
-                <h4 class="text-black">Scholar Books</h4>
+                <h4 class="text-black">Backpacks</h4>
                 <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
             </div>
 
             <div class="col-12 mb-5">
                 <div class="owl-carousel product-carousel">
-                    @foreach ($products as $product)
+                    @foreach ($backpacks as $backpack)
                     <div class="item px-2">
                         <div class="card border-custom item-card product-card overflow-hidden shadow">
-                            <img src="{{ $product->image }}" class="img-fluid product-img">
+                            <img src="{{ $backpack->image }}" class="img-fluid product-img">
                             <div class="card-body text-start">
-                                <h6 class="text-black">{{ $product->name }}</h6>
+                                <h6 class="text-black">{{ $backpack->name }}</h6>
                                 <div class="d-flex justify-content-end">
-                                    @if ($product->compare_price)
-                                    <p class="text-muted mb-0"><s>${{ number_format($product->compare_price, 2) }}</s>
-                                    </p>
-                                    @endif
-                                    <div class="text-secondary ms-2 mb-0">${{ number_format($product->price, 2) }}</div>
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($backpack->price, 2) }}
+                                    </div>
                                 </div>
-                                <a href="{{ route('product', $product->name) }}"
+                                <a href="{{ route('product', $backpack->name) }}"
                                     class="btn btn-tertiary w-100 mt-3">View
                                     Product</a>
                             </div>
@@ -140,26 +134,22 @@
     <section>
         <div class="row">
             <div class="col-12 justify-content-between d-flex pb-3">
-                <h4 class="text-black">Browse Your Favorite Authors</h4>
+                <h4 class="text-black">Lunchbag & LunchBox</h4>
                 <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
             </div>
+
             <div class="col-12 mb-5">
                 <div class="owl-carousel product-carousel">
-                    @foreach ($products as $product)
+                    @foreach ($lunchs as $lunch)
                     <div class="item px-2">
                         <div class="card border-custom item-card product-card overflow-hidden shadow">
-                            <img src="{{ $product->image }}" class="img-fluid product-img">
+                            <img src="{{ $lunch->image }}" class="img-fluid product-img">
                             <div class="card-body text-start">
-                                <h6 class="text-black">{{ $product->name }}</h6>
+                                <h6 class="text-black">{{ $lunch->name }}</h6>
                                 <div class="d-flex justify-content-end">
-                                    @if ($product->compare_price)
-                                    <p class="text-muted mb-0"><s>${{ number_format($product->compare_price, 2) }}</s>
-                                    </p>
-                                    @endif
-                                    <div class="text-secondary ms-2 mb-0">${{ number_format($product->price, 2) }}</div>
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($lunch->price, 2) }}</div>
                                 </div>
-                                <a href="{{ route('product', $product->name) }}"
-                                    class="btn btn-tertiary w-100 mt-3">View
+                                <a href="{{ route('product', $lunch->name) }}" class="btn btn-tertiary w-100 mt-3">View
                                     Product</a>
                             </div>
                         </div>
@@ -202,26 +192,115 @@
     <section>
         <div class="row mt-5">
             <div class="col-12 justify-content-between d-flex pb-3">
+                <h4 class="text-black">Pencil Cases</h4>
+                <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
+            </div>
+
+            <div class="col-12 mb-5">
+                <div class="owl-carousel product-carousel">
+                    @foreach ($pencil_cases as $pencil_case)
+                    <div class="item px-2">
+                        <div class="card border-custom item-card product-card overflow-hidden shadow">
+                            <img src="{{ $pencil_case->image }}" class="img-fluid product-img">
+                            <div class="card-body text-start">
+                                <h6 class="text-black">{{ $pencil_case->name }}</h6>
+                                <div class="d-flex justify-content-end">
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($pencil_case->price, 2) }}
+                                    </div>
+                                </div>
+                                <a href="{{ route('product', $pencil_case->name) }}"
+                                    class="btn btn-tertiary w-100 mt-3">View
+                                    Product</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row mt-5">
+            <div class="col-12 justify-content-between d-flex pb-3">
                 <h4 class="text-black">Stationaries</h4>
                 <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
             </div>
 
             <div class="col-12 mb-5">
                 <div class="owl-carousel product-carousel">
-                    @foreach ($products as $product)
+                    @foreach ($stationaries as $stationary)
                     <div class="item px-2">
                         <div class="card border-custom item-card product-card overflow-hidden shadow">
-                            <img src="{{ $product->image }}" class="img-fluid product-img">
+                            <img src="{{ $stationary->image }}" class="img-fluid product-img">
                             <div class="card-body text-start">
-                                <h6 class="text-black">{{ $product->name }}</h6>
+                                <h6 class="text-black">{{ $stationary->name }}</h6>
                                 <div class="d-flex justify-content-end">
-                                    @if ($product->compare_price)
-                                    <p class="text-muted mb-0"><s>${{ number_format($product->compare_price, 2) }}</s>
-                                    </p>
-                                    @endif
-                                    <div class="text-secondary ms-2 mb-0">${{ number_format($product->price, 2) }}</div>
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($stationary->price, 2) }}
+                                    </div>
                                 </div>
-                                <a href="{{ route('product', $product->name) }}"
+                                <a href="{{ route('product', $stationary->name) }}"
+                                    class="btn btn-tertiary w-100 mt-3">View
+                                    Product</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row mt-5">
+            <div class="col-12 justify-content-between d-flex pb-3">
+                <h4 class="text-black">Toys</h4>
+                <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
+            </div>
+
+            <div class="col-12 mb-5">
+                <div class="owl-carousel product-carousel">
+                    @foreach ($toys as $toy)
+                    <div class="item px-2">
+                        <div class="card border-custom item-card product-card overflow-hidden shadow">
+                            <img src="{{ $toy->image }}" class="img-fluid product-img">
+                            <div class="card-body text-start">
+                                <h6 class="text-black">{{ $toy->name }}</h6>
+                                <div class="d-flex justify-content-end">
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($toy->price, 2) }}
+                                    </div>
+                                </div>
+                                <a href="{{ route('product', $toy->name) }}" class="btn btn-tertiary w-100 mt-3">View
+                                    Product</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row mt-5">
+            <div class="col-12 justify-content-between d-flex pb-3">
+                <h4 class="text-black">Water Bottles</h4>
+                <a href="{{ route('shop') }}" class="text-decoration-none text-primary">View All</a>
+            </div>
+
+            <div class="col-12 mb-5">
+                <div class="owl-carousel product-carousel">
+                    @foreach ($water_bottles as $water_bottle)
+                    <div class="item px-2">
+                        <div class="card border-custom item-card product-card overflow-hidden shadow">
+                            <img src="{{ $water_bottle->image }}" class="img-fluid product-img">
+                            <div class="card-body text-start">
+                                <h6 class="text-black">{{ $water_bottle->name }}</h6>
+                                <div class="d-flex justify-content-end">
+                                    <div class="text-secondary ms-2 mb-0">${{ number_format($water_bottle->price, 2) }}
+                                    </div>
+                                </div>
+                                <a href="{{ route('product', $water_bottle->name) }}"
                                     class="btn btn-tertiary w-100 mt-3">View
                                     Product</a>
                             </div>

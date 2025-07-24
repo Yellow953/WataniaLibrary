@@ -19,9 +19,59 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::select('id', 'name', 'image')->where('parent_id', null)->limit(6)->with('subCategories')->get();
-        $products = Product::select('id', 'name', 'image')->where('public', true)->where('quantity', '>=', 0)->limit(20)->get();
 
-        $data = compact('categories', 'products');
+        // Collections
+        $art_materials = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['3154148454182', '3167868323560', '4005401134220', '4005405542212', '4260192961336', '5907690865719', '6949905294975', '6971479810503', '6971479810633', '6971479810657', '6976272010389', '8003511423247', '8901765096050']);
+            })
+            ->get();
+        $backpacks = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['529113416077', '5205698729836', '5205698759086', '5291134176098', '8002047095966', '9332934353312', '9332934359840', '9332934370623']);
+            })
+            ->get();
+        $lunchs = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['3154148707011', '5205698759345', '5285011930088', '8904042647327', '9332934320802', '9332934323476', '9332934370739', '9332934383920']);
+            })
+            ->get();
+        $pencil_cases = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['1234201580965', '5205698729508', '5205698759840', '5903235650994', '5903235651380', '5903235667527', '9332934384392', '9332934387638']);
+            })
+            ->get();
+        $stationaries = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['3154140178116', '3154140511111', '3154149818679', '4902778913956', '6936699710132', '6941250541858', '6968581247012', '8003511330064', '8901765590954']);
+            })
+            ->get();
+        $toys = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['000013870867', '5010993431878', '6901234566307', '6920062101184', '6987558961110', '8681842235052']);
+            })
+            ->get();
+        $water_bottles = Product::select('id', 'name', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>=', 0)
+            ->whereHas('barcodes', function ($query) {
+                $query->whereIn('barcode', ['015205010105', '1234601574175', '5205698735455', '5205698735547', '5285011930040', '8681655543320', '8901765114556']);
+            })
+            ->get();
+
+        $data = compact('categories', 'art_materials', 'backpacks', 'lunchs', 'pencil_cases', 'stationaries', 'toys', 'water_bottles');
         return view('frontend.index', $data);
     }
 
