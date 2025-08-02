@@ -42,9 +42,6 @@ class CategoryController extends Controller
             $ext = $file->getClientOriginalExtension();
             $filename = auth()->id() . '_' . time() . '.' . $ext;
             $image = Image::make($file);
-            $image->fit(300, 300, function ($constraint) {
-                $constraint->upsize();
-            });
             $image->save(public_path('uploads/categories/' . $filename));
             $path = '/uploads/categories/' . $filename;
         } else {
@@ -83,9 +80,6 @@ class CategoryController extends Controller
             $ext = $file->getClientOriginalExtension();
             $filename = auth()->id() . '_' . time() . '.' . $ext;
             $image = Image::make($file);
-            $image->fit(300, 300, function ($constraint) {
-                $constraint->upsize();
-            });
             $image->save(public_path('uploads/categories/' . $filename));
             $path = '/uploads/categories/' . $filename;
         } else {

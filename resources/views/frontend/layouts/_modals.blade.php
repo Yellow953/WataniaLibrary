@@ -27,45 +27,64 @@
 </div>
 
 <script>
-    const searchInput = document.getElementById("searchInput");
-    const resultsContainer = document.getElementById("searchResults");
+    function debounce(fn, delay) {
+        let timeout;
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
 
-    searchInput.addEventListener("input", function() {
-        const query = searchInput.value.trim();
+    const routeURL = `{{ route('products.search') }}`;
 
-        if (query === "") {
-            resultsContainer.innerHTML = "";
+    function handleSearch(inputElement, resultsElement) {
+        const query = inputElement.value.trim();
+
+        if (!query) {
+            resultsElement.innerHTML = "";
             return;
         }
 
-        fetch(`{{route('products.search')}}?q=${encodeURIComponent(query)}`)
+        fetch(`${routeURL}?q=${encodeURIComponent(query)}`)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 return response.json();
             })
             .then(data => {
-                resultsContainer.innerHTML = "";
-
-                if (data.length === 0) {
-                    resultsContainer.innerHTML = `<div class="text-muted text-center">No products found.</div>`;
+                if (!Array.isArray(data) || data.length === 0) {
+                    resultsElement.innerHTML = `<div class="text-muted text-center">No products found.</div>`;
                     return;
                 }
 
-                data.forEach(product => {
-                    const resultItem = `
-                        <a href="${product.url}" class="list-group-item list-group-item-action d-flex align-items-center">
-                            <img src="${product.image || 'https://via.placeholder.com/50'}" alt="${product.name}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
-                            <span>${product.name}</span>
-                        </a>
-                    `;
-                    resultsContainer.innerHTML += resultItem;
-                });
+                const resultsHTML = data.map(product => `
+                    <a href="${product.url}" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <img src="${product.image || '/assets/images/no_img.png'}" alt="${product.name}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
+                        <span>${product.name}</span>
+                    </a>
+                `).join('');
+
+                resultsElement.innerHTML = resultsHTML;
             })
             .catch(error => {
-                console.error("Error fetching search results:", error);
+                console.error("Search error:", error);
+                resultsElement.innerHTML = `<div class="text-danger text-center">Search failed. Try again.</div>`;
             });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchPairs = [
+            { inputId: "searchInput", resultsId: "searchResults" },
+            { inputId: "searchInputMobile", resultsId: "searchResultsMobile" }
+        ];
+
+        searchPairs.forEach(({ inputId, resultsId }) => {
+            const inputEl = document.getElementById(inputId);
+            const resultsEl = document.getElementById(resultsId);
+
+            if (inputEl && resultsEl) {
+                inputEl.addEventListener("input", debounce(() => handleSearch(inputEl, resultsEl), 300));
+            }
+        });
     });
 
     const cartButton = document.getElementById('cartButton');

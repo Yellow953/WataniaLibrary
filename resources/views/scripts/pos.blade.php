@@ -939,6 +939,10 @@
             this.changeDue = 0;
             this.paymentCurrency = this.systemCurrency;
 
+            this.discount = 0;
+            this.cachedElements.discountInput.value = 0;
+            this.updateDiscount()
+
             this.cachedElements.grandTotalUSD.textContent = '$0.00';
             this.cachedElements.grandTotalLBP.textContent = '0 LBP';
             this.cachedElements.changeDueUSD.textContent = '$0.00';
@@ -1049,7 +1053,7 @@
 
             receiptWindow.onload = () => {
                 receiptWindow.print();
-                receiptWindow.close();
+                // receiptWindow.close();
             };
         }
 
@@ -1240,6 +1244,7 @@
                 return;
             }
 
+            const searchWords = searchTerm.split(/\s+/);
             let foundMatches = false;
 
             document.querySelectorAll(this.SELECTORS.PRODUCT_ITEM).forEach(item => {
@@ -1253,11 +1258,12 @@
                     console.error('Invalid JSON in data-barcodes:', e);
                 }
 
-                const barcodeMatch = barcodeList.some(b =>
-                    b.barcode && b.barcode.toLowerCase().includes(searchTerm)
+                const allBarcodes = barcodeList.map(b => b.barcode?.toLowerCase() || '').join(' ');
+
+                const matchesSearch = searchWords.every(word =>
+                    productName.includes(word) || allBarcodes.includes(word)
                 );
 
-                const matchesSearch = productName.includes(searchTerm) || barcodeMatch;
                 item.style.display = matchesSearch ? '' : 'none';
 
                 if (matchesSearch) {

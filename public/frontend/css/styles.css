@@ -1181,8 +1181,14 @@ footer {
     background-color: white;
 }
 
-#searchResults {
+#searchResults,
+#searchResultsMobile {
     z-index: 9999;
+}
+
+#searchResultsMobile {
+    top: 80%;
+    left: 0;
 }
 
 .spam-input {

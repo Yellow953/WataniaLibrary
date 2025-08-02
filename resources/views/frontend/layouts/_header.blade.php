@@ -4,7 +4,7 @@
             <img src="{{ asset('frontend/images/logo.png') }}" alt="Watania Logo" class="logo" />
         </a>
         <div class="position-relative py-4 ms-md-2">
-            <div class="desktop-display align-items-center">
+            <div class="d-none d-md-flex align-items-center">
                 <ul class="navbar-nav text-wrap d-flex flex-row">
                     <li class="nav-item"><a href="{{ route('home') }}"
                             class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
@@ -23,25 +23,7 @@
                     <i class="fa-solid fa-cart-shopping py-2"></i>
                 </a>
             </div>
-            <div class="align-items-center tab-display">
-                <ul class="navbar-nav text-wrap d-flex flex-row ">
-                    <li class="nav-item"><a href="{{ route('home') }}"
-                            class="text-decoration-none nav-link zoom-in-on-hover-sm">Home</a>
-                    </li>
-                    <li class="nav-item"><a href="{{ route('about') }}"
-                            class="text-decoration-none nav-link zoom-in-on-hover-sm">About</a>
-                    </li>
-                    <li class="nav-item me-2"><a href="{{ route('contact') }}"
-                            class="text-decoration-none nav-link zoom-in-on-hover-sm">Contact</a>
-                    </li>
-                </ul>
-                <input type="text" class="form-control input px-5" name="q" id="searchInput"
-                    placeholder="Type To Search" autocomplete="off">
-                <a class="nav-link ms-2" data-bs-toggle="offcanvas" href="#offcanvasCart" role="button" id="cartButton"
-                    aria-controls="offcanvasCart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-            </div>
+
             <div id="searchResults" class="list-group position-absolute w-100 mt-1 shadow bg-white"></div>
         </div>
     </div>
@@ -54,8 +36,9 @@
         </a>
     </div>
     <div class="navbar-nav ms-auto me-auto m-display">
-        <input type="text" class="form-control input px-4" name="q" id="searchInput" placeholder="Type To Search"
+        <input type="text" class="form-control input px-4" name="q" id="searchInputMobile" placeholder="Type To Search"
             autocomplete="off">
+        <div id="searchResultsMobile" class="list-group position-absolute w-100 mt-1 shadow bg-white"></div>
     </div>
 
     <button class="navbar-toggler border-0 me-2 tab-end" type="button" data-bs-toggle="collapse"
