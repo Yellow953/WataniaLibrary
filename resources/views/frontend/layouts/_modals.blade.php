@@ -83,6 +83,16 @@
 
             if (inputEl && resultsEl) {
                 inputEl.addEventListener("input", debounce(() => handleSearch(inputEl, resultsEl), 300));
+
+                inputEl.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        const query = inputEl.value.trim();
+                        if (query) {
+                            window.location.href = `{{ route('shop') }}?q=${encodeURIComponent(query)}`;
+                        }
+                    }
+                });
             }
         });
     });

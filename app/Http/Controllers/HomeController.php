@@ -119,14 +119,32 @@ class HomeController extends Controller
             ->with('subCategories')
             ->get();
 
-        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price')->where('public', true)->where('quantity', '>', 0);
+        $productsQuery = Product::select('id', 'name', 'category_id', 'image', 'price')
+            ->where('public', true)
+            ->where('quantity', '>', 0);
 
+        // Category filter from dropdown or URL
         if ($request->filled('category')) {
             $category = Category::where('name', urldecode($request->input('category')))->firstOrFail();
             $categoryIds = $this->getAllCategoryIds($category);
             $productsQuery->whereIn('category_id', $categoryIds);
         }
 
+        // Handle search by product name OR category name
+        if ($request->filled('q')) {
+            $searchTerm = $request->input('q');
+
+            $productsQuery->where(function ($query) use ($searchTerm) {
+                // Search in product name
+                $query->where('name', 'like', "%{$searchTerm}%")
+                    // Search in category name
+                    ->orWhereHas('category', function ($catQuery) use ($searchTerm) {
+                        $catQuery->where('name', 'like', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        // Price filters
         if ($request->filled('price_min')) {
             $productsQuery->where('price', '>=', $request->input('price_min'));
         }
@@ -134,6 +152,7 @@ class HomeController extends Controller
             $productsQuery->where('price', '<=', $request->input('price_max'));
         }
 
+        // Sorting
         switch ($request->input('sort_by')) {
             case 'price_asc':
                 $productsQuery->orderBy('price', 'asc');
