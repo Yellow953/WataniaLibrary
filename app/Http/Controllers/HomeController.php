@@ -218,6 +218,12 @@ class HomeController extends Controller
         $subTotal = 0;
         $productsCount = 0;
         foreach ($cart as $item) {
+            $product = Product::findOrFail($item['id']);
+
+            if ($product->quantity < $item['quantity']) {
+                return redirect()->back()->with('error', 'Insufficient stock for product: ' . $product->name);
+            }
+
             $subTotal += $item['price'] * $item['quantity'];
             $productsCount += $item['quantity'];
         }
@@ -259,6 +265,7 @@ class HomeController extends Controller
 
             foreach ($cart as $item) {
                 $product = Product::findOrFail($item['id']);
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
@@ -266,6 +273,8 @@ class HomeController extends Controller
                     'unit_price' => $item['price'],
                     'total' => $item['price'] * $item['quantity'],
                 ]);
+
+                $product->update(['quantity' => $product->quanity - $item['quantity']]);
             }
 
             DB::commit();

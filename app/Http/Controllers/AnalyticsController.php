@@ -107,10 +107,10 @@ class AnalyticsController extends Controller
         $todays_profit = 0;
 
         foreach ($todays_orders as $order) {
-            foreach ($order->items as $item) {
-                $currency_rate = $order->currency->rate;
+            $currency_rate = $order->currency->rate;
+            $todays_sales += ($order->total / $currency_rate);
 
-                $todays_sales += ($item->total / $currency_rate);
+            foreach ($order->items as $item) {
                 $todays_profit += (($item->quantity * ($item->product->price - $item->product->cost)));
             }
         }

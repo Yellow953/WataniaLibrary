@@ -50,7 +50,7 @@
                     <tr>
                         <th>Order No.</th>
                         <th>Date</th>
-                        <th>Cashier</th>
+                        <th>Cashier/Client</th>
                         <th>Items</th>
                         <th>Subtotal</th>
                         <th>Tax</th>
@@ -63,7 +63,7 @@
                     <tr>
                         <td>{{ $order->order_number }}</td>
                         <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
-                        <td>{{ ucwords($order->cashier->name) }}</td>
+                        <td>{{ ucwords($order->cashier->name ?? $order->client->name) }}</td>
                         <td>{{ $order->items_count }}</td>
                         <td>{{ $order->currency->symbol }}{{ number_format($order->sub_total, 2) }}</td>
                         <td>{{ $order->currency->symbol }}{{ number_format($order->tax, 2) }}</td>

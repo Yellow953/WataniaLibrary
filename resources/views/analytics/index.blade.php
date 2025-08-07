@@ -65,7 +65,7 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800">
                                             <th>Order No</th>
-                                            <th>Cashier</th>
+                                            <th>Cashier/Client</th>
                                             <th>Sub Total</th>
                                             <th>Total</th>
                                         </tr>
@@ -74,7 +74,7 @@
                                         @foreach ($todays_orders as $order)
                                         <tr>
                                             <td>{{ $order->order_number }}</td>
-                                            <td>{{ ucwords($order->cashier->name) }}</td>
+                                            <td>{{ ucwords($order->cashier->name ?? $order->client->name) }}</td>
                                             <td>{{ $order->currency->symbol }}{{ number_format($order->sub_total, 2) }}
                                             </td>
                                             <td>{{ $order->currency->symbol }}{{ number_format($order->total, 2) }}
