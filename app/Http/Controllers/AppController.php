@@ -91,7 +91,7 @@ class AppController extends Controller
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
                     'discount' => $item['discount'],
-                    'total' => $variantTotalPrice * $item['quantity'] - $item['discount'],
+                    'total' => max(0, ($variantTotalPrice * $item['quantity']) - $item['discount']),
                     'variant_details' => isset($item['options']) ? json_encode($item['options']) : null,
                 ]);
 
@@ -170,7 +170,7 @@ class AppController extends Controller
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
                     'discount' => $item['discount'],
-                    'total' => $variantTotalPrice * $item['quantity'] - $item['discount'],
+                    'total' => max(0, ($variantTotalPrice * $item['quantity']) - $item['discount']),
                     'variant_details' => isset($item['options']) ? json_encode($item['options']) : null,
                 ]);
 
