@@ -1127,32 +1127,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td><strong>Amount Paid:</strong></td>
-                                    <td class="text-right">
-                                        <div class="dual-currency">
-                                            <div class="currency-item">
-                                                ${this.paymentCurrency === 'USD' ? '$' + this.amountPaid.toFixed(2) : formatLBP(this.amountPaid)}
-                                            </div>
-                                            <div class="currency-item">
-                                                ${this.paymentCurrency === 'USD' ? formatLBP(amountPaidLBP) : '$' + this.convertCurrency(this.amountPaid, 'LBP', 'USD').toFixed(2)}
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Change Due:</strong></td>
-                                    <td class="text-right">
-                                        <div class="dual-currency">
-                                            <div class="currency-item">
-                                                ${this.paymentCurrency === 'USD' ? '$' + (this.changeDue > 0 ? this.changeDue.toFixed(2) : '0.00') : formatLBP(this.changeDue > 0 ? this.changeDue : 0)}
-                                            </div>
-                                            <div class="currency-item">
-                                                ${this.paymentCurrency === 'USD' ? formatLBP(changeDueLBP > 0 ? changeDueLBP : 0) : '$' + (this.convertCurrency(this.changeDue, 'LBP', 'USD') > 0 ? this.convertCurrency(this.changeDue, 'LBP', 'USD').toFixed(2) : '0.00')}
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                         <br>
