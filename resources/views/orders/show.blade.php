@@ -25,11 +25,124 @@
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+
+    <style>
+        @media print {
+            body.app-default * {
+                visibility: hidden;
+            }
+
+            .print-content-only .print-receipt,
+            .print-content-only .print-receipt * {
+                visibility: visible;
+            }
+
+            .print-content-only .print-receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .receipt-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .receipt-details,
+            .receipt-footer {
+                margin-top: 20px;
+            }
+
+            .text-right {
+                text-align: right;
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .dual-currency {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .currency-item {
+                flex: 1;
+            }
+
+            .currency-label {
+                font-size: 10px;
+                color: #666;
+            }
+
+            hr {
+                border-top: 1px dashed #ccc;
+            }
+
+            .discount-row {
+                color: #d9534f;
+            }
+        }
+    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 
 <body id="kt_app_body" class="print-content-only app-default">
+    <!-- Print Receipt (hidden until printing) -->
+    <div class="print-receipt" style="display: none;">
+        <div class="receipt-header">
+            <h2>Watania Library</h2>
+            <p>{{ $business->address ?? 'Lebanon, Bourj Hammoud, Haret Sader' }}</p>
+            <p>Date: {{ $order->created_at }}</p>
+            <p>Order #: {{ $order->order_number }}</p>
+            <p>Payment Method: {{ ucwords($order->payment_method ?? 'N/A') }}</p>
+        </div>
+        <hr>
+        <div class="receipt-details">
+            <table width="100%">
+                @foreach ($order->items as $item)
+                <tr>
+                    <td>{{ $item->product->name }} x{{ $item->quantity }}</td>
+                    <td class="text-right">{{ $currency->symbol }}{{ number_format($item->total, 2) }}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+        <hr>
+        <div class="receipt-footer">
+            <table width="100%">
+                <tr>
+                    <td><strong>Subtotal:</strong></td>
+                    <td class="text-right">{{ $currency->symbol }}{{ number_format($order->sub_total, 2) }}</td>
+                </tr>
+                @if($order->discount > 0)
+                <tr class="discount-row">
+                    <td><strong>Discount:</strong></td>
+                    <td class="text-right">-{{ $currency->symbol }}{{ number_format($order->discount, 2) }}</td>
+                </tr>
+                @endif
+                <tr>
+                    <td><strong>Total:</strong></td>
+                    <td class="text-right">
+                        <div class="dual-currency">
+                            <div class="currency-item">
+                                {{ $currency->symbol }}{{ number_format($order->total, 2) }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="text-center">Thank you for your purchase!</div>
+    </div>
+
     <!--begin::App-->
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <!--begin::Main-->
@@ -37,7 +150,7 @@
             <!--begin::Content wrapper-->
             <div class="d-flex flex-column flex-column-fluid">
                 <!--begin::Toolbar-->
-                <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+                <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 no-print">
                     <!--begin::Toolbar container-->
                     <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                         <!--begin::Page title-->
@@ -83,10 +196,10 @@
                                 <i class="bi bi-caret-left-fill"></i>
                                 Back
                             </a>
-                            <!-- begin::Pint-->
-                            <button type="button" class="btn btn-sm btn-primary my-1" onclick="window.print();">Print
+                            <!-- begin::Print-->
+                            <button type="button" class="btn btn-sm btn-primary my-1" onclick="printReceipt()">Print
                                 Order</button>
-                            <!-- end::Pint-->
+                            <!-- end::Print-->
                         </div>
                         <!--end::Actions-->
                     </div>
@@ -301,6 +414,21 @@
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
     <!--end::Custom Javascript-->
+
+    <script>
+        function printReceipt() {
+            // Show the receipt div
+            document.querySelector('.print-receipt').style.display = 'block';
+
+            // Print the receipt
+            window.print();
+
+            // Hide the receipt div after printing
+            setTimeout(() => {
+                document.querySelector('.print-receipt').style.display = 'none';
+            }, 100);
+        }
+    </script>
     <!--end::Javascript-->
 </body>
 <!--end::Body-->
